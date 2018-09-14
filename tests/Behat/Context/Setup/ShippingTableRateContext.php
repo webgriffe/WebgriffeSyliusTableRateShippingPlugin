@@ -6,9 +6,11 @@ namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
+use Sylius\Component\Core\Formatter\StringInflector;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate;
 
 final class ShippingTableRateContext implements Context
 {
@@ -31,6 +33,12 @@ final class ShippingTableRateContext implements Context
      */
     public function theStoreHasShippingTableRateForCurrency(string $name, CurrencyInterface $currency): void
     {
-        throw new PendingException();
+        /** @var ShippingTableRate $shippingTableRate */
+        $shippingTableRate = $this->shippingTableRateFactory->createNew();
+        $shippingTableRate->setName($name);
+        $shippingTableRate->setCode(StringInflector::nameToUppercaseCode($name));
+        $shippingTableRate->setCurrency($currency);
+
+        $this->shippingTableRateRepository->add($shippingTableRate);
     }
 }
