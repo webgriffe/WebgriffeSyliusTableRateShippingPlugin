@@ -1,7 +1,7 @@
 {
-    "name": "sylius/plugin-skeleton",
+    "name": "webgriffe/sylius-table-rate-shipping-plugin",
     "type": "sylius-plugin",
-    "description": "Acme example plugin for Sylius.",
+    "description": "Provides table rate shipping calculator.",
     "license": "MIT",
     "require": {
         "php": "^7.1",
@@ -32,8 +32,8 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Acme\\SyliusExamplePlugin\\": "src/",
-            "Tests\\Acme\\SyliusExamplePlugin\\": "tests/"
+            "Webgriffe\\SyliusTableRateShippingPlugin\\": "src/",
+            "Tests\\Webgriffe\\SyliusTableRateShippingPlugin\\": "tests/"
         }
     },
     "autoload-dev": {
