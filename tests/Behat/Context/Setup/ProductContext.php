@@ -25,7 +25,7 @@ final class ProductContext implements Context
         $this->productExampleFactory = $productExampleFactory;
         $this->productRepository = $productRepository;
     }
-    
+
     /**
      * @Transform :weight
      */
