@@ -1,0 +1,5 @@
+sylius_resource:
+    resources:
+        webgriffe.shipping_table_rate:
+            classes:
+                model: Webgriffe\SyliusTableRateShippingPlugin\Model\ShippingTableRate
