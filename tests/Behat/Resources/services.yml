@@ -10,6 +10,7 @@ services:
         arguments:
             - '@__symfony__.webgriffe.factory.shipping_table_rate'
             - '@__symfony__.webgriffe.repository.shipping_table_rate'
+            - '@__symfony__.webgriffe.manager.shipping_table_rate'
             - '@sylius.behat.shared_storage'
             - '@__symfony__.sylius.fixture.example_factory.shipping_method'
             - '@__symfony__.sylius.repository.shipping_method'

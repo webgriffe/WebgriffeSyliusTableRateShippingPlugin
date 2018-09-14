@@ -13,6 +13,8 @@ Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate:
         name:
             type: string
             nullable: false
+        weightLimitToRate:
+            type: json_array
     manyToOne:
         currency:
             targetEntity: Sylius\Component\Currency\Model\CurrencyInterface

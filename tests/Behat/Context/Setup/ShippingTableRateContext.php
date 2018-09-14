@@ -6,6 +6,7 @@ namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
+use Doctrine\Common\Persistence\ObjectManager;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\ExampleFactoryInterface;
 use Sylius\Component\Addressing\Model\ZoneInterface;
@@ -27,6 +28,9 @@ final class ShippingTableRateContext implements Context
     /** @var RepositoryInterface */
     private $shippingTableRateRepository;
 
+    /** @var ObjectManager */
+    private $shippingTableRateManager;
+
     /** @var SharedStorageInterface */
     private $sharedStorage;
 
@@ -39,19 +43,21 @@ final class ShippingTableRateContext implements Context
     public function __construct(
         FactoryInterface $shippingTableRateFactory,
         RepositoryInterface $shippingTableRateRepository,
+        ObjectManager $shippingTableRateManager,
         SharedStorageInterface $sharedStorage,
         ExampleFactoryInterface $shippingMethodExampleFactory,
         RepositoryInterface $shippingMethodRepository
     ) {
         $this->shippingTableRateFactory = $shippingTableRateFactory;
         $this->shippingTableRateRepository = $shippingTableRateRepository;
+        $this->shippingTableRateManager = $shippingTableRateManager;
         $this->sharedStorage = $sharedStorage;
         $this->shippingMethodExampleFactory = $shippingMethodExampleFactory;
         $this->shippingMethodRepository = $shippingMethodRepository;
     }
 
     /**
-     * @Transform
+     * @Transform :shippingTableRate
      */
     public function transformShippingTableRate(string $name): ShippingTableRate
     {
@@ -78,6 +84,18 @@ final class ShippingTableRateContext implements Context
         $shippingTableRate->setCurrency($currency);
 
         $this->shippingTableRateRepository->add($shippingTableRate);
+
+        $this->sharedStorage->set('shipping_table_rate', $shippingTableRate);
+    }
+
+    /**
+     * @Given /^(it) has a rate ("[^"]+") for shipments up to (\d+) kg$/
+     */
+    public function thisShippingTableRateHasRateForShipmentsUpToKg(ShippingTableRate $shippingTableRate, int $rate, int $weightLimit): void
+    {
+        $shippingTableRate->addRate($weightLimit, $rate);
+
+        $this->shippingTableRateManager->flush();
     }
 
     /**
@@ -95,7 +113,7 @@ final class ShippingTableRateContext implements Context
             'zone' => $this->getShippingZone(),
             'calculator' => [
                 'type' => TableRateShippingCalculator::TYPE,
-                'configuration' => [],
+                'configuration' => [$channel->getCode() => ['table_rate_code' => $shippingTableRate->getCode()]],
             ],
             'channels' => [$channel],
         ]);

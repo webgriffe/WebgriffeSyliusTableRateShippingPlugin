@@ -21,6 +21,9 @@ class ShippingTableRate implements ResourceInterface
     /** @var CurrencyInterface|null */
     private $currency;
 
+    /** @var array */
+    private $weightLimitToRate = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -54,5 +57,25 @@ class ShippingTableRate implements ResourceInterface
     public function setCurrency(?CurrencyInterface $currency): void
     {
         $this->currency = $currency;
+    }
+
+    public function addRate(float $weightLimit, int $rate): void
+    {
+        $this->weightLimitToRate[] = ['weightLimit' => $weightLimit, 'rate' => $rate];
+    }
+
+    public function getRate(float $weight): int
+    {
+        usort($this->weightLimitToRate, function (array $a, array $b): int {
+            return $a['weightLimit'] <=> $b['weightLimit'];
+        });
+
+        foreach ($this->weightLimitToRate as $array) {
+            if ($weight <= $array['weightLimit']) {
+                return $array['rate'];
+            }
+        }
+
+        throw new \RuntimeException('No rate found for given weight!');
     }
 }

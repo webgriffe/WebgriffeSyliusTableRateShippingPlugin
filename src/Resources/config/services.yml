@@ -1,5 +1,7 @@
 services:
     Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculator:
+        arguments:
+            - '@webgriffe.repository.shipping_table_rate'
         tags:
             -
                 name: sylius.shipping_calculator
