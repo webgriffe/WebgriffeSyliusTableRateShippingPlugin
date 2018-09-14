@@ -16,17 +16,19 @@ Feature: Seeing correct shipping fees for table rate based shipping methods
     @ui
     Scenario: Seeing correct shipping fee for the light shipment
         Given I have product "Bottle of water" in the cart
-        When I proceed selecting "Basic" shipping method
         Then my cart shipping total should be "$5.00"
 
     @ui
     Scenario: Seeing correct shipping fee for the exact upper limit of the lighter shipment
         Given I have 5 products "Bottle of water" in the cart
-        When I proceed selecting "Basic" shipping method
         Then my cart shipping total should be "$5.00"
 
     @ui
     Scenario: Seeing correct shipping fee for the heavier shipment
         Given I have 15 products "Bottle of water" in the cart
-        When I proceed selecting "Basic" shipping method
         Then my cart shipping total should be "$10.00"
+
+    @ui
+    Scenario: Seeing no shipping methods for too heavy shipment
+        Given I have 25 products "Bottle of water" in the cart
+        Then my cart shipping total should be "$0.00"
