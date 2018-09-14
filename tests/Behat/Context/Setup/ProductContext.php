@@ -6,9 +6,27 @@ namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
+use Sylius\Bundle\CoreBundle\Fixture\Factory\ExampleFactoryInterface;
+use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class ProductContext implements Context
 {
+    /** @var ExampleFactoryInterface */
+    private $productExampleFactory;
+
+    /** @var RepositoryInterface */
+    private $productRepository;
+
+    public function __construct(
+        ExampleFactoryInterface $productExampleFactory,
+        RepositoryInterface $productRepository
+    ) {
+        $this->productExampleFactory = $productExampleFactory;
+        $this->productRepository = $productRepository;
+    }
+
     /**
      * @Transform /^(\-)?(?:€|£|￥|\$)((?:\d+\.)?\d+)$/
      */
@@ -36,13 +54,24 @@ final class ProductContext implements Context
     }
 
     /**
-     * @Given the store has a product :productName priced at :money which weights :weight kg
+     * @Given the store has a product :productName which weights :weight kg
      */
     public function theStoreHasProductPricedWhichWeights(
         string $productName,
-        int $money,
         int $weight
     ): void {
-        throw new PendingException();
+        /** @var ProductInterface $product */
+        $product = $this->productExampleFactory->create([
+            'name' => $productName,
+            'enabled' => true,
+            'main_taxon' => null,
+        ]);
+
+        /** @var ProductVariantInterface $productVariant */
+        $productVariant = $product->getVariants()->first();
+
+        $productVariant->setWeight((float) $weight);
+
+        $this->productRepository->add($product);
     }
 }

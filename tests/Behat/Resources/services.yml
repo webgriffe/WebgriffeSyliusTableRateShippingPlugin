@@ -1,4 +1,7 @@
 services:
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Setup\ProductContext:
+        arguments:
+            - '@__symfony__.sylius.fixture.example_factory.product'
+            - '@__symfony__.sylius.repository.product'
         tags:
             - { name: fob.context_service }
