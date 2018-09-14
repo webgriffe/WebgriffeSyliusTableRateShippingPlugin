@@ -1,0 +1,7 @@
+services:
+    Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculator:
+        tags:
+            -
+                name: sylius.shipping_calculator
+                calculator: !php/const Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculator::TYPE
+                label: 'Table rate'

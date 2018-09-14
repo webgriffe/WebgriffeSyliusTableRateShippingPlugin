@@ -15,6 +15,7 @@ use Sylius\Component\Core\Model\ShippingMethodInterface;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculator;
 use Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate;
 use Webmozart\Assert\Assert;
 
@@ -93,7 +94,7 @@ final class ShippingTableRateContext implements Context
             'enabled' => true,
             'zone' => $this->getShippingZone(),
             'calculator' => [
-                'type' => 'table_rate',
+                'type' => TableRateShippingCalculator::TYPE,
                 'configuration' => [],
             ],
             'channels' => [$channel],
