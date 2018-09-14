@@ -1,0 +1,4 @@
+services:
+    Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Setup\ProductContext:
+        tags:
+            - { name: fob.context_service }

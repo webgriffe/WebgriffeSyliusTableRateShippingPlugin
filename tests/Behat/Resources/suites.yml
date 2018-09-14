@@ -1,4 +1,19 @@
 # Put your Behat suites definitions here
 
 default:
-    suites: ~
+    suites:
+        ui_table_rate_shipping_fee:
+            contexts_services:
+                - sylius.behat.context.hook.doctrine_orm
+
+                - sylius.behat.context.transform.lexical
+
+                - sylius.behat.context.setup.channel
+                - Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Setup\ProductContext
+
+                - sylius.behat.context.ui.shop.cart
+                - sylius.behat.context.ui.shop.checkout
+                - sylius.behat.context.ui.shop.checkout.shipping
+
+            filter:
+                tags: "@table_rate_shipping_fee && @ui"
