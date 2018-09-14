@@ -1,0 +1,22 @@
+Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate:
+    type: entity
+    table: webgriffe_sylius_shipping_table_rate
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        code:
+            type: string
+            nullable: false
+        name:
+            type: string
+            nullable: false
+    manyToOne:
+        currency:
+            targetEntity: Sylius\Component\Currency\Model\CurrencyInterface
+            joinColumn:
+                name: currency_id
+                referencedColumnName: id
+

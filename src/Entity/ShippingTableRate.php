@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Webgriffe\SyliusTableRateShippingPlugin\Model;
+namespace Webgriffe\SyliusTableRateShippingPlugin\Entity;
 
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;

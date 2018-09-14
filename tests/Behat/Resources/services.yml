@@ -5,3 +5,10 @@ services:
             - '@__symfony__.sylius.repository.product'
         tags:
             - { name: fob.context_service }
+
+    Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Setup\ShippingTableRateContext:
+        arguments:
+            - '@__symfony__.webgriffe.factory.shipping_table_rate'
+            - '@__symfony__.webgriffe.repository.shipping_table_rate'
+        tags:
+            - { name: fob.context_service }

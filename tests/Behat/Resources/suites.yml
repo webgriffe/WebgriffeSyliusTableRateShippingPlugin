@@ -6,10 +6,12 @@ default:
             contexts_services:
                 - sylius.behat.context.hook.doctrine_orm
 
+                - sylius.behat.context.transform.currency
                 - sylius.behat.context.transform.lexical
 
                 - sylius.behat.context.setup.channel
                 - Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Setup\ProductContext
+                - Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Setup\ShippingTableRateContext
 
                 - sylius.behat.context.ui.shop.cart
                 - sylius.behat.context.ui.shop.checkout
