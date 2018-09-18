@@ -16,3 +16,11 @@ services:
             - '@__symfony__.sylius.repository.shipping_method'
         tags:
             - { name: fob.context_service }
+
+    Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ShippingTableRateContext:
+        arguments:
+            - '@__symfony__.sylius.factory.address'
+            - '@sylius.behat.page.shop.checkout.address'
+            - '@sylius.behat.page.shop.checkout.select_shipping'
+        tags:
+            - { name: fob.context_service }
