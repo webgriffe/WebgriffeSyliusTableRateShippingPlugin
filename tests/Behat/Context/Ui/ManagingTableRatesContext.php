@@ -6,6 +6,7 @@ namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
 use Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Page\TableRate\IndexPageInterface;
+use Webmozart\Assert\Assert;
 
 class ManagingTableRatesContext implements Context
 {
@@ -29,10 +30,10 @@ class ManagingTableRatesContext implements Context
     }
 
     /**
-     * @Then I should see zero table rates in the list
+     * @Then I should see :number table rate(s) in the list
      */
-    public function iShouldSeeZeroTableRatesInTheList()
+    public function iShouldSeeZeroTableRatesInTheList(int $number = 0)
     {
-        throw new PendingException();
+        Assert::same($number, $this->indexPage->countItems());
     }
 }

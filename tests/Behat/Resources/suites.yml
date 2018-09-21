@@ -31,6 +31,8 @@ default:
             contexts_services:
                 - sylius.behat.context.hook.doctrine_orm
 
+                - Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Transform\NumberContext
+
                 - sylius.behat.context.setup.admin_security
 
                 - Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ManagingTableRatesContext

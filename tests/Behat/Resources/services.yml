@@ -17,6 +17,10 @@ services:
         tags:
             - { name: fob.context_service }
 
+    Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Transform\NumberContext:
+        tags:
+            - { name: fob.context_service }
+
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ShippingTableRateContext:
         arguments:
             - '@__symfony__.sylius.factory.address'
