@@ -24,3 +24,16 @@ services:
             - '@sylius.behat.page.shop.checkout.select_shipping'
         tags:
             - { name: fob.context_service }
+
+    Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ManagingTableRatesContext:
+        arguments:
+            - '@Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Page\TableRate\IndexPageInterface'
+        tags:
+            - { name: fob.context_service }
+
+
+    Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Page\TableRate\IndexPageInterface:
+        class: Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Page\TableRate\IndexPage
+        parent: sylius.behat.page.admin.crud.index
+        arguments:
+            - "webgriffe_sylius_table_rate_shipping_plugin_admin_table_rate_index"

@@ -26,3 +26,14 @@ default:
 
             filter:
                 tags: "@table_rate_shipping_fee && @ui"
+
+        ui_managing_table_rates:
+            contexts_services:
+                - sylius.behat.context.hook.doctrine_orm
+
+                - sylius.behat.context.setup.admin_security
+
+                - Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ManagingTableRatesContext
+
+            filter:
+                tags: "@managing_table_rates && @ui"
