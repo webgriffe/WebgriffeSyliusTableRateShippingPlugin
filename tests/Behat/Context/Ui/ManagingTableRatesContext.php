@@ -5,7 +5,7 @@ namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
-use Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Page\TableRate\IndexPageInterface;
+use Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\IndexPageInterface;
 use Webmozart\Assert\Assert;
 
 class ManagingTableRatesContext implements Context
