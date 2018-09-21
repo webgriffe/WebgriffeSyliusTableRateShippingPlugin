@@ -24,7 +24,7 @@ default:
                 - sylius.behat.context.ui.shop.checkout.shipping
                 - Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ShippingTableRateContext
 
-            filter:
+            filters:
                 tags: "@table_rate_shipping_fee && @ui"
 
         ui_managing_table_rates:
@@ -35,5 +35,5 @@ default:
 
                 - Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ManagingTableRatesContext
 
-            filter:
+            filters:
                 tags: "@managing_table_rates && @ui"
