@@ -3,12 +3,12 @@ sylius:
 
 # Put your own routes here
 
-acme_sylius_example_plugin_shop:
+webgriffe_sylius_table_rate_plugin_shop:
     resource: "@WebgriffeSyliusTableRateShippingPlugin/Resources/config/shop_routing.yml"
     prefix: /{_locale}
     requirements:
         _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
 
-acme_sylius_example_plugin_admin:
+webgriffe_sylius_table_rate_plugin_admin:
     resource: "@WebgriffeSyliusTableRateShippingPlugin/Resources/config/admin_routing.yml"
     prefix: /admin

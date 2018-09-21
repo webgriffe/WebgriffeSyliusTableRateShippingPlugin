@@ -3,3 +3,18 @@ sylius_resource:
         webgriffe.shipping_table_rate:
             classes:
                 model: Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate
+
+sylius_grid:
+    grids:
+        webgriffe_sylius_table_rate_plugin_shipping_table_rate:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate
+            fields:
+                code:
+                    type: string
+                    label: webgriffe_sylius_table_rate_plugin.ui.code
+                name:
+                    type: string
+                    label: webgriffe_sylius_table_rate_plugin.ui.name

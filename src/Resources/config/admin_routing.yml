@@ -1,1 +1,14 @@
-# Define your own admin routes here
+webgriffe_sylius_table_rate_plugin_shipping_table_rate:
+  resource: |
+    alias: webgriffe.shipping_table_rate
+    section: admin
+    templates: SyliusAdminBundle:Crud
+    except: ['show']
+    redirect: update
+    grid: webgriffe_sylius_table_rate_plugin_shipping_table_rate
+    vars:
+      all:
+        subheader: webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate
+      index:
+        icon: 'file image outline'
+  type: sylius.resource
