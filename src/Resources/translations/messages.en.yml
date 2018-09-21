@@ -1,0 +1,8 @@
+webgriffe:
+  ui:
+    shipping_table_rates: "Shipping TableRates"
+
+webgriffe_sylius_table_rate_plugin:
+  ui:
+    shipping_table_rates:
+      subheader: "Here you can manage shipping TableRates costs"

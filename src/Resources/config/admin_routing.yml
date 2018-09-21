@@ -8,7 +8,7 @@ webgriffe_sylius_table_rate_plugin_shipping_table_rate:
     grid: webgriffe_sylius_table_rate_plugin_shipping_table_rate
     vars:
       all:
-        subheader: webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate
+        subheader: webgriffe_sylius_table_rate_plugin.ui.shipping_table_rates.subheader
       index:
-        icon: 'file image outline'
+        icon: 'pallet'
   type: sylius.resource
