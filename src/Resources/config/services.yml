@@ -1,3 +1,6 @@
+parameters:
+    webgriffe.form.type.shipping_table_rate.validation_groups: ['sylius']
+
 services:
     Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculator:
         arguments:
@@ -17,3 +20,10 @@ services:
     Webgriffe\SyliusTableRateShippingPlugin\Menu\AdminMenuListener:
         tags:
             - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems }
+
+    Webgriffe\SyliusTableRateShippingPlugin\Form\Type\ShippingTableRateType:
+        arguments:
+            - '%webgriffe.model.shipping_table_rate.class%'
+            - '%webgriffe.form.type.shipping_table_rate.validation_groups%'
+        tags:
+            - { name: form.type }

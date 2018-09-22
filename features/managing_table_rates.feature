@@ -21,3 +21,10 @@ Feature: Managing table rates
     Then I should see 2 table rates in the list
     And I should see the "East Coast Rates" table rate in the list
     And I should see the "West Coast Rates" table rate in the list
+
+  @ui
+  Scenario: Adding a new table rate
+    When I add a shipping table rate named "New Rates" for currency "USD"
+    And I am browsing the list of table rates
+    Then I should see 1 table rate in the list
+    And I should see the "New Rates" table rate in the list

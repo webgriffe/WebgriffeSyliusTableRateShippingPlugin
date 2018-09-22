@@ -5,6 +5,9 @@ namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
+use Sylius\Component\Core\Formatter\StringInflector;
+use Sylius\Component\Currency\Model\CurrencyInterface;
+use Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\CreatePageInterface;
 use Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\IndexPageInterface;
 use Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate;
 use Webmozart\Assert\Assert;
@@ -15,10 +18,15 @@ class ManagingTableRatesContext implements Context
      * @var IndexPageInterface
      */
     private $indexPage;
+    /**
+     * @var CreatePageInterface
+     */
+    private $createPage;
 
-    public function __construct(IndexPageInterface $indexPage)
+    public function __construct(IndexPageInterface $indexPage, CreatePageInterface $createPage)
     {
         $this->indexPage = $indexPage;
+        $this->createPage = $createPage;
     }
 
     /**
@@ -44,5 +52,17 @@ class ManagingTableRatesContext implements Context
     public function iShouldSeeTheTableRateInTheList(ShippingTableRate $shippingTableRate)
     {
         Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $shippingTableRate->getName()]));
+    }
+
+    /**
+     * @When I add a shipping table rate named :name for currency :currency
+     */
+    public function iAddAShippingTableRateNamedForCurrency(string $name, CurrencyInterface $currency)
+    {
+        $this->createPage->open();
+        $this->createPage->fillCode(StringInflector::nameToUppercaseCode($name));
+        $this->createPage->fillName($name);
+        $this->createPage->create();
+//        throw new PendingException();
     }
 }

@@ -3,6 +3,7 @@ sylius_resource:
         webgriffe.shipping_table_rate:
             classes:
                 model: Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate
+                form: Webgriffe\SyliusTableRateShippingPlugin\Form\Type\ShippingTableRateType
 
 sylius_grid:
     grids:

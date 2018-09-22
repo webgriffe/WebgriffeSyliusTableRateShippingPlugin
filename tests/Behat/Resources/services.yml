@@ -32,6 +32,7 @@ services:
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ManagingTableRatesContext:
         arguments:
             - '@Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\IndexPageInterface'
+            - '@Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\CreatePageInterface'
         tags:
             - { name: fob.context_service }
 
@@ -41,3 +42,8 @@ services:
         parent: sylius.behat.page.admin.crud.index
         arguments:
             - "webgriffe_admin_shipping_table_rate_index"
+    Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\CreatePageInterface:
+        class: Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\CreatePage
+        parent: sylius.behat.page.admin.crud.create
+        arguments:
+            - "webgriffe_admin_shipping_table_rate_create"
