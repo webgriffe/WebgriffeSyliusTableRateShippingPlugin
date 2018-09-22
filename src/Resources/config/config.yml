@@ -18,3 +18,7 @@ sylius_grid:
                 name:
                     type: string
                     label: webgriffe_sylius_table_rate_plugin.ui.name
+            actions:
+                main:
+                    create:
+                        type: create
