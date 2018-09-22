@@ -13,3 +13,7 @@ services:
         arguments:
             - '@Webgriffe\SyliusTableRateShippingPlugin\Checker\TableRateShippingMethodEligibilityChecker.inner'
             - '@Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculator'
+
+    Webgriffe\SyliusTableRateShippingPlugin\Menu\AdminMenuListener:
+        tags:
+            - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems }
