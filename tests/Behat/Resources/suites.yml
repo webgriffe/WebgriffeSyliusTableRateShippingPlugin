@@ -32,8 +32,11 @@ default:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Transform\NumberContext
+                - sylius.behat.context.transform.currency
+                - sylius.behat.context.setup.channel
 
                 - sylius.behat.context.setup.admin_security
+                - Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Setup\ShippingTableRateContext
 
                 - Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ManagingTableRatesContext
 

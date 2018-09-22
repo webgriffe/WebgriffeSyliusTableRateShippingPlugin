@@ -6,17 +6,18 @@ Feature: Managing table rates
 
   Background:
     Given I am logged in as an administrator
+    And the store operates on a single channel in "United States"
 
   @ui
   Scenario: Browsing an empty list of table rates
     When I am browsing the list of table rates
     Then I should see zero table rates in the list
 
-  @ui @todo
-  Scenario: Browsing the list of suppliers
-    Given there is a supplier "Sylius"
-    And there is also a supplier "Webgriffe"
-    When I am browsing the list of suppliers
-    Then I should see 2 suppliers in the list
-    And I should see the "Sylius" supplier in the list
-    And I should see the "Webgriffe" supplier in the list
+  @ui
+  Scenario: Browsing the list of table rates
+    Given the store has a shipping table rate "East Coast Rates" for currency "USD"
+    And the store has also a shipping table rate "West Coast Rates" for currency "USD"
+    When I am browsing the list of table rates
+    Then I should see 2 table rates in the list
+    And I should see the "East Coast Rates" table rate in the list
+    And I should see the "West Coast Rates" table rate in the list

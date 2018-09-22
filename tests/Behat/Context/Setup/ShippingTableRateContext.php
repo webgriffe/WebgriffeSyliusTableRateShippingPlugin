@@ -73,7 +73,7 @@ final class ShippingTableRateContext implements Context
     }
 
     /**
-     * @Given the store has a shipping table rate :name for currency :currency
+     * @Given the store has (also) a shipping table rate :name for currency :currency
      */
     public function theStoreHasShippingTableRateForCurrency(string $name, CurrencyInterface $currency): void
     {
