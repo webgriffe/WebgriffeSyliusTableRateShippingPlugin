@@ -28,3 +28,13 @@ Feature: Managing table rates
     And I am browsing the list of table rates
     Then I should see 1 table rate in the list
     And I should see the "New Rates" table rate in the list
+
+  @ui
+  Scenario: Deleting a table rate
+    Given the store has a shipping table rate "East Coast Rates" for currency "USD"
+    When I am browsing the list of table rates
+    Then I should see 1 table rate in the list
+    When I delete the "East Coast Rates" table rate
+    And I am browsing the list of table rates
+    Then I should see zero table rates in the list
+

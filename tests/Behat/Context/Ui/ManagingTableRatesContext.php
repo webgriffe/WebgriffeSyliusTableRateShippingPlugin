@@ -63,6 +63,13 @@ class ManagingTableRatesContext implements Context
         $this->createPage->fillCode(StringInflector::nameToUppercaseCode($name));
         $this->createPage->fillName($name);
         $this->createPage->create();
-//        throw new PendingException();
+    }
+
+    /**
+     * @When I delete the :shippingTableRate table rate
+     */
+    public function iDeleteTheTableRate(ShippingTableRate $shippingTableRate)
+    {
+        $this->indexPage->deleteResourceOnPage(['name' => $shippingTableRate->getName()]);
     }
 }
