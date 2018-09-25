@@ -9,6 +9,7 @@ use Sylius\Component\Core\Formatter\StringInflector;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\CreatePageInterface;
 use Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\IndexPageInterface;
+use Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\UpdatePageInterface;
 use Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate;
 use Webmozart\Assert\Assert;
 
@@ -22,11 +23,19 @@ class ManagingTableRatesContext implements Context
      * @var CreatePageInterface
      */
     private $createPage;
+    /**
+     * @var UpdatePageInterface
+     */
+    private $updatePage;
 
-    public function __construct(IndexPageInterface $indexPage, CreatePageInterface $createPage)
-    {
+    public function __construct(
+        IndexPageInterface $indexPage,
+        CreatePageInterface $createPage,
+        UpdatePageInterface $updatePage
+    ) {
         $this->indexPage = $indexPage;
         $this->createPage = $createPage;
+        $this->updatePage = $updatePage;
     }
 
     /**
@@ -71,5 +80,38 @@ class ManagingTableRatesContext implements Context
     public function iDeleteTheTableRate(ShippingTableRate $shippingTableRate)
     {
         $this->indexPage->deleteResourceOnPage(['name' => $shippingTableRate->getName()]);
+    }
+
+    /**
+     * @Given I want to modify the :shippingTableRate table rate
+     */
+    public function iWantToModifyTheTableRate(ShippingTableRate $shippingTableRate): void
+    {
+        $this->updatePage->open(['id' => $shippingTableRate->getId()]);
+    }
+
+    /**
+     * @When I save my changes
+     */
+    public function iSaveMyChanges()
+    {
+        $this->updatePage->saveChanges();
+    }
+
+    /**
+     * @When I change its code to :code
+     */
+    public function iChangeItsCodeTo(string $code)
+    {
+        $this->createPage->fillCode($code);
+    }
+
+    /**
+     * @Then /^(this shipping table rate) code should be "([^"]+)"$/
+     */
+    public function thisTableRateCodeShouldBe(ShippingTableRate $shippingTableRate, string $code)
+    {
+        $this->updatePage->open(['id' => $shippingTableRate->getId()]);
+        $this->updatePage->hasResourceValues(['code' => $code]);
     }
 }

@@ -38,3 +38,11 @@ Feature: Managing table rates
     And I am browsing the list of table rates
     Then I should see zero table rates in the list
 
+  @ui
+  Scenario: Updating a table rate
+    Given the store has a shipping table rate "East Coast Rates" for currency "USD"
+    And I want to modify the "East Coast Rates" table rate
+    When I change its code to "EDIT_TEST"
+    And I save my changes
+    Then I should be notified that it has been successfully edited
+    And this shipping table rate code should be "EDIT_TEST"
