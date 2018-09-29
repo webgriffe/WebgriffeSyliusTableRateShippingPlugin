@@ -114,4 +114,22 @@ class ManagingTableRatesContext implements Context
         $this->updatePage->open(['id' => $shippingTableRate->getId()]);
         $this->updatePage->hasResourceValues(['code' => $code]);
     }
+
+    /**
+     * @When /^I add a new rate of ("[^"]+") for shipments up to (\d+) kg$/
+     */
+    public function iAddANewRateOfForShipmentsUpToKg(int $rate, int $weightLimit): void
+    {
+        $this->updatePage->addRate($rate, $weightLimit);
+    }
+
+    /**
+     * @Then /^(this shipping table rate) should have (\d+) rates$/
+     */
+    public function thisShippingTableRateShouldHaveRates(ShippingTableRate $shippingTableRate, int $count)
+    {
+        $this->indexPage->open();
+
+        Assert::eq($this->indexPage->getTableRateRatesCount($shippingTableRate), $count);
+    }
 }

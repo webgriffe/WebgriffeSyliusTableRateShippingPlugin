@@ -15,4 +15,15 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
         );
     }
 
+    public function addRate(int $rate, int $weightLimit)
+    {
+        $weightLimitToRateField = $this->getDocument()->findById(
+            'webgriffe_sylius_table_rate_plugin_shipping_table_rate_weightLimitToRate'
+        );
+        $addRateButton = $weightLimitToRateField->findLink('Add');
+        $addRateButton->click();
+        $item = $weightLimitToRateField->find('css', '[data-form-collection=item]:last-child');
+        $item->fillField('Weight limit', $weightLimit);
+        $item->fillField('Rate', $rate/100);
+    }
 }

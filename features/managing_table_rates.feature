@@ -46,3 +46,13 @@ Feature: Managing table rates
     And I save my changes
     Then I should be notified that it has been successfully edited
     And this shipping table rate code should be "EDIT_TEST"
+
+  @ui @javascript
+  Scenario: Adding weight rates into a table rate
+    Given the store has a shipping table rate "East Coast Rates" for currency "USD"
+    And I want to modify the "East Coast Rates" table rate
+    When I add a new rate of "$5" for shipments up to 5 kg
+    And I add a new rate of "$10" for shipments up to 20 kg
+    And I save my changes
+    Then I should be notified that it has been successfully edited
+    And this shipping table rate should have 2 rates

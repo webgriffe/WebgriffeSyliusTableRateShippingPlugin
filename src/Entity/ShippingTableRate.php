@@ -78,4 +78,27 @@ class ShippingTableRate implements ResourceInterface
 
         throw new \RuntimeException('No rate found for given weight!');
     }
+
+    public function getRatesCount(): int
+    {
+        return count($this->weightLimitToRate);
+    }
+
+    /**
+     * @return array
+     * @internal
+     */
+    public function getWeightLimitToRate(): array
+    {
+        return $this->weightLimitToRate;
+    }
+
+    /**
+     * @param array $weightLimitToRate
+     * @internal
+     */
+    public function setWeightLimitToRate(array $weightLimitToRate): void
+    {
+        $this->weightLimitToRate = $weightLimitToRate;
+    }
 }

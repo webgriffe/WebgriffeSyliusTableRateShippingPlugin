@@ -1,8 +1,13 @@
 webgriffe:
   ui:
     shipping_table_rates: "Shipping table rates"
+    edit_shipping_table_rate: "Edit Shipping table rate"
 
 webgriffe_sylius_table_rate_plugin:
   ui:
     shipping_table_rates:
       subheader: "Here you can manage shipping costs by table rates"
+    shipping_table_rate:
+      code: "Code"
+      name: "Name"
+      rates_count: "# Rates"

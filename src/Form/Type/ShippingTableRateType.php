@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Webgriffe\SyliusTableRateShippingPlugin\Form\Type;
 
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -14,6 +15,11 @@ final class ShippingTableRateType extends AbstractResourceType
         $builder
             ->add('code', TextType::class)
             ->add('name', TextType::class)
+            ->add(
+                'weightLimitToRate',
+                CollectionType::class,
+                ['allow_add' => true, 'allow_delete' => true, 'entry_type' => WeightLimitToRateType::class]
+            )
         ;
     }
 

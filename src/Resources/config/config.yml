@@ -18,7 +18,10 @@ sylius_grid:
                     label: webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.code
                 name:
                     type: string
-                    label: webgriffe_sylius_table_rate_plugin.ui.name
+                    label: webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.name
+                rates_count:
+                    type: string
+                    label: webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.rates_count
             actions:
                 main:
                     create:
