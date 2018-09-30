@@ -1,0 +1,77 @@
+{% extends 'SyliusAdminBundle:Crud:update.html.twig' %}
+
+{% form_theme form.weightLimitToRate _self %}
+
+{% block _webgriffe_sylius_table_rate_plugin_shipping_table_rate_weightLimitToRate_widget %}
+    {% from 'SyliusResourceBundle:Macros:notification.html.twig' import error %}
+    {% import _self as self %}
+    {% set attr = attr|merge({'class': attr.class|default ~ ' controls collection-widget'}) %}
+
+    {% spaceless %}
+        <table>
+
+        </table>
+        <div data-form-type="collection" {{ block('widget_container_attributes') }}
+                {% if prototype is defined and allow_add %}
+                    data-prototype='{{ self.collection_item(prototype, allow_delete, button_delete_label, '__name__')|e }}'
+                {%- endif -%}
+        >
+            {{ error(form.vars.errors) }}
+
+            {% if prototypes|default is iterable %}
+                {% for key, subPrototype in prototypes %}
+                    <input type="hidden" data-form-prototype="{{ key }}" value="{{ self.collection_item(subPrototype, allow_delete, button_delete_label, '__name__')|e }}" />
+                {% endfor %}
+            {% endif %}
+
+            <div data-form-collection="list" class="ui three column grid">
+                {% for child in form %}
+                    {{ self.collection_item(child, allow_delete, button_delete_label, loop.index0) }}
+                {% endfor %}
+            </div>
+
+            {% if prototype is defined and allow_add %}
+                <a href="#" class="ui labeled icon button" data-form-collection="add">
+                    <i class="plus square outline icon"></i>
+                    {{ button_add_label|trans }}
+                </a>
+            {% endif %}
+        </div>
+    {% endspaceless %}
+{% endblock  %}
+
+{% macro collection_item(form, allow_delete, button_delete_label, index) %}
+    {% spaceless %}
+        <div data-form-collection="item" data-form-collection-index="{{ index }}" class="row">
+            {{ form_widget(form) }}
+            {% if allow_delete %}
+                <div class="column">
+                    <a href="#" data-form-collection="delete" class="ui red labeled icon button" style="position:absolute; bottom: 0;">
+                        <i class="trash icon"></i>
+                        {{ button_delete_label|trans }}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{% block _webgriffe_sylius_table_rate_plugin_shipping_table_rate_weightLimitToRate_entry_widget %}
+    {%- if form is rootform -%}
+        {{ form_errors(form) }}
+    {%- endif -%}
+    {{- block('form_rows') -}}
+    {{- form_rest(form) -}}
+{% endblock %}
+
+{% block _webgriffe_sylius_table_rate_plugin_shipping_table_rate_weightLimitToRate_entry_weightLimit_row %}
+    <div class="column">
+        {{ block('form_row') }}
+    </div>
+{% endblock %}
+{% block _webgriffe_sylius_table_rate_plugin_shipping_table_rate_weightLimitToRate_entry_rate_row %}
+    <div class="column">
+        {{ block('form_row') }}
+    </div>
+{% endblock %}
+
