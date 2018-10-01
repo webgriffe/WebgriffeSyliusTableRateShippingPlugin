@@ -89,6 +89,7 @@ final class ShippingTableRateContext implements Context
     }
 
     /**
+     * @Given /^(this shipping table rate) has a rate ("[^"]+") for shipments up to (\d+) kg$/
      * @Given /^(it) has a rate ("[^"]+") for shipments up to (\d+) kg$/
      */
     public function thisShippingTableRateHasRateForShipmentsUpToKg(ShippingTableRate $shippingTableRate, int $rate, int $weightLimit): void

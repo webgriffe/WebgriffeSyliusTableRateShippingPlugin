@@ -6,22 +6,43 @@ namespace Webgriffe\SyliusTableRateShippingPlugin\Entity;
 
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ShippingTableRate implements ResourceInterface
 {
     /** @var int|null */
     private $id;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     *
+     * @Assert\NotBlank(groups={"sylius"})
+     */
     private $code;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     *
+     * @Assert\NotBlank(groups={"sylius"})
+     */
     private $name;
 
-    /** @var CurrencyInterface|null */
+    /**
+     * @var CurrencyInterface|null
+     *
+     * @Assert\NotBlank(groups={"sylius"})
+     */
     private $currency;
 
-    /** @var array */
+    /**
+     * @var array
+     *
+     * @Assert\NotBlank(
+     *     groups={"sylius"},
+     *     message="webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.weightLimitToRate.not_blank"
+     * )
+     *
+     */
     private $weightLimitToRate = [];
 
     public function getId(): ?int

@@ -10,5 +10,7 @@ interface CreatePageInterface extends BaseCreatePageInterface
 {
     public function fillCode(string $code);
     public function fillName(string $name);
-    public function fillCurrency(CurrencyInterface $currency);
+    public function fillCurrency(?CurrencyInterface $currency);
+    public function addRate(int $rate, int $weightLimit);
+    public function getFormValidationMessage(): string;
 }

@@ -21,4 +21,5 @@ Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate:
             joinColumn:
                 name: currency_id
                 referencedColumnName: id
+                nullable: false
 

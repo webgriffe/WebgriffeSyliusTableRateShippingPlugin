@@ -16,7 +16,7 @@ final class ShippingTableRateType extends AbstractResourceType
         $builder
             ->add('code', TextType::class)
             ->add('name', TextType::class)
-            ->add('currency', CurrencyChoiceType::class, ['required' => true])
+            ->add('currency', CurrencyChoiceType::class, ['required' => true, 'placeholder' => '- Select -'])
             ->add(
                 'weightLimitToRate',
                 CollectionType::class,

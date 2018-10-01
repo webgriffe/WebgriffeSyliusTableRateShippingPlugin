@@ -72,6 +72,7 @@ class ManagingTableRatesContext implements Context
         $this->createPage->fillCode(StringInflector::nameToUppercaseCode($name));
         $this->createPage->fillName($name);
         $this->createPage->fillCurrency($currency);
+        $this->createPage->addRate(random_int(1, 10), random_int(500, 1000));
         $this->createPage->create();
     }
 
@@ -132,5 +133,96 @@ class ManagingTableRatesContext implements Context
         $this->indexPage->open();
 
         Assert::eq($this->indexPage->getTableRateRatesCount($shippingTableRate), $count);
+    }
+
+    /**
+     * @When I try to add a new shipping table
+     */
+    public function iTryToAddANewShippingTable()
+    {
+        $this->createPage->open();
+    }
+
+    /**
+     * @When I specify its code as :code
+     */
+    public function iSpecifyItsCodeAs(string $code)
+    {
+        $this->createPage->fillCode($code);
+    }
+
+    /**
+     * @When I specify its currency as :currency
+     */
+    public function iSpecifyItsCurrencyAs(CurrencyInterface $currency)
+    {
+        $this->createPage->fillCurrency($currency);
+    }
+
+    /**
+     * @When I do not specify its name
+     */
+    public function iDoNotSpecifyItsName()
+    {
+        $this->createPage->fillName('');
+    }
+
+    /**
+     * @When I try to add it
+     */
+    public function iTryToAddIt()
+    {
+        $this->createPage->create();
+    }
+
+    /**
+     * @Then I should be notified that :element is required
+     */
+    public function iShouldBeNotifiedThatIsRequired($element)
+    {
+        Assert::same($this->createPage->getValidationMessage($element), 'This value should not be blank.');
+    }
+
+    /**
+     * @When I specify its name as :name
+     */
+    public function iSpecifyItsNameAs(string $name)
+    {
+        $this->createPage->fillName($name);
+    }
+
+    /**
+     * @When I do not specify its code
+     */
+    public function iDoNotSpecifyItsCode()
+    {
+        $this->createPage->fillCode('');
+    }
+
+    /**
+     * @When I do not specify its currency
+     */
+    public function iDoNotSpecifyItsCurrency()
+    {
+        $this->createPage->fillCurrency(null);
+    }
+
+    /**
+     * @When I do not specify any rate
+     */
+    public function iDoNotSpecifyAnyRate()
+    {
+        // Simply we don't add the rate
+    }
+
+    /**
+     * @Then I should be notified that at least one rate is required
+     */
+    public function iShouldBeNotifiedThatAtLeastOneRateIsRequired()
+    {
+        Assert::same(
+            $this->createPage->getFormValidationMessage(),
+            'You should specify at least one rate for this table rate.'
+        );
     }
 }

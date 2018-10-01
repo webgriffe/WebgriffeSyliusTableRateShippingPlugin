@@ -11,7 +11,7 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
     {
         return array_merge(
             parent::getDefinedElements(),
-            ['code' => '#webgriffe_sylius_table_rate_plugin_shipping_table_rate_code']
+            CreatePage::getCreateUpdatePageDefinedElements()
         );
     }
 

@@ -11,3 +11,5 @@ webgriffe_sylius_table_rate_plugin:
       code: "Code"
       name: "Name"
       rates_count: "# Rates"
+      weightLimitToRate:
+        not_blank: "You should specify at least one rate for this table rate."

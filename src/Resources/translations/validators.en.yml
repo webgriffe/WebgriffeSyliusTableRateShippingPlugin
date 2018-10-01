@@ -1,0 +1,5 @@
+webgriffe_sylius_table_rate_plugin:
+  ui:
+    shipping_table_rate:
+      weightLimitToRate:
+        not_blank: "You should specify at least one rate for this table rate."
