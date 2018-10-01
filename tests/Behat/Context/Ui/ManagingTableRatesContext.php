@@ -71,6 +71,7 @@ class ManagingTableRatesContext implements Context
         $this->createPage->open();
         $this->createPage->fillCode(StringInflector::nameToUppercaseCode($name));
         $this->createPage->fillName($name);
+        $this->createPage->fillCurrency($currency);
         $this->createPage->create();
     }
 
