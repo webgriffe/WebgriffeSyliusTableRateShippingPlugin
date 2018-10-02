@@ -37,6 +37,11 @@ services:
         tags:
             - { name: fob.context_service }
 
+    Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ManagingShippingMethodsWithTableRateContext:
+        tags:
+            - { name: fob.context_service }
+
+
 
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\IndexPageInterface:
         class: Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\IndexPage
