@@ -88,3 +88,9 @@ Feature: Managing table rates
     But I do not specify any rate
     And I try to add it
     Then I should be notified that at least one rate is required
+
+  @ui @todo
+  Scenario: Modifying table rate code
+
+  @ui @todo
+  Scenario: Creating two table rates with the same code
