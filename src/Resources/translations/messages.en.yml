@@ -2,6 +2,7 @@ webgriffe:
   ui:
     shipping_table_rates: "Shipping table rates"
     edit_shipping_table_rate: "Edit Shipping table rate"
+    new_shipping_table_rate: "Create new Shipping table rate"
 
 webgriffe_sylius_table_rate_plugin:
   ui:
