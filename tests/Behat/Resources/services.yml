@@ -38,6 +38,8 @@ services:
             - { name: fob.context_service }
 
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ManagingShippingMethodsWithTableRateContext:
+        arguments:
+            - '@Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\ShippingMethod\UpdatePageInterface'
         tags:
             - { name: fob.context_service }
 
@@ -58,3 +60,8 @@ services:
         parent: sylius.behat.page.admin.crud.update
         arguments:
             - "webgriffe_admin_shipping_table_rate_update"
+    Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\ShippingMethod\UpdatePageInterface:
+        class: Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\ShippingMethod\UpdatePage
+        parent: sylius.behat.page.admin.shipping_method.update
+        arguments:
+            - "sylius_admin_shipping_method_update"

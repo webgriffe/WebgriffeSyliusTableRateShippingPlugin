@@ -16,7 +16,12 @@ final class ShippingTableRateType extends AbstractResourceType
         $builder
             ->add('code', TextType::class)
             ->add('name', TextType::class)
-            ->add('currency', CurrencyChoiceType::class, ['required' => true, 'placeholder' => '- Select -'])
+            ->add('currency', CurrencyChoiceType::class,
+                [
+                    'required' => true,
+                    'placeholder' => 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.currency.placeholder'
+                ]
+            )
             ->add(
                 'weightLimitToRate',
                 CollectionType::class,

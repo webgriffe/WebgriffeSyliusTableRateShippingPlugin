@@ -10,6 +10,7 @@ services:
                 name: sylius.shipping_calculator
                 calculator: !php/const Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculator::TYPE
                 label: 'Table rate'
+                form_type: Webgriffe\SyliusTableRateShippingPlugin\Form\Type\Shipping\Calculator\ChannelBasedTableRateConfigurationType
 
     Webgriffe\SyliusTableRateShippingPlugin\Checker\TableRateShippingMethodEligibilityChecker:
         decorates: sylius.shipping_eligibility_checker
@@ -27,3 +28,12 @@ services:
             - '%webgriffe.form.type.shipping_table_rate.validation_groups%'
         tags:
             - { name: form.type }
+
+    Webgriffe\SyliusTableRateShippingPlugin\Form\Type\Shipping\Calculator\ChannelBasedTableRateConfigurationType:
+        tags:
+            - { name: form.type }
+
+    Webgriffe\SyliusTableRateShippingPlugin\Form\Type\Shipping\Calculator\TableRateConfigurationType:
+        tags:
+            - { name: form.type }
+

@@ -4,7 +4,7 @@ Feature: Managing shipping methods with table rates
   As an Administrator
   I want to be able to assign table rates to shipping methods
 
-  @ui
+  @ui @javascript
   Scenario: Assigning a table rate to a shipping method
     Given I am logged in as an administrator
     And the store operates on a single channel in "United States"
