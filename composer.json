@@ -46,5 +46,19 @@
     },
     "config": {
         "bin-dir": "bin"
+    },
+    "scripts": {
+        "ecs": "ecs check src/ tests/Behat/",
+        "phpstan": "phpstan.phar analyse -c phpstan.neon -l max src/",
+        "phpunit": "phpunit",
+        "phpspec": "phpspec run",
+        "behat": "behat --strict -vvv --no-interaction || behat --strict -vvv --no-interaction --rerun",
+        "suite": [
+            "@ecs",
+            "@phpstan",
+            "@phpunit",
+            "@phpspec",
+            "@behat"
+        ]
     }
 }
