@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Webgriffe\SyliusTableRateShippingPlugin\Form\Type;
@@ -19,7 +20,7 @@ final class ShippingTableRateType extends AbstractResourceType
             ->add('currency', CurrencyChoiceType::class,
                 [
                     'required' => true,
-                    'placeholder' => 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.currency.placeholder'
+                    'placeholder' => 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.currency.placeholder',
                 ]
             )
             ->add(

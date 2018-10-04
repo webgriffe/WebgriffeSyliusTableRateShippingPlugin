@@ -1,10 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui;
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Mink\Element\NodeElement;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\ShippingMethod\UpdatePageInterface;

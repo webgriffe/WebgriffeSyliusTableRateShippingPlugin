@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate;
@@ -24,6 +25,6 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
         $addRateButton->click();
         $item = $weightLimitToRateField->find('css', '[data-form-collection=item]:last-child');
         $item->fillField('Weight limit', $weightLimit);
-        $item->fillField('Rate', $rate/100);
+        $item->fillField('Rate', $rate / 100);
     }
 }

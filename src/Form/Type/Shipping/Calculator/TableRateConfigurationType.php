@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Webgriffe\SyliusTableRateShippingPlugin\Form\Type\Shipping\Calculator;
@@ -34,7 +35,7 @@ final class TableRateConfigurationType extends AbstractType
                 },
                 'choice_label' => 'name',
                 'choice_value' => 'code',
-                'constraints' => [new NotBlank(['groups' => ['sylius']])]
+                'constraints' => [new NotBlank(['groups' => ['sylius']])],
             ]
         );
     }

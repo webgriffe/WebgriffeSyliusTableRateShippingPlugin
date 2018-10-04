@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate;
@@ -16,6 +17,6 @@ class IndexPage extends BaseIndexPage implements IndexPageInterface
         $row = $tableAccessor->getRowWithFields($table, ['code' => $shippingTableRate->getCode()]);
         $rates = $tableAccessor->getFieldFromRow($table, $row, 'rates_count');
 
-        return (int)$rates->getText();
+        return (int) $rates->getText();
     }
 }

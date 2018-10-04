@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate;
@@ -44,7 +45,7 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
 
     public function getFormValidationMessage(): string
     {
-        return trim($this->getElement('form')->find('css','.sylius-validation-error')->getText());
+        return trim($this->getElement('form')->find('css', '.sylius-validation-error')->getText());
     }
 
     public function addRate(int $rate, int $weightLimit)
@@ -56,6 +57,6 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
         $addRateButton->click();
         $item = $weightLimitToRateField->find('css', '[data-form-collection=item]:last-child');
         $item->fillField('Weight limit', $weightLimit);
-        $item->fillField('Rate', $rate/100);
+        $item->fillField('Rate', $rate / 100);
     }
 }

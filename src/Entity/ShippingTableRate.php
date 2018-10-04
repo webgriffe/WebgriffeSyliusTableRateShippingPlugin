@@ -41,7 +41,6 @@ class ShippingTableRate implements ResourceInterface
      *     groups={"sylius"},
      *     message="webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.weightLimitToRate.not_blank"
      * )
-     *
      */
     private $weightLimitToRate = [];
 
@@ -107,6 +106,7 @@ class ShippingTableRate implements ResourceInterface
 
     /**
      * @return array
+     *
      * @internal
      */
     public function getWeightLimitToRate(): array
@@ -116,6 +116,7 @@ class ShippingTableRate implements ResourceInterface
 
     /**
      * @param array $weightLimitToRate
+     *
      * @internal
      */
     public function setWeightLimitToRate(array $weightLimitToRate): void
