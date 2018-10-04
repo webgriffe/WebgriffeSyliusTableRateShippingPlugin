@@ -29,14 +29,35 @@ final class TableRateShippingCalculator implements CalculatorInterface
         /** @var ShipmentInterface $shipment */
         Assert::isInstanceOf($shipment, ShipmentInterface::class);
 
-        $channelCode = $shipment->getOrder()->getChannel()->getCode();
+        $order = $shipment->getOrder();
+        if (null === $order) {
+            throw new \RuntimeException('Cannot calculate shipment cost, there\'s no order for this shipment.');
+        }
+        $channel = $order->getChannel();
+        if (null === $channel) {
+            throw new \RuntimeException(
+                'Cannot calculate shipment cost, there\'s no channel for this shipment\'s order.'
+            );
+        }
+        $channelCode = $channel->getCode();
 
         if (!isset($configuration[$channelCode])) {
-            throw new MissingChannelConfigurationException(sprintf(
-                'Shipping method "%s" has no configuration for channel "%s".',
-                $shipment->getMethod()->getName(),
-                $shipment->getOrder()->getChannel()->getName()
-            ));
+            $shippingMethod = $shipment->getMethod();
+            if (null === $shippingMethod) {
+                throw new MissingChannelConfigurationException(
+                    sprintf(
+                        'This shipment has no configuration for channel "%s".',
+                        $channel->getName()
+                    )
+                );
+            }
+            throw new MissingChannelConfigurationException(
+                sprintf(
+                    'Shipping method "%s" has no configuration for channel "%s".',
+                    $shippingMethod->getName(),
+                    $channel->getName()
+                )
+            );
         }
 
         $tableRateCode = $configuration[$channelCode]['table_rate_code'];

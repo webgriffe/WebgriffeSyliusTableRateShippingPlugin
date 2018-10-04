@@ -11,8 +11,11 @@ final class AdminMenuListener
     public function addAdminMenuItems(MenuBuilderEvent $event): void
     {
         $menu = $event->getMenu();
-        $menu
-            ->getChild('configuration')
+        $configuration = $menu->getChild('configuration');
+        if (null === $configuration) {
+            return;
+        }
+        $configuration
             ->addChild(
                 'webgriffe-sylius-table-rate-plugin-table-rates',
                 ['route' => 'webgriffe_admin_shipping_table_rate_index']
