@@ -6,9 +6,11 @@ namespace Webgriffe\SyliusTableRateShippingPlugin\Checker;
 
 use Sylius\Component\Shipping\Calculator\CalculatorInterface;
 use Sylius\Component\Shipping\Checker\ShippingMethodEligibilityCheckerInterface;
+use Sylius\Component\Shipping\Model\ShipmentInterface;
 use Sylius\Component\Shipping\Model\ShippingMethodInterface;
 use Sylius\Component\Shipping\Model\ShippingSubjectInterface;
 use Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculator;
+use Webmozart\Assert\Assert;
 
 final class TableRateShippingMethodEligibilityChecker implements ShippingMethodEligibilityCheckerInterface
 {
@@ -39,6 +41,7 @@ final class TableRateShippingMethodEligibilityChecker implements ShippingMethodE
         }
 
         try {
+            Assert::isInstanceOf($subject, ShipmentInterface::class);
             $this->tableRateCalculator->calculate($subject, $method->getConfiguration());
         } catch (\Throwable $throwable) {
             // TODO: SPECIFY THE EXCEPTION CLASS

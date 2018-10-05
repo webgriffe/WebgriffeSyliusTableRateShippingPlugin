@@ -51,6 +51,7 @@ final class TableRateShippingCalculator implements CalculatorInterface
                     )
                 );
             }
+
             throw new MissingChannelConfigurationException(
                 sprintf(
                     'Shipping method "%s" has no configuration for channel "%s".',
