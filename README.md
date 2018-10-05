@@ -4,26 +4,17 @@
     </a>
 </p>
 
-<h1 align="center">Plugin Skeleton</h1>
+<h1 align="center">Table Rate Shipping Plugin</h1>
 
-<p align="center">Skeleton for starting Sylius plugins.</p>
+<p align="center">This plugin allows to define shipping rates with using weight tables.</p>
 
 ## Installation
 
-1. Run `composer create-project sylius/plugin-skeleton ProjectName`.
+1. Run `composer require webgriffe/sylius-table-rate-shipping-plugin`.
 
-2. From the plugin skeleton root directory, run the following commands:
+2. TODO
 
-    ```bash
-    $ (cd tests/Application && yarn install)
-    $ (cd tests/Application && yarn run gulp)
-    $ (cd tests/Application && bin/console assets:install web -e test)
-    
-    $ (cd tests/Application && bin/console doctrine:database:create -e test)
-    $ (cd tests/Application && bin/console doctrine:schema:create -e test)
-    ```
-
-## Usage
+## Contributing
 
 ### Running plugin tests
 
@@ -57,13 +48,13 @@
     3. Run test application's webserver on `localhost:8080`:
     
         ```bash
-        $ (cd tests/Application && bin/console server:run 127.0.0.1:8080 -d web -e test)
+        $ (cd tests/Application && bin/console server:run localhost:8080 -d web -e test)
         ```
     
     4. Run Behat:
     
         ```bash
-        $ bin/behat --tags="@javascript"
+        $ bin/behat
         ```
 
 ### Opening Sylius with your plugin
