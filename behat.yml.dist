@@ -11,7 +11,7 @@ default:
                 - tests/Behat/Resources/services.yml
 
         FriendsOfBehat\SymfonyExtension:
-            env_file: tests/Application/.env.test
+            env_file: tests/Application/.env
             kernel:
                 env: test
                 debug: true
