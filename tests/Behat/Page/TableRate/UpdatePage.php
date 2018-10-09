@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate;
 
+use Behat\Mink\Element\NodeElement;
+use Sylius\Behat\Behaviour\ChecksCodeImmutability;
 use Sylius\Behat\Page\Admin\Crud\UpdatePage as BaseUpdatePage;
 
 final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 {
+    use ChecksCodeImmutability;
+
     protected function getDefinedElements()
     {
         return array_merge(
@@ -26,5 +30,15 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
         $item = $weightLimitToRateField->find('css', '[data-form-collection=item]:last-child');
         $item->fillField('Weight limit', $weightLimit);
         $item->fillField('Rate', $rate / 100);
+    }
+
+    /**
+     * @return NodeElement
+     *
+     * @throws \Behat\Mink\Exception\ElementNotFoundException
+     */
+    protected function getCodeElement(): NodeElement
+    {
+        return $this->getElement('code');
     }
 }

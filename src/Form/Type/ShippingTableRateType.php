@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Webgriffe\SyliusTableRateShippingPlugin\Form\Type;
 
 use Sylius\Bundle\CurrencyBundle\Form\Type\CurrencyChoiceType;
+use Sylius\Bundle\ResourceBundle\Form\EventSubscriber\AddCodeFormSubscriber;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -15,6 +16,7 @@ final class ShippingTableRateType extends AbstractResourceType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->addEventSubscriber(new AddCodeFormSubscriber())
             ->add('code', TextType::class)
             ->add('name', TextType::class)
             ->add('currency', CurrencyChoiceType::class,

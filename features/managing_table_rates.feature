@@ -43,10 +43,10 @@ Feature: Managing table rates
     Given the store has a shipping table rate "East Coast Rates" for currency "USD"
     And this shipping table rate has a rate "$5" for shipments up to 1000 kg
     And I want to modify the "East Coast Rates" table rate
-    When I change its code to "EDIT_TEST"
+    When I change its name to "Edited Rates"
     And I save my changes
     Then I should be notified that it has been successfully edited
-    And this shipping table rate code should be "EDIT_TEST"
+    And this shipping table rate name should be "Edited Rates"
 
   @ui @javascript
   Scenario: Adding weight rates into a table rate
@@ -89,8 +89,21 @@ Feature: Managing table rates
     And I try to add it
     Then I should be notified that at least one rate is required
 
-  @ui @todo
-  Scenario: Modifying table rate code
+  @ui
+  Scenario: Trying to change table rate code (even if its field is disabled)
+    Given the store has a shipping table rate "East Coast Rates" for currency "USD"
+    And this shipping table rate has a rate "$5" for shipments up to 1000 kg
+    And I want to modify the "East Coast Rates" table rate
+    Then the code field should be disabled
+    When I change its code to "ANOTHER_CODE"
+    And I save my changes
+    Then the "East Coast Rates" table rate should still have code "EAST_COAST_RATES"
+
+  @ui
+  Scenario: Trying to change table rate currency (even if its field is disabled)
 
   @ui @todo
   Scenario: Creating two table rates with the same code
+
+  @ui @todo
+  Scenario: Deleting an alredy in use table rate

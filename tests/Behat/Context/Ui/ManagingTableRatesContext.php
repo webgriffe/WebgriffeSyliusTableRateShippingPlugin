@@ -110,12 +110,20 @@ class ManagingTableRatesContext implements Context
     }
 
     /**
-     * @Then /^(this shipping table rate) code should be "([^"]+)"$/
+     * @When I change its name to :name
      */
-    public function thisTableRateCodeShouldBe(ShippingTableRate $shippingTableRate, string $code)
+    public function iChangeItsNameTo(string $name)
+    {
+        $this->createPage->fillName($name);
+    }
+
+    /**
+     * @Then /^(this shipping table rate) name should be "([^"]+)"$/
+     */
+    public function thisShippingTableRateNameShouldBe(ShippingTableRate $shippingTableRate, string $code)
     {
         $this->updatePage->open(['id' => $shippingTableRate->getId()]);
-        $this->updatePage->hasResourceValues(['code' => $code]);
+        $this->updatePage->hasResourceValues(['name' => $code]);
     }
 
     /**
@@ -225,5 +233,21 @@ class ManagingTableRatesContext implements Context
             $this->createPage->getFormValidationMessage(),
             'You should specify at least one rate for this table rate.'
         );
+    }
+
+    /**
+     * @Then the code field should be disabled
+     */
+    public function theCodeFieldShouldBeDisabled()
+    {
+        Assert::true($this->updatePage->isCodeDisabled());
+    }
+
+    /**
+     * @Then the :shippingTableRate table rate should still have code :code
+     */
+    public function theShippingTableRateShouldStillHaveCode(ShippingTableRate $shippingTableRate, string $code)
+    {
+        Assert::eq($shippingTableRate->getCode(), $code);
     }
 }
