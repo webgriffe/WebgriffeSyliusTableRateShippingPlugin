@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui;
 
 use Behat\Behat\Context\Context;
+use Behat\Behat\Tester\Exception\PendingException;
 use Sylius\Component\Core\Formatter\StringInflector;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\CreatePageInterface;
@@ -249,5 +250,31 @@ class ManagingTableRatesContext implements Context
     public function theShippingTableRateShouldStillHaveCode(ShippingTableRate $shippingTableRate, string $code)
     {
         Assert::eq($shippingTableRate->getCode(), $code);
+    }
+
+    /**
+     * @Then the currency field should be disabled
+     */
+    public function theCurrencyFieldShouldBeDisabled()
+    {
+        Assert::true($this->updatePage->isCurrencyDisabled());
+    }
+
+    /**
+     * @When I change its currency to :currency
+     */
+    public function iChangeItsCurrencyTo(CurrencyInterface $currency)
+    {
+        $this->createPage->fillCurrency($currency);
+    }
+
+    /**
+     * @Then the :shippingTableRate table rate should still have :currency currency
+     */
+    public function theTableRateShouldStillHaveCurrency(
+        ShippingTableRate $shippingTableRate,
+        CurrencyInterface $currency
+    ) {
+        Assert::same($shippingTableRate->getCurrency()->getCode(), $currency->getCode());
     }
 }

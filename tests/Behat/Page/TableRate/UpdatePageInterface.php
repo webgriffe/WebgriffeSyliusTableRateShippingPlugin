@@ -11,4 +11,6 @@ interface UpdatePageInterface extends BaseUpdatePageInterface
     public function addRate(int $rate, int $weightLimit);
 
     public function isCodeDisabled();
+
+    public function isCurrencyDisabled(): bool;
 }

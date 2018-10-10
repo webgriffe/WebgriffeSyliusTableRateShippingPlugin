@@ -10,6 +10,7 @@ use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Webgriffe\SyliusTableRateShippingPlugin\Form\EventSubscriber\AddCurrencySubscriber;
 
 final class ShippingTableRateType extends AbstractResourceType
 {
@@ -17,14 +18,8 @@ final class ShippingTableRateType extends AbstractResourceType
     {
         $builder
             ->addEventSubscriber(new AddCodeFormSubscriber())
-            ->add('code', TextType::class)
+            ->addEventSubscriber(new AddCurrencySubscriber())
             ->add('name', TextType::class)
-            ->add('currency', CurrencyChoiceType::class,
-                [
-                    'required' => true,
-                    'placeholder' => 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.currency.placeholder',
-                ]
-            )
             ->add(
                 'weightLimitToRate',
                 CollectionType::class,

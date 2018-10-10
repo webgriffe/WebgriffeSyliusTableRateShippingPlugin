@@ -41,4 +41,13 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
     {
         return $this->getElement('code');
     }
+
+    /**
+     * @return bool
+     * @throws \Behat\Mink\Exception\ElementNotFoundException
+     */
+    public function isCurrencyDisabled(): bool
+    {
+        return $this->getElement('currency')->getAttribute('disabled') === 'disabled';
+    }
 }

@@ -101,6 +101,14 @@ Feature: Managing table rates
 
   @ui
   Scenario: Trying to change table rate currency (even if its field is disabled)
+    Given the store also operates on another channel named "Europe" in "EUR" currency
+    And the store has a shipping table rate "East Coast Rates" for currency "USD"
+    And this shipping table rate has a rate "$5" for shipments up to 1000 kg
+    And I want to modify the "East Coast Rates" table rate
+    Then the currency field should be disabled
+    When I change its currency to "EUR"
+    And I save my changes
+    Then the "East Coast Rates" table rate should still have "USD" currency
 
   @ui @todo
   Scenario: Creating two table rates with the same code
