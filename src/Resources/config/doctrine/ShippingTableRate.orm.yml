@@ -22,4 +22,7 @@ Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate:
                 name: currency_id
                 referencedColumnName: id
                 nullable: false
+    uniqueConstraints:
+        code_idx:
+            columns: [ code ]
 

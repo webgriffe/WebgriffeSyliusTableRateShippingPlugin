@@ -110,8 +110,12 @@ Feature: Managing table rates
     And I save my changes
     Then the "East Coast Rates" table rate should still have "USD" currency
 
-  @ui @todo
+  @ui @javascript
   Scenario: Creating two table rates with the same code
+    Given the store has a shipping table rate "East Coast Rates" for currency "USD"
+    When I add a shipping table rate named "East Coast Rates" for currency "USD"
+    Then I should be notified that code has to be unique
+
 
   @ui @todo
   Scenario: Deleting an alredy in use table rate

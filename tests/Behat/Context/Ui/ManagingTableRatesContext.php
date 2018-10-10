@@ -277,4 +277,15 @@ class ManagingTableRatesContext implements Context
     ) {
         Assert::same($shippingTableRate->getCurrency()->getCode(), $currency->getCode());
     }
+
+    /**
+     * @Then I should be notified that code has to be unique
+     */
+    public function iShouldBeNotifiedThatCodeHasToBeUnique()
+    {
+        $this->createPage->getValidationMessage(
+            'code',
+            'There\'s another shipping table rate with the same code. The code has to be unique.'
+        );
+    }
 }

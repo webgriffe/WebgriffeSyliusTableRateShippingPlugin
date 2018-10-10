@@ -8,7 +8,11 @@ use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Resource\Model\CodeAwareInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+/**
+ * @UniqueEntity("code", groups={"sylius"})
+ */
 class ShippingTableRate implements ResourceInterface, CodeAwareInterface
 {
     /** @var int|null */
