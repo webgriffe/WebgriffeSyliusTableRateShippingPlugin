@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusTableRateShippingPlugin\Form\Type;
 
-use Sylius\Bundle\CurrencyBundle\Form\Type\CurrencyChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\EventSubscriber\AddCodeFormSubscriber;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;

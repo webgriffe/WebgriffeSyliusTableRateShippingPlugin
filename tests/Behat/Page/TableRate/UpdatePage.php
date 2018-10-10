@@ -44,6 +44,7 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 
     /**
      * @return bool
+     *
      * @throws \Behat\Mink\Exception\ElementNotFoundException
      */
     public function isCurrencyDisabled(): bool

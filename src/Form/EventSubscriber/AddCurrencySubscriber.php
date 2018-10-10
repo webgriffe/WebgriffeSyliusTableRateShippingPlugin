@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Webgriffe\SyliusTableRateShippingPlugin\Form\EventSubscriber;
@@ -8,8 +9,6 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate;
-use Webmozart\Assert\Assert;
 
 class AddCurrencySubscriber implements EventSubscriberInterface
 {
@@ -42,6 +41,7 @@ class AddCurrencySubscriber implements EventSubscriberInterface
         if (null === $resource) {
             return false;
         }
+
         return $resource->getId() !== null;
     }
 }

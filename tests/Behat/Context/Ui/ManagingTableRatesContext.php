@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui;
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Tester\Exception\PendingException;
 use Sylius\Component\Core\Formatter\StringInflector;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\CreatePageInterface;
