@@ -15,3 +15,12 @@ Feature: Managing shipping methods with table rates
     And I choose "Table rate" calculator
     Then I should be able to choose only the table rate "United States Rates" for the "United States" channel
     And I should be able to choose only the table rate "Europe Rates" for the "Europe" channel
+    # TODO
+#    When I select "United States Rates" for the "United States" channel
+#    And I select "Europe Rates" for the "Europe" channel
+#    And I name the shipping method "Global Shipping"
+#    And I save my changes
+#    Then I should be notified that it has been successfully edited
+#    When I edit the "Global Shipping" shipping method
+#    Then the "United States Rates" should be selected for the "United States" channel
+#    And the "Europe Rates" should be selected for the "Europe" channel

@@ -116,6 +116,12 @@ Feature: Managing table rates
     When I add a shipping table rate named "East Coast Rates" for currency "USD"
     Then I should be notified that code has to be unique
 
-
-  @ui @todo
-  Scenario: Deleting an alredy in use table rate
+  @ui
+  Scenario: Deleting a table rate which is already in use
+    Given the store has a shipping table rate "East Coast Rates" for currency "USD"
+    And the store has "East Coast Shipping" shipping method using "East Coast Rates" table rate for "United States" channel
+    When I am browsing the list of table rates
+    Then I should see 1 table rate in the list
+    When I delete the "East Coast Rates" table rate
+    Then I should be notified that the table rate couldn't be deleted because is already used by the "East Coast Shipping" shipping method
+    And the "East Coast Rates" shipping table rate should still be there

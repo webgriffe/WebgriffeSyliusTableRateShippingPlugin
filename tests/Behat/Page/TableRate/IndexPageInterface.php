@@ -10,4 +10,6 @@ use Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate;
 interface IndexPageInterface extends BaseIndexPageInterface
 {
     public function getTableRateRatesCount(ShippingTableRate $shippingTableRate): int;
+
+    public function getValidationMessage(): string;
 }

@@ -19,4 +19,9 @@ class IndexPage extends BaseIndexPage implements IndexPageInterface
 
         return (int) $rates->getText();
     }
+
+    public function getValidationMessage(): string
+    {
+        return $this->getDocument()->find('css', '.sylius-flash-message.negative')->getText();
+    }
 }

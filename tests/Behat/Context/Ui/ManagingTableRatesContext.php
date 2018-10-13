@@ -6,6 +6,7 @@ namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui;
 
 use Behat\Behat\Context\Context;
 use Sylius\Component\Core\Formatter\StringInflector;
+use Sylius\Component\Core\Model\ShippingMethod;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\CreatePageInterface;
 use Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\IndexPageInterface;
@@ -286,5 +287,26 @@ class ManagingTableRatesContext implements Context
             'code',
             'There\'s another shipping table rate with the same code. The code has to be unique.'
         );
+    }
+
+    /**
+     * @Then I should be notified that the table rate couldn't be deleted because is already used by the :shippingMethod shipping method
+     */
+    public function iShouldBeNotifiedThatTheTableRateCouldntBeDeletedBecauseIsAlreadyUsedByTheShippingMethod(
+        ShippingMethod $shippingMethod
+    ) {
+        Assert::contains(
+            $this->indexPage->getValidationMessage(),
+            'The table rate cannot be deleted because is currently used by the following shipping methods: ' .
+            $shippingMethod->getCode()
+        );
+    }
+
+    /**
+     * @Then the :shippingTableRate shipping table rate should still be there
+     */
+    public function theShippingTableRateShouldStillBeThere(ShippingTableRate $shippingTableRate)
+    {
+        Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $shippingTableRate->getName()]));
     }
 }

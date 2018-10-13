@@ -37,3 +37,8 @@ services:
         tags:
             - { name: form.type }
 
+    Webgriffe\SyliusTableRateShippingPlugin\EventSubscriber\TableRateDeleteSubscriber:
+        arguments:
+            - '@sylius.repository.shipping_method'
+        tags:
+            - { name: kernel.event_subscriber }

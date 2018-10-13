@@ -1,0 +1,4 @@
+webgriffe_sylius_table_rate_plugin:
+  ui:
+    shipping_table_rate:
+      already_used_by_shipping_methods: "The table rate cannot be deleted because is currently used by the following shipping methods: %shipping_methods%"
