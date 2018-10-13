@@ -15,12 +15,14 @@ use Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate;
 
 final class TableRateConfigurationType extends AbstractType
 {
+    public const TABLE_RATE_FIELD_NAME = 'table_rate';
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $messagesNamespace = 'webgriffe_sylius_table_rate_plugin.ui.calculator_configuration.';
         $currency = $options['currency'];
         $builder->add(
-            'table_rate_code',
+            self::TABLE_RATE_FIELD_NAME,
             EntityType::class,
             [
                 'label' => $messagesNamespace . 'table_rate.label',

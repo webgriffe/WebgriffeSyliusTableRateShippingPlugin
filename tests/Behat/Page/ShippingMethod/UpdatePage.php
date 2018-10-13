@@ -10,7 +10,7 @@ class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 {
     public function getTableRateOptions(string $channelCode): array
     {
-        return $this->getElement('table_rate_code', ['%channelCode%' => $channelCode])->findAll(
+        return $this->getElement('table_rate', ['%channelCode%' => $channelCode])->findAll(
             'css',
             'option[value!=""]'
         );
@@ -20,7 +20,7 @@ class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
     {
         return array_merge(
             parent::getDefinedElements(),
-            ['table_rate_code' => '#sylius_shipping_method_configuration_%channelCode%_table_rate_code']
+            ['table_rate' => '#sylius_shipping_method_configuration_%channelCode%_table_rate']
         );
     }
 }

@@ -10,6 +10,7 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Component\Shipping\Calculator\CalculatorInterface;
 use Sylius\Component\Shipping\Model\ShipmentInterface as BaseShipmentInterface;
 use Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate;
+use Webgriffe\SyliusTableRateShippingPlugin\Form\Type\Shipping\Calculator\TableRateConfigurationType;
 use Webmozart\Assert\Assert;
 
 final class TableRateShippingCalculator implements CalculatorInterface
@@ -61,10 +62,10 @@ final class TableRateShippingCalculator implements CalculatorInterface
             );
         }
 
-        $tableRateCode = $configuration[$channelCode]['table_rate_code'];
+        $tableRate = $configuration[$channelCode][TableRateConfigurationType::TABLE_RATE_FIELD_NAME];
 
         /** @var ShippingTableRate $tableRate */
-        $tableRate = $this->tableRateRepository->findOneBy(['code' => $tableRateCode]);
+        $tableRate = $this->tableRateRepository->findOneBy(['code' => $tableRate->getCode()]);
 
         return $tableRate->getRate($shipment->getShippingWeight());
     }

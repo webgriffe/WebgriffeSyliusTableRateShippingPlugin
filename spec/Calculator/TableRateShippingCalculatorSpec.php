@@ -30,13 +30,14 @@ class TableRateShippingCalculatorSpec extends ObjectBehavior
         $shipment->getOrder()->willReturn($order);
         $order->getChannel()->willReturn($channel);
         $channel->getCode()->willReturn('CHANNEL_CODE');
+        $tableRate->getCode()->willReturn('TABLE_RATE_CODE');
 
         $tableRateRepository->findOneBy(['code' => 'TABLE_RATE_CODE'])->willReturn($tableRate);
 
         $tableRate->getRate(15.5)->willReturn(1000);
 
         $this
-            ->calculate($shipment, ['CHANNEL_CODE' => ['table_rate_code' => 'TABLE_RATE_CODE']])
+            ->calculate($shipment, ['CHANNEL_CODE' => ['table_rate' => $tableRate]])
             ->shouldReturn(1000)
         ;
     }
@@ -45,7 +46,8 @@ class TableRateShippingCalculatorSpec extends ObjectBehavior
         ShipmentInterface $shipment,
         OrderInterface $order,
         ChannelInterface $channel,
-        ShippingMethodInterface $shippingMethod
+        ShippingMethodInterface $shippingMethod,
+        ShippingTableRate $shippingTableRate
     ): void {
         $shipment->getOrder()->willReturn($order);
         $order->getChannel()->willReturn($channel);
@@ -54,10 +56,11 @@ class TableRateShippingCalculatorSpec extends ObjectBehavior
 
         $shipment->getMethod()->willReturn($shippingMethod);
         $shippingMethod->getName()->willReturn('Table rate based');
+        $shippingTableRate->getCode()->willReturn('TABLE_RATE_CODE');
 
         $this
             ->shouldThrow(new MissingChannelConfigurationException('Shipping method "Table rate based" has no configuration for channel "Another channel".'))
-            ->during('calculate', [$shipment, ['CHANNEL_CODE' => ['table_rate_code' => 'TABLE_RATE_CODE']]])
+            ->during('calculate', [$shipment, ['CHANNEL_CODE' => ['table_rate' => $shippingTableRate]]])
         ;
     }
 }

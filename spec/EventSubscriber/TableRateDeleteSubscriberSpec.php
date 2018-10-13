@@ -40,27 +40,29 @@ class TableRateDeleteSubscriberSpec extends ObjectBehavior
     }
 
     function it_should_stop_event_if_table_rate_is_already_in_use(
-        ShippingTableRate $shippingTableRate,
         ResourceControllerEvent $event,
         ShippingMethodRepositoryInterface $shippingMethodRepository
     ) {
-        $shippingTableRate->getCode()->willReturn('TABLE_RATE');
+        $tableRate = new ShippingTableRate();
+        $tableRate->setCode('TABLE_RATE');
+        $anotherTableRate = new ShippingTableRate();
+        $anotherTableRate->setCode('ANOTHER_RATE');
         $shippingMethod1 = new ShippingMethod();
         $shippingMethod1->setCode('METHOD1');
-        $shippingMethod1->setConfiguration(['WEB-US' => ['table_rate_code' => 'TABLE_RATE']]);
+        $shippingMethod1->setConfiguration(['WEB-US' => ['table_rate' => $tableRate]]);
         $shippingMethod2 = new ShippingMethod();
         $shippingMethod2->setCode('METHOD2');
-        $shippingMethod2->setConfiguration(['WEB-US' => ['table_rate_code' => 'ANOTHER_RATE']]);
+        $shippingMethod2->setConfiguration(['WEB-US' => ['table_rate' => $anotherTableRate]]);
         $shippingMethod3 = new ShippingMethod();
         $shippingMethod3->setCode('METHOD3');
         $shippingMethod3->setConfiguration(
-            ['WEB-US' => ['table_rate_code' => 'ANOTHER_RATE'], 'WEB-EU' => ['table_rate_code' => 'TABLE_RATE']]
+            ['WEB-US' => ['table_rate' => $anotherTableRate], 'WEB-EU' => ['table_rate' => $tableRate]]
         );
         $shippingMethodRepository
             ->findBy(['calculator' => TableRateShippingCalculator::TYPE])
             ->willReturn([$shippingMethod1, $shippingMethod2, $shippingMethod3])
         ;
-        $event->getSubject()->willReturn($shippingTableRate);
+        $event->getSubject()->willReturn($tableRate);
         $event
             ->stop(
                 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.already_used_by_shipping_methods',
