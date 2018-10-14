@@ -9,6 +9,7 @@ use Sylius\Component\Resource\Model\CodeAwareInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Webgriffe\SyliusTableRateShippingPlugin\Exception\RateNotFoundException;
 
 /**
  * @UniqueEntity("code", groups={"sylius"})
@@ -101,7 +102,7 @@ class ShippingTableRate implements ResourceInterface, CodeAwareInterface
             }
         }
 
-        throw new \RuntimeException('No rate found for given weight!');
+        throw new RateNotFoundException($this, $weight);
     }
 
     public function getRatesCount(): int

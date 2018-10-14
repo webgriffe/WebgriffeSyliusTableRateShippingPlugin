@@ -10,57 +10,45 @@ use Sylius\Component\Core\Model\ShippingMethodInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use PhpSpec\ObjectBehavior;
 use Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate;
+use Webgriffe\SyliusTableRateShippingPlugin\Exception\RateNotFoundException;
+use Webgriffe\SyliusTableRateShippingPlugin\Resolver\TableRateResolverInterface;
 
 class TableRateShippingCalculatorSpec extends ObjectBehavior
 {
-    function let(RepositoryInterface $tableRateRepository): void
+    function let(TableRateResolverInterface $tableRateResolver): void
     {
-        $this->beConstructedWith($tableRateRepository);
+        $this->beConstructedWith($tableRateResolver);
     }
 
     function it_calculates_the_rate_based_on_the_table_rate(
         ShipmentInterface $shipment,
-        OrderInterface $order,
-        ChannelInterface $channel,
-        RepositoryInterface $tableRateRepository,
+        TableRateResolverInterface $tableRateResolver,
         ShippingTableRate $tableRate
     ): void {
+        $configuration = ['CHANNEL_CODE' => ['table_rate' => $tableRate]];
         $shipment->getShippingWeight()->willReturn(15.5);
-
-        $shipment->getOrder()->willReturn($order);
-        $order->getChannel()->willReturn($channel);
-        $channel->getCode()->willReturn('CHANNEL_CODE');
-        $tableRate->getCode()->willReturn('TABLE_RATE_CODE');
-
-        $tableRateRepository->findOneBy(['code' => 'TABLE_RATE_CODE'])->willReturn($tableRate);
-
+        $tableRateResolver->resolve($shipment, $configuration)->willReturn($tableRate);
         $tableRate->getRate(15.5)->willReturn(1000);
 
         $this
-            ->calculate($shipment, ['CHANNEL_CODE' => ['table_rate' => $tableRate]])
+            ->calculate($shipment, $configuration)
             ->shouldReturn(1000)
         ;
     }
 
-    function it_throws_an_missing_channel_configuration_exception_if_the_order_channel_is_not_configured(
+    function it_should_return_zero_if_no_rate_is_found_for_a_given_shipment(
         ShipmentInterface $shipment,
-        OrderInterface $order,
-        ChannelInterface $channel,
-        ShippingMethodInterface $shippingMethod,
-        ShippingTableRate $shippingTableRate
-    ): void {
-        $shipment->getOrder()->willReturn($order);
-        $order->getChannel()->willReturn($channel);
-        $channel->getCode()->willReturn('ANOTHER_CHANNEL_CODE');
-        $channel->getName()->willReturn('Another channel');
-
-        $shipment->getMethod()->willReturn($shippingMethod);
-        $shippingMethod->getName()->willReturn('Table rate based');
-        $shippingTableRate->getCode()->willReturn('TABLE_RATE_CODE');
+        TableRateResolverInterface $tableRateResolver,
+        ShippingTableRate $tableRate
+    ) {
+        $configuration = ['CHANNEL_CODE' => ['table_rate' => $tableRate]];
+        $shipment->getShippingWeight()->willReturn(1000);
+        $tableRateResolver->resolve($shipment, $configuration)->willReturn($tableRate);
+        $tableRate->getRate(1000)->willThrow(RateNotFoundException::class);
 
         $this
-            ->shouldThrow(new MissingChannelConfigurationException('Shipping method "Table rate based" has no configuration for channel "Another channel".'))
-            ->during('calculate', [$shipment, ['CHANNEL_CODE' => ['table_rate' => $shippingTableRate]]])
+            ->calculate($shipment, $configuration)
+            ->shouldReturn(0)
         ;
     }
 }

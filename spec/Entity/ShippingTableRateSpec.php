@@ -7,6 +7,7 @@ namespace spec\Webgriffe\SyliusTableRateShippingPlugin\Entity;
 use Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Webgriffe\SyliusTableRateShippingPlugin\Exception\RateNotFoundException;
 
 class ShippingTableRateSpec extends ObjectBehavior
 {
@@ -22,6 +23,6 @@ class ShippingTableRateSpec extends ObjectBehavior
         $this->getRate(10.0)->shouldReturn(7);
         $this->getRate(15.0)->shouldReturn(10);
         $this->getRate(20.0)->shouldReturn(10);
-        $this->shouldThrow(\RuntimeException::class)->during('getRate', [25.0]);
+        $this->shouldThrow(RateNotFoundException::class)->during('getRate', [25.0]);
     }
 }

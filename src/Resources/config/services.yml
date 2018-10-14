@@ -4,7 +4,7 @@ parameters:
 services:
     Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculator:
         arguments:
-            - '@webgriffe.repository.shipping_table_rate'
+            - '@Webgriffe\SyliusTableRateShippingPlugin\Resolver\TableRateResolverInterface'
         tags:
             -
                 name: sylius.shipping_calculator
@@ -16,7 +16,7 @@ services:
         decorates: sylius.shipping_eligibility_checker
         arguments:
             - '@Webgriffe\SyliusTableRateShippingPlugin\Checker\TableRateShippingMethodEligibilityChecker.inner'
-            - '@Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculator'
+            - '@Webgriffe\SyliusTableRateShippingPlugin\Resolver\TableRateResolverInterface'
 
     Webgriffe\SyliusTableRateShippingPlugin\Menu\AdminMenuListener:
         tags:
@@ -42,3 +42,8 @@ services:
             - '@sylius.repository.shipping_method'
         tags:
             - { name: kernel.event_subscriber }
+
+    Webgriffe\SyliusTableRateShippingPlugin\Resolver\TableRateResolverInterface:
+        class: Webgriffe\SyliusTableRateShippingPlugin\Resolver\TableRateResolver
+        arguments:
+            - '@webgriffe.repository.shipping_table_rate'
