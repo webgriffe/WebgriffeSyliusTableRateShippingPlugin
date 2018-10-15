@@ -11,4 +11,10 @@ webgriffe_sylius_table_rate_plugin_shipping_table_rate:
         subheader: webgriffe_sylius_table_rate_plugin.ui.shipping_table_rates.subheader
       index:
         icon: 'pallet'
+      create:
+        templates:
+          form: '@WebgriffeSyliusTableRateShippingPlugin/TableRateCrud/_form.html.twig'
+      update:
+        templates:
+          form: '@WebgriffeSyliusTableRateShippingPlugin/TableRateCrud/_form.html.twig'
   type: sylius.resource
