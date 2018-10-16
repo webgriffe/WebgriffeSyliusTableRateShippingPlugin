@@ -1,0 +1,2 @@
+imports:
+    - { resource: "@WebgriffeSyliusTableRateShippingPlugin/Resources/config/config.yml" }
