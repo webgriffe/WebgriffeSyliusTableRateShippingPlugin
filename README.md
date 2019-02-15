@@ -6,7 +6,7 @@
 
 <h1 align="center">Table Rate Shipping Plugin</h1>
 
-<p align="center"><img src="https://sylius.com/assets/badge-approved-by-sylius.png" width="200"></p>
+<p align="center"><a href="https://sylius.com/plugins/" target="_blank"><img src="https://sylius.com/assets/badge-approved-by-sylius.png" width="200"></a></p>
 <p align="center">This plugin allows to define shipping rates using weight tables.</p>
 
 ## Installation
