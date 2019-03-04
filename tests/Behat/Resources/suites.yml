@@ -3,7 +3,7 @@
 default:
     suites:
         ui_table_rate_shipping_fee:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - sylius.behat.context.transform.channel
@@ -28,7 +28,7 @@ default:
                 tags: "@table_rate_shipping_fee && @ui"
 
         ui_managing_table_rates:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Transform\NumberContext
@@ -49,7 +49,7 @@ default:
                 tags: "@managing_table_rates && @ui"
 
         ui_managing_shipping_methods_with_table_rate:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - sylius.behat.context.transform.currency

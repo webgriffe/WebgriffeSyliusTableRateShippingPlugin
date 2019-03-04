@@ -1,67 +1,62 @@
 services:
+    _defaults: { public: true }
+
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Setup\ProductContext:
         arguments:
-            - '@__symfony__.sylius.fixture.example_factory.product'
-            - '@__symfony__.sylius.repository.product'
-        tags:
-            - { name: fob.context_service }
+            - '@sylius.fixture.example_factory.product'
+            - '@sylius.repository.product'
 
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Setup\ShippingTableRateContext:
         arguments:
-            - '@__symfony__.webgriffe.factory.shipping_table_rate'
-            - '@__symfony__.webgriffe.repository.shipping_table_rate'
-            - '@__symfony__.webgriffe.manager.shipping_table_rate'
+            - '@webgriffe.factory.shipping_table_rate'
+            - '@webgriffe.repository.shipping_table_rate'
+            - '@webgriffe.manager.shipping_table_rate'
             - '@sylius.behat.shared_storage'
-            - '@__symfony__.sylius.fixture.example_factory.shipping_method'
-            - '@__symfony__.sylius.repository.shipping_method'
-        tags:
-            - { name: fob.context_service }
+            - '@sylius.fixture.example_factory.shipping_method'
+            - '@sylius.repository.shipping_method'
 
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Transform\NumberContext:
-        tags:
-            - { name: fob.context_service }
+        arguments: []
 
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ShippingTableRateContext:
         arguments:
-            - '@__symfony__.sylius.factory.address'
+            - '@sylius.factory.address'
             - '@sylius.behat.page.shop.checkout.address'
             - '@sylius.behat.page.shop.checkout.select_shipping'
-        tags:
-            - { name: fob.context_service }
 
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ManagingTableRatesContext:
         arguments:
             - '@Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\IndexPageInterface'
             - '@Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\CreatePageInterface'
             - '@Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\UpdatePageInterface'
-        tags:
-            - { name: fob.context_service }
 
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ManagingShippingMethodsWithTableRateContext:
         arguments:
             - '@Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\ShippingMethod\UpdatePageInterface'
-        tags:
-            - { name: fob.context_service }
 
 
 
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\IndexPageInterface:
         class: Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\IndexPage
         parent: sylius.behat.page.admin.crud.index
+        public: true
         arguments:
             - "webgriffe_admin_shipping_table_rate_index"
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\CreatePageInterface:
         class: Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\CreatePage
         parent: sylius.behat.page.admin.crud.create
+        public: true
         arguments:
             - "webgriffe_admin_shipping_table_rate_create"
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\UpdatePageInterface:
         class: Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\UpdatePage
         parent: sylius.behat.page.admin.crud.update
+        public: true
         arguments:
             - "webgriffe_admin_shipping_table_rate_update"
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\ShippingMethod\UpdatePageInterface:
         class: Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\ShippingMethod\UpdatePage
         parent: sylius.behat.page.admin.shipping_method.update
+        public: true
         arguments:
             - "sylius_admin_shipping_method_update"
