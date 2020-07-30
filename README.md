@@ -56,19 +56,9 @@ To contribute you need to:
 
 1. Clone this repository into you development environment
 
-2. Copy the `.env.test.dist` file inside the test application directory to the `.env` file:
+2. Copy `tests/Application/.env` in `tests/Application/.env.local` and set configuration specific for your development environment.
 
-   ```bash
-   cp tests/Application/.env.test.dist tests/Application/.env
-   ```
-
-3. Edit the `tests/Application/.env` file by setting configuration specific for your development environment. For example, if you want to use SQLite as database driver during testing you can set the `DATABASE_URL` environment variable as follows:
-
-   ```bash
-   DATABASE_URL=sqlite:///%kernel.project_dir%/var/%kernel.environment%_db.sql
-   ```
-
-4. Then, from the plugin's root directory, run the following commands:
+3. Then, from the plugin's root directory, run the following commands:
 
    ```bash
    (cd tests/Application && yarn install)
@@ -76,14 +66,27 @@ To contribute you need to:
    (cd tests/Application && bin/console assets:install public)
    (cd tests/Application && bin/console doctrine:database:create)
    (cd tests/Application && bin/console doctrine:schema:create)
-   (cd tests/Application && bin/console server:run localhost:8080 -d public)
+   (cd tests/Application && bin/console sylius:fixtures:load)
+   (cd tests/Application && symfony server:start -d) # Requires Symfony CLI (https://symfony.com/download)
    ```
 
 5. Now at http://localhost:8080/ you have a full Sylius testing application which runs the plugin
 
 ### Testing
 
-After your changes you must ensure that the tests are still passing. The current CI suite runs the following tests:
+After your changes you must ensure that the tests are still passing.
+
+First setup your test database:
+
+    ```bash
+    (cd tests/Application && bin/console -e test doctrine:database:create)
+    (cd tests/Application && bin/console -e test doctrine:schema:create)
+    ```
+
+This plugin's test application already comes with a test configuration that uses SQLite as test database.
+If you don't want this you can create a `tests/Application/.env.test.local` with a different `DATABASE_URL`.
+
+The current CI suite runs the following tests:
 
 * Easy Coding Standard
 
@@ -109,10 +112,16 @@ After your changes you must ensure that the tests are still passing. The current
   vendor/bin/phpspec run
   ```
 
-* Behat
+* Behat (without Javascript)
 
   ```bash
-  vendor/bin/behat --strict -vvv --no-interaction || vendor/bin/behat --strict -vvv --no-interaction --rerun
+  vendor/bin/behat --tags="~@javascript"
+  ```
+
+* Behat (only Javascript)
+
+  ```bash
+  vendor/bin/behat --tags="@javascript"
   ```
 
 To run them all with a single command run:
@@ -121,7 +130,7 @@ To run them all with a single command run:
 composer suite
 ```
 
-To run Behat's JS scenarios you need to setup Selenium and Chromedriver. Do the following:
+To run Behat's Javascript scenarios you need to setup Selenium and Chromedriver. Do the following:
 
 1. Download [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
 
@@ -136,7 +145,7 @@ To run Behat's JS scenarios you need to setup Selenium and Chromedriver. Do the 
 4. Remember that the test application webserver must be up and running as described above:
 
    ```bash
-   cd tests/Application && bin/console server:run localhost:8080 -d public
+   (cd tests/Application && symfony server:start --port=8080 --dir=public --daemon)
    ```
 
 License

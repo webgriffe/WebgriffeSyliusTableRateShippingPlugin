@@ -1,13 +1,10 @@
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
-    - vendor/phpstan/phpstan-symfony/extension.neon
     - vendor/phpstan/phpstan-webmozart-assert/extension.neon
 
 parameters:
     reportUnmatchedIgnoredErrors: false
-
-    symfony:
-        container_xml_path: tests/Application/var/cache/test/ApplicationTests_Webgriffe_SyliusTableRateShippingPlugin_Application_KernelTestDebugContainer.xml
+    checkMissingIterableValueType: false
 
     excludes_analyse:
         # Makes PHPStan crash
