@@ -9,22 +9,26 @@
         <table>
 
         </table>
-        <div data-form-type="collection" {{ block('widget_container_attributes') }}
-                {% if prototype is defined and allow_add %}
-                    data-prototype='{{ self.collection_item(prototype, allow_delete, button_delete_label, '__name__')|e }}'
-                {%- endif -%}
-        >
+        <div data-form-type="collection"
+             {{ block('widget_container_attributes') }}
+             {% if prototype is defined and allow_add %}
+             data-prototype='{{ _self.collectionItem(prototype, allow_delete, button_delete_label, '__name__')|e }}'
+             data-prototype-name='{{ prototype.vars.name }}'
+             {%- endif -%}>
+
             {{ error(form.vars.errors) }}
 
             {% if prototypes|default is iterable %}
                 {% for key, subPrototype in prototypes %}
-                    <input type="hidden" data-form-prototype="{{ key }}" value="{{ self.collection_item(subPrototype, allow_delete, button_delete_label, '__name__')|e }}" />
+                    <input type="hidden"
+                           data-form-prototype="{{ key }}"
+                           value="{{ _self.collectionItem(subPrototype, allow_delete, button_delete_label, '__name__')|e }}" />
                 {% endfor %}
             {% endif %}
 
             <div data-form-collection="list" class="ui three column grid">
                 {% for child in form %}
-                    {{ self.collection_item(child, allow_delete, button_delete_label, loop.index0) }}
+                    {{ _self.collectionItem(child, allow_delete, button_delete_label, loop.index0) }}
                 {% endfor %}
             </div>
 
@@ -38,7 +42,7 @@
     {% endspaceless %}
 {% endblock %}
 
-{% macro collection_item(form, allow_delete, button_delete_label, index) %}
+{% macro collectionItem(form, allow_delete, button_delete_label, index) %}
     {% spaceless %}
         <div data-form-collection="item" data-form-collection-index="{{ index }}" class="row">
             {{ form_widget(form) }}
