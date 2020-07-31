@@ -13,9 +13,7 @@ use Webmozart\Assert\Assert;
 
 final class TableRateResolver implements TableRateResolverInterface
 {
-    /**
-     * @var RepositoryInterface
-     */
+    /** @var RepositoryInterface */
     private $tableRateRepository;
 
     public function __construct(RepositoryInterface $tableRateRepository)

@@ -33,8 +33,6 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
     }
 
     /**
-     * @return NodeElement
-     *
      * @throws \Behat\Mink\Exception\ElementNotFoundException
      */
     protected function getCodeElement(): NodeElement
@@ -43,8 +41,6 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
     }
 
     /**
-     * @return bool
-     *
      * @throws \Behat\Mink\Exception\ElementNotFoundException
      */
     public function isCurrencyDisabled(): bool

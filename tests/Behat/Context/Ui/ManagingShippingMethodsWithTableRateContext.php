@@ -13,9 +13,7 @@ use Webmozart\Assert\Assert;
 
 final class ManagingShippingMethodsWithTableRateContext implements Context
 {
-    /**
-     * @var UpdatePageInterface
-     */
+    /** @var UpdatePageInterface */
     private $updatePage;
 
     public function __construct(UpdatePageInterface $updatePage)

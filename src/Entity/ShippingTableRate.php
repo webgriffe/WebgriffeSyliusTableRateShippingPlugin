@@ -111,8 +111,6 @@ class ShippingTableRate implements ResourceInterface, CodeAwareInterface
     }
 
     /**
-     * @return array
-     *
      * @internal
      */
     public function getWeightLimitToRate(): array
@@ -121,8 +119,6 @@ class ShippingTableRate implements ResourceInterface, CodeAwareInterface
     }
 
     /**
-     * @param array $weightLimitToRate
-     *
      * @internal
      */
     public function setWeightLimitToRate(array $weightLimitToRate): void

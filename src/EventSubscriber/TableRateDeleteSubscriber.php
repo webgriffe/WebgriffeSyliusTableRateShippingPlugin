@@ -14,9 +14,7 @@ use Webmozart\Assert\Assert;
 
 class TableRateDeleteSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var ShippingMethodRepositoryInterface
-     */
+    /** @var ShippingMethodRepositoryInterface */
     private $shippingMethodRepository;
 
     public function __construct(ShippingMethodRepositoryInterface $shippingMethodRepository)

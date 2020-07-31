@@ -14,9 +14,8 @@ use Webmozart\Assert\Assert;
 final class TableRateShippingCalculator implements CalculatorInterface
 {
     public const TYPE = 'table_rate';
-    /**
-     * @var TableRateResolverInterface
-     */
+
+    /** @var TableRateResolverInterface */
     private $tableRateResolver;
 
     public function __construct(TableRateResolverInterface $tableRateResolver)
@@ -24,9 +23,11 @@ final class TableRateShippingCalculator implements CalculatorInterface
         $this->tableRateResolver = $tableRateResolver;
     }
 
+    /**
+     * @param ShipmentInterface $shipment
+     */
     public function calculate(BaseShipmentInterface $shipment, array $configuration): int
     {
-        /** @var ShipmentInterface $shipment */
         Assert::isInstanceOf($shipment, ShipmentInterface::class);
 
         $tableRate = $this->tableRateResolver->resolve($shipment, $configuration);

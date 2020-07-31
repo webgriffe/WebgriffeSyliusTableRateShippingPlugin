@@ -17,9 +17,8 @@ final class TableRateShippingMethodEligibilityChecker implements ShippingMethodE
 {
     /** @var ShippingMethodEligibilityCheckerInterface */
     private $eligibilityChecker;
-    /**
-     * @var TableRateResolverInterface
-     */
+
+    /** @var TableRateResolverInterface */
     private $tableRateResolver;
 
     public function __construct(
@@ -30,6 +29,9 @@ final class TableRateShippingMethodEligibilityChecker implements ShippingMethodE
         $this->tableRateResolver = $tableRateResolver;
     }
 
+    /**
+     * @param ShipmentInterface $subject
+     */
     public function isEligible(
         ShippingSubjectInterface $subject,
         ShippingMethodInterface $method
@@ -43,7 +45,7 @@ final class TableRateShippingMethodEligibilityChecker implements ShippingMethodE
         }
 
         Assert::isInstanceOf($subject, ShipmentInterface::class);
-        /** @var ShipmentInterface $subject */
+
         $weight = $subject->getShippingWeight();
         $tableRate = $this->tableRateResolver->resolve($subject, $method->getConfiguration());
 
