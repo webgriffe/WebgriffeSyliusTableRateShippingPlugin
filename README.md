@@ -132,21 +132,18 @@ composer suite
 
 To run Behat's Javascript scenarios you need to setup Selenium and Chromedriver. Do the following:
 
-1. Download [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
+1. Start Headless Chrome:
 
-2. Download [Selenium Standalone Server](https://www.seleniumhq.org/download/)
+      ```bash
+      google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --enable-features=Metal --headless --remote-debugging-port=9222 --window-size=2880,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1
+      ```
 
-3. Run Selenium with Chromedriver
+2. Install SSL certificates (only once needed) and run test application's webserver on `127.0.0.1:8080`:
 
-   ```bash
-   java -Dwebdriver.chrome.driver=chromedriver -jar selenium-server-standalone.jar
-   ```
-
-4. Remember that the test application webserver must be up and running as described above:
-
-   ```bash
-   (cd tests/Application && symfony server:start --port=8080 --dir=public --daemon)
-   ```
+      ```bash
+      symfony server:ca:install
+      APP_ENV=test symfony server:start --port=8080 --dir=tests/Application/public --daemon
+      ```
 
 License
 -------

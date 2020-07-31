@@ -47,6 +47,9 @@ before_script:
     - (cd tests/Application && bin/console cache:warmup -vvv)
     - (cd tests/Application && yarn build)
 
+    # Install certificates
+    - $SYLIUS_CACHE_DIR/symfony server:ca:install
+
     # Downloading Symfony CLI
     - |
         if [ ! -f $SYLIUS_CACHE_DIR/symfony ]; then
