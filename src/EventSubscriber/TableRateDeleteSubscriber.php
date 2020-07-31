@@ -30,7 +30,7 @@ class TableRateDeleteSubscriber implements EventSubscriberInterface
         return ['webgriffe.shipping_table_rate.pre_delete' => 'onTableRatePreDelete'];
     }
 
-    public function onTableRatePreDelete(ResourceControllerEvent $event)
+    public function onTableRatePreDelete(ResourceControllerEvent $event): void
     {
         /** @var ShippingTableRate $shippingTableRate */
         $shippingTableRate = $event->getSubject();
