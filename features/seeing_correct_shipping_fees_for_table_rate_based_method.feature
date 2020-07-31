@@ -31,7 +31,7 @@ Feature: Seeing correct shipping fees for table rate based shipping methods
     @ui
     Scenario: Seeing no shipping methods for too heavy shipment
         When I add 25 products "Bottle of water" to the cart
-        Then my cart shipping total should be "$0.00"
+        Then I should not see shipping total for my cart
         And I should have no shipping methods available to choose from
 
     @ui

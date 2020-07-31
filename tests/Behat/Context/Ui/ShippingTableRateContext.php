@@ -38,7 +38,7 @@ final class ShippingTableRateContext implements Context
     public function iShouldHaveNoShippingMethodsAvailable(): void
     {
         $this->addressPage->open();
-        $this->addressPage->specifyShippingAddress($this->createDefaultAddress());
+        $this->addressPage->specifyBillingAddress($this->createDefaultAddress());
         $this->addressPage->nextStep();
 
         $this->selectShippingPage->verify();
