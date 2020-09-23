@@ -1,5 +1,5 @@
 Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate:
-    type: entity
+    type: mappedSuperclass
     table: webgriffe_sylius_shipping_table_rate
     id:
         id:
