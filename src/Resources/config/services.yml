@@ -17,6 +17,8 @@ services:
         arguments:
             - '@Webgriffe\SyliusTableRateShippingPlugin\Checker\TableRateShippingMethodEligibilityChecker.inner'
             - '@Webgriffe\SyliusTableRateShippingPlugin\Resolver\TableRateResolverInterface'
+        tags:
+            - {name: 'sylius.shipping_method_eligibility_checker'}
 
     Webgriffe\SyliusTableRateShippingPlugin\Menu\AdminMenuListener:
         tags:
