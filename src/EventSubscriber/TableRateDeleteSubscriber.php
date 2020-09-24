@@ -32,7 +32,6 @@ class TableRateDeleteSubscriber implements EventSubscriberInterface
 
     public function onTableRatePreDelete(ResourceControllerEvent $event): void
     {
-        /** @var ShippingTableRate $shippingTableRate */
         $shippingTableRate = $event->getSubject();
         Assert::isInstanceOf($shippingTableRate, ShippingTableRate::class);
 
@@ -43,13 +42,13 @@ class TableRateDeleteSubscriber implements EventSubscriberInterface
             foreach ($shippingMethod->getConfiguration() as $channelConfiguration) {
                 /** @var ShippingTableRate|null $channelTableRate */
                 $channelTableRate = $channelConfiguration['table_rate'] ?? null;
-                if ($channelTableRate && $channelTableRate->getCode() === $shippingTableRate->getCode()) {
+                if ($channelTableRate !== null && $channelTableRate->getCode() === $shippingTableRate->getCode()) {
                     $foundMethods[] = $shippingMethod->getCode();
                 }
             }
         }
 
-        if ($foundMethods) {
+        if (count($foundMethods) > 0) {
             $event->stop(
                 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.already_used_by_shipping_methods',
                 ResourceControllerEvent::TYPE_ERROR,

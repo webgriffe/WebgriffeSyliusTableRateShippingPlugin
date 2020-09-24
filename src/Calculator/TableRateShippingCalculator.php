@@ -23,13 +23,11 @@ final class TableRateShippingCalculator implements CalculatorInterface
         $this->tableRateResolver = $tableRateResolver;
     }
 
-    /**
-     * @param ShipmentInterface $shipment
-     */
     public function calculate(BaseShipmentInterface $shipment, array $configuration): int
     {
         Assert::isInstanceOf($shipment, ShipmentInterface::class);
 
+        /** @noinspection PhpParamsInspection */
         $tableRate = $this->tableRateResolver->resolve($shipment, $configuration);
 
         try {

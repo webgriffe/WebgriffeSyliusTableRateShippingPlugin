@@ -29,9 +29,6 @@ final class TableRateShippingMethodEligibilityChecker implements ShippingMethodE
         $this->tableRateResolver = $tableRateResolver;
     }
 
-    /**
-     * @param ShipmentInterface $subject
-     */
     public function isEligible(
         ShippingSubjectInterface $subject,
         ShippingMethodInterface $method
@@ -47,14 +44,15 @@ final class TableRateShippingMethodEligibilityChecker implements ShippingMethodE
         Assert::isInstanceOf($subject, ShipmentInterface::class);
 
         $weight = $subject->getShippingWeight();
+        /** @noinspection PhpParamsInspection */
         $tableRate = $this->tableRateResolver->resolve($subject, $method->getConfiguration());
 
         try {
-            $rate = $tableRate->getRate($weight);
+            $tableRate->getRate($weight);
         } catch (RateNotFoundException $e) {
             return false;
         }
 
-        return \is_int($rate);
+        return true;
     }
 }

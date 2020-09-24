@@ -27,7 +27,7 @@ final class ShippingTableRateType extends AbstractResourceType
         ;
     }
 
-    public function getBlockPrefix(): ?string
+    public function getBlockPrefix(): string
     {
         return 'webgriffe_sylius_table_rate_plugin_shipping_table_rate';
     }
