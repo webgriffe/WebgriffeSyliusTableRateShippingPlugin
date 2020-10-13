@@ -2,8 +2,8 @@ webgriffe_sylius_table_rate_plugin_shipping_table_rate:
   resource: |
     alias: webgriffe.shipping_table_rate
     section: admin
-    templates: WebgriffeSyliusTableRateShippingPlugin:TableRateCrud
     except: ['show', 'bulkDelete']
+    templates: '@WebgriffeSyliusTableRateShippingPlugin/TableRateCrud'
     redirect: update
     grid: webgriffe_sylius_table_rate_plugin_shipping_table_rate
     vars:

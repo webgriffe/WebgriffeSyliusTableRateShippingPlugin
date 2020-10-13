@@ -1,7 +1,7 @@
-{% extends 'SyliusAdminBundle:Form:theme.html.twig' %}
+{% extends '@SyliusAdmin/Form/theme.html.twig' %}
 
 {% block _webgriffe_sylius_table_rate_plugin_shipping_table_rate_weightLimitToRate_widget %}
-    {% from 'SyliusResourceBundle:Macros:notification.html.twig' import error %}
+    {% from '@SyliusResource/Macros/notification.html.twig' import error %}
     {% import _self as self %}
     {% set attr = attr|merge({'class': attr.class|default ~ ' controls collection-widget'}) %}
 
