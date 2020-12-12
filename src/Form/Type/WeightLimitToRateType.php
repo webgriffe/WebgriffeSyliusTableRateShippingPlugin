@@ -15,7 +15,6 @@ final class WeightLimitToRateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $messagesNamespace = 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.';
-
         $builder
             ->add(
                 'weightLimit',

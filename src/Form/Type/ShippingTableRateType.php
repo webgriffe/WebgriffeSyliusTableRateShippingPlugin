@@ -16,7 +16,6 @@ final class ShippingTableRateType extends AbstractResourceType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $messagesNamespace = 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.';
-
         $builder
             ->addEventSubscriber(new AddCodeFormSubscriber())
             ->addEventSubscriber(new AddCurrencySubscriber())
