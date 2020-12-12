@@ -22,6 +22,8 @@ class AddCurrencySubscriber implements EventSubscriberInterface
 
     public function preSetData(FormEvent $event): void
     {
+        $messagesNamespace = 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.';
+
         $form = $event->getForm();
         $resource = $event->getData();
 
@@ -29,8 +31,9 @@ class AddCurrencySubscriber implements EventSubscriberInterface
             'currency',
             CurrencyChoiceType::class,
             [
+                'label' => $messagesNamespace . 'currency.label',
                 'required' => true,
-                'placeholder' => 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.currency.placeholder',
+                'placeholder' => $messagesNamespace . 'currency.placeholder',
                 'disabled' => $this->shouldCurrencyBeDisabled($resource),
             ]
         );

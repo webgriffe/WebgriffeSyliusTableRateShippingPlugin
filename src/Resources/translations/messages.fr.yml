@@ -1,0 +1,25 @@
+webgriffe:
+  ui:
+    shipping_table_rates: "Grille tarifaire d'expédition"
+    edit_shipping_table_rate: "Édition d'une grille tarifaire d'expédition"
+    new_shipping_table_rate: "Création d'une nouvelle grille tarifaire d'expédition"
+
+webgriffe_sylius_table_rate_plugin:
+  ui:
+    shipping_table_rates:
+      subheader: "Ici, vous pouvez gérer les frais d'expédition par grille tarifaire"
+    shipping_table_rate:
+      code: "Code"
+      name: "Nom"
+      rates_count: "Nombre de tarifs"
+      weightLimitToRate:
+        label: Limite de poids par tarif
+      weightLimit: Limite de poids
+      rate: Tarif
+      currency:
+        label: "Devise"
+        placeholder: "- Veuillez sélectionner -"
+    calculator_configuration:
+      table_rate:
+        label: "Grille tarifaire"
+        placeholder: "- Veuillez sélectionner -"
