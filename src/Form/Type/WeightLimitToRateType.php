@@ -14,16 +14,26 @@ final class WeightLimitToRateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $messagesNamespace = 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.';
         $builder
             ->add(
                 'weightLimit',
                 NumberType::class,
-                ['scale' => 2, 'required' => true, 'constraints' => [new NotBlank(['groups' => 'sylius'])]]
+                [
+                    'label' => $messagesNamespace . 'weightLimit',
+                    'scale' => 2,
+                    'required' => true,
+                    'constraints' => [new NotBlank(['groups' => 'sylius'])],
+                ]
             )
             ->add(
                 'rate',
                 MoneyType::class,
-                ['required' => true, 'constraints' => [new NotBlank(['groups' => 'sylius'])]]
+                [
+                    'label' => $messagesNamespace . 'rate',
+                    'required' => true,
+                    'constraints' => [new NotBlank(['groups' => 'sylius'])],
+                ]
             )
         ;
     }

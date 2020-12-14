@@ -13,8 +13,11 @@ webgriffe_sylius_table_rate_plugin:
       name: "Name"
       rates_count: "# Rates"
       weightLimitToRate:
-        not_blank: "You should specify at least one rate for this table rate."
+        label: Weight limit to rate
+      weightLimit: Weight limit
+      rate: Rate
       currency:
+        label: "Currency"
         placeholder: "- Please select -"
     calculator_configuration:
       table_rate:

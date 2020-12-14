@@ -54,11 +54,17 @@
 
 To contribute you need to:
 
-1. Clone this repository into you development environment
+1. Clone this repository into you development environment and go to the plugin's root directory,
 
-2. Copy `tests/Application/.env` in `tests/Application/.env.local` and set configuration specific for your development environment.
+2. Then, from the plugin's root directory, run the following commands:
 
-3. Then, from the plugin's root directory, run the following commands:
+   ```bash
+   composer install
+   ```
+
+3. Copy `tests/Application/.env` in `tests/Application/.env.local` and set configuration specific for your development environment.
+
+4. Then, from the plugin's root directory, run the following commands:
 
    ```bash
    (cd tests/Application && yarn install)

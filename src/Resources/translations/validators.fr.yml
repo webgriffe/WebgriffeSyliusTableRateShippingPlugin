@@ -1,0 +1,5 @@
+webgriffe_sylius_table_rate_plugin:
+  ui:
+    shipping_table_rate:
+      weightLimitToRate:
+        not_blank: "Vous devez spécifier au moins un tarif par grille tarifaire."

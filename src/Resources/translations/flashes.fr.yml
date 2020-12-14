@@ -1,0 +1,4 @@
+webgriffe_sylius_table_rate_plugin:
+  ui:
+    shipping_table_rate:
+      already_used_by_shipping_methods: "La grille tarifaire ne peut être supprimé car elle est actuellement utilisé par les méthodes d'expédition suivantes: %shipping_methods%"

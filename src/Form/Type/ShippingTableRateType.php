@@ -15,14 +15,20 @@ final class ShippingTableRateType extends AbstractResourceType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $messagesNamespace = 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.';
         $builder
             ->addEventSubscriber(new AddCodeFormSubscriber())
             ->addEventSubscriber(new AddCurrencySubscriber())
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, ['label' => $messagesNamespace . 'name'])
             ->add(
                 'weightLimitToRate',
                 CollectionType::class,
-                ['allow_add' => true, 'allow_delete' => true, 'entry_type' => WeightLimitToRateType::class]
+                [
+                    'label' => $messagesNamespace . 'weightLimitToRate.label',
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'entry_type' => WeightLimitToRateType::class,
+                ]
             )
         ;
     }
