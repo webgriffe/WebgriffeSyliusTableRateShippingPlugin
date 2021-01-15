@@ -35,9 +35,9 @@
      requirements:
        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
    
-   webgriffe_sylius_table_rate_shipping_plugin_admina:
+   webgriffe_sylius_table_rate_shipping_plugin_admin:
      resource: "@WebgriffeSyliusTableRateShippingPlugin/Resources/config/admin_routing.yml"
-     prefix: /admin
+     prefix: /%sylius_admin.path_name%
    
    ```
 
