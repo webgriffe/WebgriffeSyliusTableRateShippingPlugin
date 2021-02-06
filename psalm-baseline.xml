@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.4.1@9fd7a7d885b3a216cff8dec9d8c21a132f275224">
+  <file src="src/Calculator/TableRateShippingCalculator.php">
+    <ParamNameMismatch occurrences="1">
+      <code>$shipment</code>
+    </ParamNameMismatch>
+  </file>
+  <file src="src/Checker/TableRateShippingMethodEligibilityChecker.php">
+    <DeprecatedClass occurrences="2">
+      <code>ShippingMethodEligibilityCheckerInterface</code>
+      <code>ShippingMethodEligibilityCheckerInterface</code>
+    </DeprecatedClass>
+    <DeprecatedInterface occurrences="1">
+      <code>TableRateShippingMethodEligibilityChecker</code>
+    </DeprecatedInterface>
+    <ParamNameMismatch occurrences="2">
+      <code>$method</code>
+      <code>$subject</code>
+    </ParamNameMismatch>
+  </file>
+  <file src="src/DependencyInjection/WebgriffeSyliusTableRateShippingExtension.php">
+    <ParamNameMismatch occurrences="1">
+      <code>$config</code>
+    </ParamNameMismatch>
+    <PossiblyNullArgument occurrences="1">
+      <code>$this-&gt;getConfiguration([], $container)</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="src/Entity/ShippingTableRate.php">
+    <MixedArgumentTypeCoercion occurrences="1"/>
+    <MixedArrayAccess occurrences="2">
+      <code>$array['rate']</code>
+      <code>$array['weightLimit']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="1">
+      <code>$array</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>int</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$array['rate']</code>
+    </MixedReturnStatement>
+  </file>
+  <file src="src/EventSubscriber/TableRateDeleteSubscriber.php">
+    <MixedArrayAccess occurrences="1">
+      <code>$channelConfiguration['table_rate']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="1">
+      <code>$channelConfiguration</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/Exception/RateNotFoundException.php">
+    <PossiblyNullArgument occurrences="1">
+      <code>$shippingTableRate-&gt;getCode()</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="src/Form/EventSubscriber/AddCurrencySubscriber.php">
+    <MixedArgument occurrences="1">
+      <code>$resource</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$resource</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/Form/Type/Shipping/Calculator/TableRateConfigurationType.php">
+    <MixedAssignment occurrences="1">
+      <code>$currency</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/Resolver/TableRateResolver.php">
+    <MixedArrayAccess occurrences="1">
+      <code>$calculatorConfig[$channelCode][TableRateConfigurationType::TABLE_RATE_FIELD_NAME]</code>
+    </MixedArrayAccess>
+    <PossiblyNullArgument occurrences="3">
+      <code>$channel-&gt;getName()</code>
+      <code>$channel-&gt;getName()</code>
+      <code>$shippingMethod-&gt;getName()</code>
+    </PossiblyNullArgument>
+  </file>
+</files>
