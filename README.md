@@ -8,6 +8,7 @@
 
 <p align="center"><a href="https://sylius.com/plugins/" target="_blank"><img src="https://sylius.com/assets/badge-approved-by-sylius.png" width="200"></a></p>
 <p align="center">This plugin allows to define shipping rates using weight tables.</p>
+<p align="center"><a href="https://github.com/webgriffe/WebgriffeSyliusTableRateShippingPlugin/actions"><img src="https://github.com/webgriffe/WebgriffeSyliusTableRateShippingPlugin/workflows/Build/badge.svg" alt="Build Status" /></a></p>
 
 ## Installation
 
