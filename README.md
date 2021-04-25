@@ -12,7 +12,7 @@
 
 ## Installation
 
-1. Run `composer require webgriffe/sylius-table-rate-shipping-plugin`.
+1. Run `composer require --no-scripts webgriffe/sylius-table-rate-shipping-plugin`.
 
 2. Add the plugin to the `config/bundles.php` file:
 
@@ -45,6 +45,7 @@
 5. Finish the installation by updating the database schema and installing assets:
 
    ```bash
+   bin/console cache:clear
    bin/console doctrine:migrations:diff
    bin/console doctrine:migrations:migrate
    bin/console assets:install
