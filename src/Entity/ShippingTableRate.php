@@ -17,28 +17,28 @@ use Webgriffe\SyliusTableRateShippingPlugin\Exception\RateNotFoundException;
 class ShippingTableRate implements ResourceInterface, CodeAwareInterface
 {
     /** @var int|null */
-    private $id;
+    protected $id;
 
     /**
      * @var string|null
      *
      * @Assert\NotBlank(groups={"sylius"})
      */
-    private $code;
+    protected $code;
 
     /**
      * @var string|null
      *
      * @Assert\NotBlank(groups={"sylius"})
      */
-    private $name;
+    protected $name;
 
     /**
      * @var CurrencyInterface|null
      *
      * @Assert\NotBlank(groups={"sylius"})
      */
-    private $currency;
+    protected $currency;
 
     /**
      * @var array
@@ -48,7 +48,7 @@ class ShippingTableRate implements ResourceInterface, CodeAwareInterface
      *     message="webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.weightLimitToRate.not_blank"
      * )
      */
-    private $weightLimitToRate = [];
+    protected $weightLimitToRate = [];
 
     public function getId(): ?int
     {
