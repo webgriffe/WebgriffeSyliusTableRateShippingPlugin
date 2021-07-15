@@ -28,7 +28,7 @@ final class ChannelBasedTableRateConfigurationType extends AbstractType
         return ChannelCollectionType::class;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'webgriffe_sylius_table_rate_shipping_plugin_calculator_channel_based_table_rate';
     }

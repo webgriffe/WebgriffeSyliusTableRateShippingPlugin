@@ -25,7 +25,7 @@ class TableRateDeleteSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return ['webgriffe.shipping_table_rate.pre_delete' => 'onTableRatePreDelete'];
     }

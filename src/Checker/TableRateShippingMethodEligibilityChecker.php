@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Webgriffe\SyliusTableRateShippingPlugin\Checker;
 
 use Sylius\Component\Core\Model\ShipmentInterface;
-use Sylius\Component\Shipping\Checker\ShippingMethodEligibilityCheckerInterface;
+use Sylius\Component\Shipping\Checker\Eligibility\ShippingMethodEligibilityCheckerInterface;
 use Sylius\Component\Shipping\Model\ShippingMethodInterface;
 use Sylius\Component\Shipping\Model\ShippingSubjectInterface;
 use Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculator;
