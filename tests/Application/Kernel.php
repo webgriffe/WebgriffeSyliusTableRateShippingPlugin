@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Application;
 
-use ProxyManager\Proxy\VirtualProxyInterface;
 use PSS\SymfonyMockerContainer\DependencyInjection\MockerContainer;
+use Sylius\Bundle\CoreBundle\Application\Kernel as SyliusKernel;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
@@ -19,13 +19,6 @@ final class Kernel extends BaseKernel
     use MicroKernelTrait;
 
     private const CONFIG_EXTS = '.{php,xml,yaml,yml}';
-
-    private const IGNORED_SERVICES_DURING_CLEANUP = [
-        'kernel',
-        'http_kernel',
-        'liip_imagine.mime_type_guesser',
-        'liip_imagine.extension_guesser',
-    ];
 
     public function getCacheDir(): string
     {
@@ -39,52 +32,37 @@ final class Kernel extends BaseKernel
 
     public function registerBundles(): iterable
     {
-        $contents = require $this->getProjectDir() . '/config/bundles.php';
-        foreach ($contents as $class => $envs) {
-            if (isset($envs['all']) || isset($envs[$this->environment])) {
-                yield new $class();
+        foreach ($this->getConfigurationDirectories() as $confDir) {
+            $bundlesFile = $confDir . '/bundles.php';
+            if (false === is_file($bundlesFile)) {
+                continue;
             }
+            yield from $this->registerBundlesFromFile($bundlesFile);
         }
-    }
-
-    public function shutdown(): void
-    {
-        if (!$this->isTestEnvironment()) {
-            parent::shutdown();
-
-            return;
-        }
-
-        if (false === $this->booted) {
-            return;
-        }
-
-        $container = $this->getContainer();
-
-        parent::shutdown();
-
-        $this->cleanupContainer($container);
     }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
-        $container->addResource(new FileResource($this->getProjectDir() . '/config/bundles.php'));
-        $container->setParameter('container.dumper.inline_class_loader', true);
-        $confDir = $this->getProjectDir() . '/config';
+        foreach ($this->getConfigurationDirectories() as $confDir) {
+            $bundlesFile = $confDir . '/bundles.php';
+            if (false === is_file($bundlesFile)) {
+                continue;
+            }
+            $container->addResource(new FileResource($bundlesFile));
+        }
 
-        $loader->load($confDir . '/{packages}/*' . self::CONFIG_EXTS, 'glob');
-        $loader->load($confDir . '/{packages}/' . $this->environment . '/**/*' . self::CONFIG_EXTS, 'glob');
-        $loader->load($confDir . '/{services}' . self::CONFIG_EXTS, 'glob');
-        $loader->load($confDir . '/{services}_' . $this->environment . self::CONFIG_EXTS, 'glob');
+        $container->setParameter('container.dumper.inline_class_loader', true);
+
+        foreach ($this->getConfigurationDirectories() as $confDir) {
+            $this->loadContainerConfiguration($loader, $confDir);
+        }
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes): void
     {
-        $confDir = $this->getProjectDir() . '/config';
-
-        $routes->import($confDir . '/{routes}/*' . self::CONFIG_EXTS, '/', 'glob');
-        $routes->import($confDir . '/{routes}/' . $this->environment . '/**/*' . self::CONFIG_EXTS, '/', 'glob');
-        $routes->import($confDir . '/{routes}' . self::CONFIG_EXTS, '/', 'glob');
+        foreach ($this->getConfigurationDirectories() as $confDir) {
+            $this->loadRoutesConfiguration($routes, $confDir);
+        }
     }
 
     protected function getContainerBaseClass(): string
@@ -101,44 +79,47 @@ final class Kernel extends BaseKernel
         return 0 === strpos($this->getEnvironment(), 'test');
     }
 
-    /**
-     * Remove all container references from all loaded services
-     */
-    private function cleanupContainer(ContainerInterface $container): void
+    private function loadContainerConfiguration(LoaderInterface $loader, string $confDir): void
     {
-        $containerReflection = new \ReflectionObject($container);
-        $containerServicesPropertyReflection = $containerReflection->getProperty('services');
-        $containerServicesPropertyReflection->setAccessible(true);
+        $loader->load($confDir . '/{packages}/*' . self::CONFIG_EXTS, 'glob');
+        $loader->load($confDir . '/{packages}/' . $this->environment . '/**/*' . self::CONFIG_EXTS, 'glob');
+        $loader->load($confDir . '/{services}' . self::CONFIG_EXTS, 'glob');
+        $loader->load($confDir . '/{services}_' . $this->environment . self::CONFIG_EXTS, 'glob');
+    }
 
-        $services = $containerServicesPropertyReflection->getValue($container) ?: [];
-        foreach ($services as $serviceId => $service) {
-            if (null === $service) {
-                continue;
-            }
+    private function loadRoutesConfiguration(RouteCollectionBuilder $routes, string $confDir): void
+    {
+        $routes->import($confDir . '/{routes}/*' . self::CONFIG_EXTS, '/', 'glob');
+        $routes->import($confDir . '/{routes}/' . $this->environment . '/**/*' . self::CONFIG_EXTS, '/', 'glob');
+        $routes->import($confDir . '/{routes}' . self::CONFIG_EXTS, '/', 'glob');
+    }
 
-            if (in_array($serviceId, self::IGNORED_SERVICES_DURING_CLEANUP, true)) {
-                continue;
-            }
-
-            $serviceReflection = new \ReflectionObject($service);
-
-            if ($serviceReflection->implementsInterface(VirtualProxyInterface::class)) {
-                continue;
-            }
-
-            $servicePropertiesReflections = $serviceReflection->getProperties();
-            $servicePropertiesDefaultValues = $serviceReflection->getDefaultProperties();
-            foreach ($servicePropertiesReflections as $servicePropertyReflection) {
-                $defaultPropertyValue = null;
-                if (isset($servicePropertiesDefaultValues[$servicePropertyReflection->getName()])) {
-                    $defaultPropertyValue = $servicePropertiesDefaultValues[$servicePropertyReflection->getName()];
-                }
-
-                $servicePropertyReflection->setAccessible(true);
-                $servicePropertyReflection->setValue($service, $defaultPropertyValue);
+    /**
+     * @return BundleInterface[]
+     */
+    private function registerBundlesFromFile(string $bundlesFile): iterable
+    {
+        $contents = require $bundlesFile;
+        foreach ($contents as $class => $envs) {
+            if (isset($envs['all']) || isset($envs[$this->environment])) {
+                yield new $class();
             }
         }
+    }
 
-        $containerServicesPropertyReflection->setValue($container, null);
+    /**
+     * @return string[]
+     */
+    private function getConfigurationDirectories(): iterable
+    {
+        yield $this->getProjectDir() . '/config';
+        $syliusConfigDir = $this->getProjectDir() . '/config/sylius/' . SyliusKernel::MAJOR_VERSION . '.' . SyliusKernel::MINOR_VERSION;
+        if (is_dir($syliusConfigDir)) {
+            yield $syliusConfigDir;
+        }
+        $symfonyConfigDir = $this->getProjectDir() . '/config/symfony/' . BaseKernel::MAJOR_VERSION . '.' . BaseKernel::MINOR_VERSION;
+        if (is_dir($symfonyConfigDir)) {
+            yield $symfonyConfigDir;
+        }
     }
 }
