@@ -11,9 +11,6 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 final class WebgriffeSyliusTableRateShippingExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $config, ContainerBuilder $container): void
     {
         $this->processConfiguration($this->getConfiguration([], $container), $config);

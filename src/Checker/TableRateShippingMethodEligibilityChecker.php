@@ -15,18 +15,10 @@ use Webmozart\Assert\Assert;
 
 final class TableRateShippingMethodEligibilityChecker implements ShippingMethodEligibilityCheckerInterface
 {
-    /** @var ShippingMethodEligibilityCheckerInterface */
-    private $eligibilityChecker;
-
-    /** @var TableRateResolverInterface */
-    private $tableRateResolver;
-
     public function __construct(
-        ShippingMethodEligibilityCheckerInterface $eligibilityChecker,
-        TableRateResolverInterface $tableRateResolver
+        private ShippingMethodEligibilityCheckerInterface $eligibilityChecker,
+        private TableRateResolverInterface $tableRateResolver
     ) {
-        $this->eligibilityChecker = $eligibilityChecker;
-        $this->tableRateResolver = $tableRateResolver;
     }
 
     public function isEligible(

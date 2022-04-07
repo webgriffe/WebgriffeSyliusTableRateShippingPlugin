@@ -12,18 +12,10 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class ProductContext implements Context
 {
-    /** @var ExampleFactoryInterface */
-    private $productExampleFactory;
-
-    /** @var RepositoryInterface */
-    private $productRepository;
-
     public function __construct(
-        ExampleFactoryInterface $productExampleFactory,
-        RepositoryInterface $productRepository
+        private ExampleFactoryInterface $productExampleFactory,
+        private RepositoryInterface $productRepository
     ) {
-        $this->productExampleFactory = $productExampleFactory;
-        $this->productRepository = $productRepository;
     }
 
     /**

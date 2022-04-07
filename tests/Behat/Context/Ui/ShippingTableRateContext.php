@@ -13,23 +13,11 @@ use Webmozart\Assert\Assert;
 
 final class ShippingTableRateContext implements Context
 {
-    /** @var AddressFactoryInterface */
-    private $addressFactory;
-
-    /** @var AddressPageInterface */
-    private $addressPage;
-
-    /** @var SelectShippingPageInterface */
-    private $selectShippingPage;
-
     public function __construct(
-        AddressFactoryInterface $addressFactory,
-        AddressPageInterface $addressPage,
-        SelectShippingPageInterface $selectShippingPage
+        private AddressFactoryInterface $addressFactory,
+        private AddressPageInterface $addressPage,
+        private SelectShippingPageInterface $selectShippingPage
     ) {
-        $this->addressFactory = $addressFactory;
-        $this->addressPage = $addressPage;
-        $this->selectShippingPage = $selectShippingPage;
     }
 
     /**

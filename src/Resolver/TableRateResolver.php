@@ -13,12 +13,8 @@ use Webmozart\Assert\Assert;
 
 final class TableRateResolver implements TableRateResolverInterface
 {
-    /** @var RepositoryInterface */
-    private $tableRateRepository;
-
-    public function __construct(RepositoryInterface $tableRateRepository)
+    public function __construct(private RepositoryInterface $tableRateRepository)
     {
-        $this->tableRateRepository = $tableRateRepository;
     }
 
     public function resolve(ShipmentInterface $shipment, array $calculatorConfig): ShippingTableRate
