@@ -21,38 +21,14 @@ use Webmozart\Assert\Assert;
 
 final class ShippingTableRateContext implements Context
 {
-    /** @var FactoryInterface */
-    private $shippingTableRateFactory;
-
-    /** @var RepositoryInterface */
-    private $shippingTableRateRepository;
-
-    /** @var ObjectManager */
-    private $shippingTableRateManager;
-
-    /** @var SharedStorageInterface */
-    private $sharedStorage;
-
-    /** @var ExampleFactoryInterface */
-    private $shippingMethodExampleFactory;
-
-    /** @var RepositoryInterface */
-    private $shippingMethodRepository;
-
     public function __construct(
-        FactoryInterface $shippingTableRateFactory,
-        RepositoryInterface $shippingTableRateRepository,
-        ObjectManager $shippingTableRateManager,
-        SharedStorageInterface $sharedStorage,
-        ExampleFactoryInterface $shippingMethodExampleFactory,
-        RepositoryInterface $shippingMethodRepository
+        private FactoryInterface $shippingTableRateFactory,
+        private RepositoryInterface $shippingTableRateRepository,
+        private ObjectManager $shippingTableRateManager,
+        private SharedStorageInterface $sharedStorage,
+        private ExampleFactoryInterface $shippingMethodExampleFactory,
+        private RepositoryInterface $shippingMethodRepository
     ) {
-        $this->shippingTableRateFactory = $shippingTableRateFactory;
-        $this->shippingTableRateRepository = $shippingTableRateRepository;
-        $this->shippingTableRateManager = $shippingTableRateManager;
-        $this->sharedStorage = $sharedStorage;
-        $this->shippingMethodExampleFactory = $shippingMethodExampleFactory;
-        $this->shippingMethodRepository = $shippingMethodRepository;
     }
 
     /**

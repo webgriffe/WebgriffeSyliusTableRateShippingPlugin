@@ -15,12 +15,8 @@ final class TableRateShippingCalculator implements CalculatorInterface
 {
     public const TYPE = 'table_rate';
 
-    /** @var TableRateResolverInterface */
-    private $tableRateResolver;
-
-    public function __construct(TableRateResolverInterface $tableRateResolver)
+    public function __construct(private TableRateResolverInterface $tableRateResolver)
     {
-        $this->tableRateResolver = $tableRateResolver;
     }
 
     public function calculate(BaseShipmentInterface $shipment, array $configuration): int

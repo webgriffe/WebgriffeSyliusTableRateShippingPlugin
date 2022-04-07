@@ -14,17 +14,10 @@ use Webmozart\Assert\Assert;
 
 class TableRateDeleteSubscriber implements EventSubscriberInterface
 {
-    /** @var ShippingMethodRepositoryInterface */
-    private $shippingMethodRepository;
-
-    public function __construct(ShippingMethodRepositoryInterface $shippingMethodRepository)
+    public function __construct(private ShippingMethodRepositoryInterface $shippingMethodRepository)
     {
-        $this->shippingMethodRepository = $shippingMethodRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return ['webgriffe.shipping_table_rate.pre_delete' => 'onTableRatePreDelete'];
