@@ -5,57 +5,54 @@
     {% import _self as self %}
     {% set attr = attr|merge({'class': attr.class|default ~ ' controls collection-widget'}) %}
 
-    {% spaceless %}
-        <table>
+    <table>
 
-        </table>
-        <div data-form-type="collection"
-             {{ block('widget_container_attributes') }}
-             {% if prototype is defined and allow_add %}
-             data-prototype='{{ _self.collectionItem(prototype, allow_delete, button_delete_label, '__name__')|e }}'
-             data-prototype-name='{{ prototype.vars.name }}'
-             {%- endif -%}>
+    </table>
+    <div data-form-type="collection"
+        {{ block('widget_container_attributes') }}
+        {% if prototype is defined and allow_add %}
+        data-prototype='{{ _self.collectionItem(prototype, allow_delete, button_delete_label, '__name__')|e }}'
+        data-prototype-name='{{ prototype.vars.name }}'
+        {%- endif -%}>
 
-            {{ error(form.vars.errors) }}
+        {{ error(form.vars.errors) }}
 
-            {% if prototypes|default is iterable %}
-                {% for key, subPrototype in prototypes %}
-                    <input type="hidden"
-                           data-form-prototype="{{ key }}"
-                           value="{{ _self.collectionItem(subPrototype, allow_delete, button_delete_label, '__name__')|e }}" />
-                {% endfor %}
-            {% endif %}
+        {% if prototypes|default is iterable %}
+            {% for key, subPrototype in prototypes %}
+                <input type="hidden"
+                       data-form-prototype="{{ key }}"
+                       value="{{ _self.collectionItem(subPrototype, allow_delete, button_delete_label, '__name__')|e }}"/>
+            {% endfor %}
+        {% endif %}
 
-            <div data-form-collection="list" class="ui three column grid">
-                {% for child in form %}
-                    {{ _self.collectionItem(child, allow_delete, button_delete_label, loop.index0) }}
-                {% endfor %}
-            </div>
-
-            {% if prototype is defined and allow_add %}
-                <a href="#" class="ui labeled icon button" data-form-collection="add" style="margin-top: 2em;">
-                    <i class="plus square outline icon"></i>
-                    {{ button_add_label|trans }}
-                </a>
-            {% endif %}
+        <div data-form-collection="list" class="ui three column grid">
+            {% for child in form %}
+                {{ _self.collectionItem(child, allow_delete, button_delete_label, loop.index0) }}
+            {% endfor %}
         </div>
-    {% endspaceless %}
+
+        {% if prototype is defined and allow_add %}
+            <a href="#" class="ui labeled icon button" data-form-collection="add" style="margin-top: 2em;">
+                <i class="plus square outline icon"></i>
+                {{ button_add_label|trans }}
+            </a>
+        {% endif %}
+    </div>
 {% endblock %}
 
 {% macro collectionItem(form, allow_delete, button_delete_label, index) %}
-    {% spaceless %}
-        <div data-form-collection="item" data-form-collection-index="{{ index }}" class="row">
-            {{ form_widget(form) }}
-            {% if allow_delete %}
-                <div class="column">
-                    <a href="#" data-form-collection="delete" class="ui red labeled icon button" style="position:absolute; bottom: 0;">
-                        <i class="trash icon"></i>
-                        {{ button_delete_label|trans }}
-                    </a>
-                </div>
-            {% endif %}
-        </div>
-    {% endspaceless %}
+    <div data-form-collection="item" data-form-collection-index="{{ index }}" class="row">
+        {{ form_widget(form) }}
+        {% if allow_delete %}
+            <div class="column">
+                <a href="#" data-form-collection="delete" class="ui red labeled icon button"
+                   style="position:absolute; bottom: 0;">
+                    <i class="trash icon"></i>
+                    {{ button_delete_label|trans }}
+                </a>
+            </div>
+        {% endif %}
+    </div>
 {% endmacro %}
 
 {% block _webgriffe_sylius_table_rate_plugin_shipping_table_rate_weightLimitToRate_entry_widget %}

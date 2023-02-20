@@ -14,18 +14,18 @@ on:
 
 jobs:
     tests:
-        runs-on: ubuntu-18.04
+        runs-on: ubuntu-latest
 
         name: "Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, MySQL ${{ matrix.mysql }}"
 
         strategy:
             fail-fast: false
             matrix:
-                php: ["8.0"]
-                symfony: ["5.4.*"]
-                sylius: ["^1.11.2"]
-                node: ["14.x"]
-                mysql: ["8.0"]
+                php: ["8.0", "8.1"]
+                symfony: ["5.4.*", "^6.0"]
+                sylius: ["^1.12"]
+                node: ["18.x"]
+                mysql: ["5.7", "8.0"]
 
         env:
             APP_ENV: test
@@ -41,7 +41,7 @@ jobs:
                 with:
                     php-version: "${{ matrix.php }}"
                     extensions: intl
-                    tools: symfony
+                    tools: flex,symfony
                     coverage: none
 
             -
@@ -92,10 +92,15 @@ jobs:
                         ${{ runner.os }}-php-${{ matrix.php }}-composer-
 
             -
+                name: Configure global composer
+                run: |
+                    composer global config --no-plugins allow-plugins.symfony/flex true
+                    composer global require --no-progress --no-scripts --no-plugins "symfony/flex:^2.2.2"
+
+            -
                 name: Restrict Symfony version
                 if: matrix.symfony != ''
                 run: |
-                    composer global require --no-progress --no-scripts --no-plugins "symfony/flex:^1.10"
                     composer config extra.symfony.require "${{ matrix.symfony }}"
 
             -
@@ -106,6 +111,8 @@ jobs:
             -
                 name: Install PHP dependencies
                 run: composer install --no-interaction
+                env:
+                    SYMFONY_REQUIRE: ${{ matrix.symfony }}
 
             -
                 name: Get Yarn cache directory
@@ -135,7 +142,7 @@ jobs:
                 name: Prepare test application assets
                 run: |
                     (cd tests/Application && bin/console assets:install public -vvv)
-                    (cd tests/Application && yarn build)
+                    (cd tests/Application && yarn build:prod)
 
             -
                 name: Prepare test application cache

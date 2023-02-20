@@ -9,6 +9,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Webmozart\Assert\Assert;
 
 class AddCurrencySubscriber implements EventSubscriberInterface
 {
@@ -22,6 +23,7 @@ class AddCurrencySubscriber implements EventSubscriberInterface
         $messagesNamespace = 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.';
         $form = $event->getForm();
         $resource = $event->getData();
+        Assert::nullOrIsInstanceOf($resource, ResourceInterface::class);
 
         $form->add(
             'currency',
