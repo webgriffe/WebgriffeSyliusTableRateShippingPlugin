@@ -36,6 +36,7 @@ class AddCurrencySubscriberSpec extends ObjectBehavior
         $form
             ->add('currency', Argument::type('string'), Argument::withEntry('disabled', true))
             ->shouldBeCalled()
+            ->willReturn($form)
         ;
 
         $this->preSetData($event);
@@ -54,6 +55,7 @@ class AddCurrencySubscriberSpec extends ObjectBehavior
         $form
             ->add('currency', Argument::type('string'), Argument::withEntry('disabled', false))
             ->shouldBeCalled()
+            ->willReturn($form)
         ;
 
         $this->preSetData($event);

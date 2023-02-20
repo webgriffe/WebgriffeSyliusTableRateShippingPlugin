@@ -13,6 +13,9 @@ use Webmozart\Assert\Assert;
 
 final class TableRateResolver implements TableRateResolverInterface
 {
+    /**
+     * @param RepositoryInterface<ShippingTableRate> $tableRateRepository
+     */
     public function __construct(private RepositoryInterface $tableRateRepository)
     {
     }
@@ -53,7 +56,6 @@ final class TableRateResolver implements TableRateResolverInterface
 
         /** @var ShippingTableRate $tableRate */
         $tableRate = $calculatorConfig[$channelCode][TableRateConfigurationType::TABLE_RATE_FIELD_NAME];
-        /** @var ShippingTableRate|null $tableRate */
         $tableRate = $this->tableRateRepository->findOneBy(['code' => $tableRate->getCode()]);
         Assert::isInstanceOf($tableRate, ShippingTableRate::class);
 
