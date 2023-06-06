@@ -9,7 +9,7 @@ services:
             -
                 name: sylius.shipping_calculator
                 calculator: !php/const Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculator::TYPE
-                label: 'Table rate'
+                label: 'webgriffe_sylius_table_rate_plugin.ui.calculator_configuration.table_rate.label'
                 form_type: Webgriffe\SyliusTableRateShippingPlugin\Form\Type\Shipping\Calculator\ChannelBasedTableRateConfigurationType
 
     Webgriffe\SyliusTableRateShippingPlugin\Checker\TableRateShippingMethodEligibilityChecker:
