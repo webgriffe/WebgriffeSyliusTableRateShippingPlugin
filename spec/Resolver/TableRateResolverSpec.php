@@ -16,17 +16,17 @@ use Webgriffe\SyliusTableRateShippingPlugin\Resolver\TableRateResolverInterface;
 
 class TableRateResolverSpec extends ObjectBehavior
 {
-    function let(RepositoryInterface $tableRateRepository): void
+    public function let(RepositoryInterface $tableRateRepository): void
     {
         $this->beConstructedWith($tableRateRepository);
     }
 
-    function it_should_implement_table_rate_resolver_interface(): void
+    public function it_should_implement_table_rate_resolver_interface(): void
     {
         $this->shouldImplement(TableRateResolverInterface::class);
     }
 
-    function it_should_resolve_table_rate_from_shipment(
+    public function it_should_resolve_table_rate_from_shipment(
         ShipmentInterface $shipment,
         OrderInterface $order,
         ChannelInterface $channel,
@@ -38,12 +38,12 @@ class TableRateResolverSpec extends ObjectBehavior
         $channel->getCode()->willReturn('CHANNEL_CODE');
         $tableRate->getCode()->willReturn('TABLE_RATE_CODE');
         $tableRateRepository->findOneBy(['code' => 'TABLE_RATE_CODE'])->willReturn($tableRate);
-        $calculatorConfig = ['CHANNEL_CODE' => ['table_rate' => $tableRate]];
+        $calculatorConfig = ['CHANNEL_CODE' => ['table_rate' => 'TABLE_RATE_CODE']];
 
         $this->resolve($shipment, $calculatorConfig)->shouldReturn($tableRate);
     }
 
-    function it_throws_a_missing_channel_configuration_exception_if_the_order_channel_is_not_configured(
+    public function it_throws_a_missing_channel_configuration_exception_if_the_order_channel_is_not_configured(
         ShipmentInterface $shipment,
         OrderInterface $order,
         ChannelInterface $channel,

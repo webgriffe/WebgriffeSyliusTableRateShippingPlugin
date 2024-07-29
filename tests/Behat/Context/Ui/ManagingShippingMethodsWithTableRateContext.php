@@ -23,7 +23,7 @@ final class ManagingShippingMethodsWithTableRateContext implements Context
     public function iShouldBeAbleToChooseOnlyTheTableRateForTheChannel(
         ShippingTableRate $shippingTableRate,
         ChannelInterface $channel
-    ) {
+    ): void {
         /** @var NodeElement[] $options */
         $options = $this->updatePage->getTableRateOptions($channel->getCode());
         Assert::count($options, 1);
