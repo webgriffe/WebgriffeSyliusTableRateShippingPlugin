@@ -41,7 +41,7 @@ Feature: Managing table rates
   @ui
   Scenario: Updating a table rate
     Given the store has a shipping table rate "East Coast Rates" for currency "USD"
-    And this shipping table rate has a rate "$5" for shipments up to 1000 kg
+    And this shipping table rate has a rate "$5.00" for shipments up to 1000 kg
     And I want to modify the "East Coast Rates" table rate
     When I change its name to "Edited Rates"
     And I save my changes
@@ -52,8 +52,8 @@ Feature: Managing table rates
   Scenario: Adding weight rates into a table rate
     Given the store has a shipping table rate "East Coast Rates" for currency "USD"
     And I want to modify the "East Coast Rates" table rate
-    When I add a new rate of "$5" for shipments up to 5 kg
-    And I add a new rate of "$10" for shipments up to 20 kg
+    When I add a new rate of "$5.00" for shipments up to 5 kg
+    And I add a new rate of "$10.00" for shipments up to 20 kg
     And I save my changes
     Then I should be notified that it has been successfully edited
     And this shipping table rate should have 2 rates
@@ -63,21 +63,21 @@ Feature: Managing table rates
     When I try to add a new shipping table
     And I specify its code as "VALIDATE_ME"
     And I specify its currency as "USD"
-    And I add a new rate of "$10" for shipments up to 20 kg
+    And I add a new rate of "$10.00" for shipments up to 20 kg
     But I do not specify its name
     And I try to add it
     Then I should be notified that name is required
     When I try to add a new shipping table
     And I specify its name as "Validate Me"
     And I specify its currency as "USD"
-    And I add a new rate of "$10" for shipments up to 20 kg
+    And I add a new rate of "$10.00" for shipments up to 20 kg
     But I do not specify its code
     And I try to add it
     Then I should be notified that code is required
     When I try to add a new shipping table
     And I specify its code as "VALIDATE_ME"
     And I specify its name as "Validate Me"
-    And I add a new rate of "$10" for shipments up to 20 kg
+    And I add a new rate of "$10.00" for shipments up to 20 kg
     But I do not specify its currency
     And I try to add it
     Then I should be notified that currency is required
@@ -92,7 +92,7 @@ Feature: Managing table rates
   @ui
   Scenario: Trying to change table rate code (even if its field is disabled)
     Given the store has a shipping table rate "East Coast Rates" for currency "USD"
-    And this shipping table rate has a rate "$5" for shipments up to 1000 kg
+    And this shipping table rate has a rate "$5.00" for shipments up to 1000 kg
     And I want to modify the "East Coast Rates" table rate
     Then the code field should be disabled
     When I change its code to "ANOTHER_CODE"
@@ -103,7 +103,7 @@ Feature: Managing table rates
   Scenario: Trying to change table rate currency (even if its field is disabled)
     Given the store also operates on another channel named "Europe" in "EUR" currency
     And the store has a shipping table rate "East Coast Rates" for currency "USD"
-    And this shipping table rate has a rate "$5" for shipments up to 1000 kg
+    And this shipping table rate has a rate "$5.00" for shipments up to 1000 kg
     And I want to modify the "East Coast Rates" table rate
     Then the currency field should be disabled
     When I change its currency to "EUR"

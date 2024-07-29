@@ -17,46 +17,46 @@ use Prophecy\Argument;
 
 class TableRateDeleteSubscriberSpec extends ObjectBehavior
 {
-    function let(ShippingMethodRepositoryInterface $shippingMethodRepository)
+    public function let(ShippingMethodRepositoryInterface $shippingMethodRepository): void
     {
         $this->beConstructedWith($shippingMethodRepository);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(TableRateDeleteSubscriber::class);
     }
 
-    function it_should_implement_event_subscriber_interface()
+    public function it_should_implement_event_subscriber_interface(): void
     {
         $this->shouldImplement(EventSubscriberInterface::class);
     }
 
-    function it_should_subscribe_to_table_rate_pre_delete_event()
+    public function it_should_subscribe_to_table_rate_pre_delete_event(): void
     {
         self::getSubscribedEvents()->shouldReturn(
             ['webgriffe.shipping_table_rate.pre_delete' => 'onTableRatePreDelete']
         );
     }
 
-    function it_should_stop_event_if_table_rate_is_already_in_use(
+    public function it_should_stop_event_if_table_rate_is_already_in_use(
         ResourceControllerEvent $event,
         ShippingMethodRepositoryInterface $shippingMethodRepository
-    ) {
+    ): void {
         $tableRate = new ShippingTableRate();
         $tableRate->setCode('TABLE_RATE');
         $anotherTableRate = new ShippingTableRate();
         $anotherTableRate->setCode('ANOTHER_RATE');
         $shippingMethod1 = new ShippingMethod();
         $shippingMethod1->setCode('METHOD1');
-        $shippingMethod1->setConfiguration(['WEB-US' => ['table_rate' => $tableRate]]);
+        $shippingMethod1->setConfiguration(['WEB-US' => ['table_rate' => 'TABLE_RATE']]);
         $shippingMethod2 = new ShippingMethod();
         $shippingMethod2->setCode('METHOD2');
-        $shippingMethod2->setConfiguration(['WEB-US' => ['table_rate' => $anotherTableRate]]);
+        $shippingMethod2->setConfiguration(['WEB-US' => ['table_rate' => 'ANOTHER_RATE']]);
         $shippingMethod3 = new ShippingMethod();
         $shippingMethod3->setCode('METHOD3');
         $shippingMethod3->setConfiguration(
-            ['WEB-US' => ['table_rate' => $anotherTableRate], 'WEB-EU' => ['table_rate' => $tableRate]]
+            ['WEB-US' => ['table_rate' => 'ANOTHER_RATE'], 'WEB-EU' => ['table_rate' => 'TABLE_RATE']]
         );
         $shippingMethodRepository
             ->findBy(['calculator' => TableRateShippingCalculator::TYPE])
@@ -76,11 +76,11 @@ class TableRateDeleteSubscriberSpec extends ObjectBehavior
         $this->onTableRatePreDelete($event);
     }
 
-    function it_should_not_stop_event_if_table_rate_is_not_in_use(
+    public function it_should_not_stop_event_if_table_rate_is_not_in_use(
         ShippingTableRate $shippingTableRate,
         ResourceControllerEvent $event,
         ShippingMethodRepositoryInterface $shippingMethodRepository
-    ) {
+    ): void {
         $event->getSubject()->willReturn($shippingTableRate);
         $shippingMethodRepository
             ->findBy(['calculator' => TableRateShippingCalculator::TYPE])

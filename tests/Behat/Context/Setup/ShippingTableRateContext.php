@@ -89,7 +89,7 @@ final class ShippingTableRateContext implements Context
             'zone' => $this->getShippingZone(),
             'calculator' => [
                 'type' => TableRateShippingCalculator::TYPE,
-                'configuration' => [$channel->getCode() => ['table_rate' => $shippingTableRate]],
+                'configuration' => [$channel->getCode() => [TableRateShippingCalculator::TYPE => $shippingTableRate->getCode()]],
             ],
             'channels' => [$channel],
         ]);

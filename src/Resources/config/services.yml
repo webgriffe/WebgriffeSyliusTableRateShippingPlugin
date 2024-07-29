@@ -36,6 +36,8 @@ services:
             - { name: form.type }
 
     Webgriffe\SyliusTableRateShippingPlugin\Form\Type\Shipping\Calculator\TableRateConfigurationType:
+        arguments:
+            - '@webgriffe.repository.shipping_table_rate'
         tags:
             - { name: form.type }
 

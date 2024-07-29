@@ -33,9 +33,9 @@ class TableRateDeleteSubscriber implements EventSubscriberInterface
         /** @var ShippingMethod $shippingMethod */
         foreach ($shippingMethods as $shippingMethod) {
             foreach ($shippingMethod->getConfiguration() as $channelConfiguration) {
-                /** @var ShippingTableRate|null $channelTableRate */
-                $channelTableRate = $channelConfiguration['table_rate'] ?? null;
-                if ($channelTableRate !== null && $channelTableRate->getCode() === $shippingTableRate->getCode()) {
+                /** @var string|null $channelTableRateCode */
+                $channelTableRateCode = $channelConfiguration['table_rate'] ?? null;
+                if ($channelTableRateCode !== null && $channelTableRateCode === $shippingTableRate->getCode()) {
                     $foundMethods[] = $shippingMethod->getCode();
                 }
             }

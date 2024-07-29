@@ -29,7 +29,7 @@ final class TableRateResolver implements TableRateResolverInterface
         $channel = $order->getChannel();
         if (null === $channel) {
             throw new \RuntimeException(
-                'Cannot resolve a table rate, there\'s no channel for this shipment\'s order.'
+                'Cannot resolve a table rate, there\'s no channel for this shipment\'s order.',
             );
         }
         $channelCode = $channel->getCode();
@@ -40,8 +40,8 @@ final class TableRateResolver implements TableRateResolverInterface
                 throw new MissingChannelConfigurationException(
                     sprintf(
                         'This shipment has no configuration for channel "%s".',
-                        $channel->getName()
-                    )
+                        $channel->getName(),
+                    ),
                 );
             }
 
@@ -49,14 +49,14 @@ final class TableRateResolver implements TableRateResolverInterface
                 sprintf(
                     'Shipping method "%s" has no configuration for channel "%s".',
                     $shippingMethod->getName(),
-                    $channel->getName()
-                )
+                    $channel->getName(),
+                ),
             );
         }
 
-        /** @var ShippingTableRate $tableRate */
-        $tableRate = $calculatorConfig[$channelCode][TableRateConfigurationType::TABLE_RATE_FIELD_NAME];
-        $tableRate = $this->tableRateRepository->findOneBy(['code' => $tableRate->getCode()]);
+        /** @var string $tableRateCode */
+        $tableRateCode = $calculatorConfig[$channelCode][TableRateConfigurationType::TABLE_RATE_FIELD_NAME];
+        $tableRate = $this->tableRateRepository->findOneBy(['code' => $tableRateCode]);
         Assert::isInstanceOf($tableRate, ShippingTableRate::class);
 
         return $tableRate;
