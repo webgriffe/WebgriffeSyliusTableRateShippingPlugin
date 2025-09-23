@@ -68,17 +68,25 @@ To contribute you need to:
 
 4. Then, from the plugin's root directory, run the following commands:
 
-   ```bash
-   (cd tests/Application && yarn install)
-   (cd tests/Application && yarn build)
-   (cd tests/Application && bin/console assets:install public)
-   (cd tests/Application && bin/console doctrine:database:create)
-   (cd tests/Application && bin/console doctrine:schema:create)
-   (cd tests/Application && bin/console sylius:fixtures:load)
-   (cd tests/Application && symfony server:start -d) # Requires Symfony CLI (https://symfony.com/download)
-   ```
+    ```bash
+    (cd vendor/sylius/test-application && yarn install)
+    (cd vendor/sylius/test-application && yarn build)
+    vendor/bin/console assets:install
+   
+    vendor/bin/console doctrine:database:create
+    vendor/bin/console doctrine:migrations:migrate -n
+    # Optionally load data fixtures
+    vendor/bin/console sylius:fixtures:load -n
+    ```
 
-5. Now at http://localhost:8080/ you have a full Sylius testing application which runs the plugin
+5. Run your local server:
+
+      ```bash
+      symfony server:ca:install
+      symfony server:start -d
+      ```
+
+6. Now at http://localhost:8080/ you have a full Sylius testing application which runs the plugin
 
 ### Testing
 
@@ -87,12 +95,14 @@ After your changes you must ensure that the tests are still passing.
 First setup your test database:
 
     ```bash
-    (cd tests/Application && bin/console -e test doctrine:database:create)
-    (cd tests/Application && bin/console -e test doctrine:schema:create)
+    APP_ENV=test vendor/bin/console doctrine:database:create
+    APP_ENV=test vendor/bin/console doctrine:migrations:migrate -n
+    # Optionally load data fixtures
+    APP_ENV=test vendor/bin/console sylius:fixtures:load -n
     ```
 
 This plugin's test application already comes with a test configuration that uses SQLite as test database.
-If you don't want this you can create a `tests/Application/.env.test.local` with a different `DATABASE_URL`.
+If you don't want this you can create a `tests/TestApplication/.env.test.local` with a different `DATABASE_URL`.
 
 The current CI suite runs the following tests:
 

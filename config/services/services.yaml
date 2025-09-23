@@ -1,0 +1,53 @@
+parameters:
+    webgriffe.form.type.shipping_table_rate.validation_groups: ['sylius']
+
+services:
+    Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculator:
+        arguments:
+            - '@Webgriffe\SyliusTableRateShippingPlugin\Resolver\TableRateResolverInterface'
+        tags:
+            -
+                name: sylius.shipping_calculator
+                calculator: !php/const Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculator::TYPE
+                label: 'webgriffe_sylius_table_rate_plugin.ui.calculator_configuration.table_rate.label'
+                form_type: Webgriffe\SyliusTableRateShippingPlugin\Form\Type\Shipping\Calculator\ChannelBasedTableRateConfigurationType
+
+    Webgriffe\SyliusTableRateShippingPlugin\Checker\TableRateShippingMethodEligibilityChecker:
+        decorates: sylius.checker.shipping_method.rules_eligibility
+        arguments:
+            - '@Webgriffe\SyliusTableRateShippingPlugin\Checker\TableRateShippingMethodEligibilityChecker.inner'
+            - '@Webgriffe\SyliusTableRateShippingPlugin\Resolver\TableRateResolverInterface'
+        tags:
+            - {name: 'sylius.shipping_method_eligibility_checker'}
+
+    Webgriffe\SyliusTableRateShippingPlugin\Menu\AdminMenuListener:
+        tags:
+            - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems }
+
+    Webgriffe\SyliusTableRateShippingPlugin\Form\Type\ShippingTableRateType:
+        arguments:
+            - '%webgriffe.model.shipping_table_rate.class%'
+            - '%webgriffe.form.type.shipping_table_rate.validation_groups%'
+        tags:
+            - { name: form.type }
+
+    Webgriffe\SyliusTableRateShippingPlugin\Form\Type\Shipping\Calculator\ChannelBasedTableRateConfigurationType:
+        tags:
+            - { name: form.type }
+
+    Webgriffe\SyliusTableRateShippingPlugin\Form\Type\Shipping\Calculator\TableRateConfigurationType:
+        arguments:
+            - '@webgriffe.repository.shipping_table_rate'
+        tags:
+            - { name: form.type }
+
+    Webgriffe\SyliusTableRateShippingPlugin\EventSubscriber\TableRateDeleteSubscriber:
+        arguments:
+            - '@sylius.repository.shipping_method'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Webgriffe\SyliusTableRateShippingPlugin\Resolver\TableRateResolverInterface:
+        class: Webgriffe\SyliusTableRateShippingPlugin\Resolver\TableRateResolver
+        arguments:
+            - '@webgriffe.repository.shipping_table_rate'
