@@ -51,3 +51,13 @@ services:
         class: Webgriffe\SyliusTableRateShippingPlugin\Resolver\TableRateResolver
         arguments:
             - '@webgriffe.repository.shipping_table_rate'
+
+    app_admin.twig.component.shipping_table_rate.form:
+        class: Sylius\Bundle\UiBundle\Twig\Component\ResourceFormComponent
+        arguments:
+            - '@webgriffe.repository.shipping_table_rate'
+            - '@form.factory'
+            - '%webgriffe.model.shipping_table_rate.class%'
+            - 'Webgriffe\SyliusTableRateShippingPlugin\Form\Type\ShippingTableRateType'
+        tags:
+            - { name: 'sylius.live_component.admin', key: 'app_admin:twig:component:shipping_table_rate:form' }

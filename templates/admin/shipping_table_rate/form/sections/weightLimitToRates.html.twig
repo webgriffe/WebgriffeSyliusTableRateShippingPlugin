@@ -1,0 +1,36 @@
+{{ form_label(hookable_metadata.context.form.weightLimitToRate) }}
+{{ form_errors(hookable_metadata.context.form.weightLimitToRate) }}
+
+<div {{ sylius_test_html_attribute('weightLimitToRate') }}>
+    {% for weightLimitToRate_form in hookable_metadata.context.form.weightLimitToRate %}
+        <div class="card mb-2" {{ sylius_test_html_attribute('weightLimitToRate') }}>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            {{ form_label(weightLimitToRate_form.weightLimit, null, {label_attr: {class: 'col-form-label col-auto'}}) }}
+                            <div class="col">
+                                {{ form_widget(weightLimitToRate_form.weightLimit, sylius_test_form_attribute('weightLimitToRate-weightLimit')) }}
+                                {{ form_errors(weightLimitToRate_form.weightLimit) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            {{ form_label(weightLimitToRate_form.rate, null, {label_attr: {class: 'col-form-label col-auto'}}) }}
+                            <div class="col">
+                                {{ form_widget(weightLimitToRate_form.rate, sylius_test_form_attribute('weightLimitToRate-rate')) }}
+                                {{ form_errors(weightLimitToRate_form.rate) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto" {{ sylius_test_html_attribute('delete-weightLimitToRate') }}>
+                        {{ form_row(weightLimitToRate_form.vars.button_delete, {attr: {class: 'btn btn-outline-danger'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{{ form_widget(hookable_metadata.context.form.weightLimitToRate.vars.button_add, sylius_test_form_attribute('add-weightLimitToRate')) }}

@@ -1,3 +1,6 @@
+imports:
+    - { resource: 'twig_hooks/**/*.yaml' }
+
 sylius_resource:
     resources:
         webgriffe.shipping_table_rate:

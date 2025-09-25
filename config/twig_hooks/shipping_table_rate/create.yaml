@@ -1,0 +1,42 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.shipping_table_rate.create.content':
+            form:
+                component: 'app_admin:twig:component:shipping_table_rate:form'
+                props:
+                    resource: '@=_context.resource'
+                    form: '@=_context.form'
+                    template: '@WebgriffeSyliusTableRateShippingPlugin/admin/shipping_table_rate/form.html.twig'
+                priority: 0
+
+        'sylius_admin.shipping_table_rate.create.content.form':
+            sections:
+                template: '@WebgriffeSyliusTableRateShippingPlugin/admin/shipping_table_rate/form/sections.html.twig'
+                priority: 0
+
+        'sylius_admin.shipping_table_rate.create.content.form.sections':
+            general:
+                template: '@WebgriffeSyliusTableRateShippingPlugin/admin/shipping_table_rate/form/sections/general.html.twig'
+                priority: 0
+
+        'sylius_admin.shipping_table_rate.create.content.form.sections.general':
+            default:
+                enabled: false
+            code:
+                template: '@WebgriffeSyliusTableRateShippingPlugin/admin/shared/crud/form/field.html.twig'
+                priority: 200
+                configuration:
+                    field: code
+            name:
+                template: '@WebgriffeSyliusTableRateShippingPlugin/admin/shared/crud/form/field.html.twig'
+                priority: 200
+                configuration:
+                    field: name
+            currency:
+                template: '@WebgriffeSyliusTableRateShippingPlugin/admin/shared/crud/form/field.html.twig'
+                priority: 200
+                configuration:
+                    field: currency
+            weightLimitToRate:
+                template: '@WebgriffeSyliusTableRateShippingPlugin/admin/shipping_table_rate/form/sections/weightLimitToRates.html.twig'
+                priority: 0

@@ -9,6 +9,7 @@ use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 use Webgriffe\SyliusTableRateShippingPlugin\Form\EventSubscriber\AddCurrencySubscriber;
 
 final class ShippingTableRateType extends AbstractResourceType
@@ -22,12 +23,13 @@ final class ShippingTableRateType extends AbstractResourceType
             ->add('name', TextType::class, ['label' => $messagesNamespace . 'name'])
             ->add(
                 'weightLimitToRate',
-                CollectionType::class,
+                LiveCollectionType::class,
                 [
+                    'entry_type' => WeightLimitToRateType::class,
                     'label' => $messagesNamespace . 'weightLimitToRate.label',
                     'allow_add' => true,
                     'allow_delete' => true,
-                    'entry_type' => WeightLimitToRateType::class,
+                    'by_reference' => false,
                 ],
             )
         ;
