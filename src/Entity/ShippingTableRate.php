@@ -5,36 +5,22 @@ declare(strict_types=1);
 namespace Webgriffe\SyliusTableRateShippingPlugin\Entity;
 
 use Sylius\Component\Currency\Model\CurrencyInterface;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 use Webgriffe\SyliusTableRateShippingPlugin\Exception\RateNotFoundException;
 
 /**
- * @UniqueEntity("code", groups={"sylius"})
- *
  * @psalm-api
  */
 class ShippingTableRate implements ShippingTableRateInterface
 {
     protected ?int $id = null;
 
-    /** @Assert\NotBlank(groups={"sylius"}) */
     protected ?string $code = null;
 
-    /** @Assert\NotBlank(groups={"sylius"}) */
     protected ?string $name = null;
 
-    /** @Assert\NotBlank(groups={"sylius"}) */
     protected ?CurrencyInterface $currency = null;
 
-    /**
-     * @var array<array{weightLimit: float, rate: int}>
-     *
-     * @Assert\NotBlank(
-     *     groups={"sylius"},
-     *     message="webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.weightLimitToRate.not_blank"
-     * )
-     */
+    /** @var array<array{weightLimit: float, rate: int}> */
     protected array $weightLimitToRate = [];
 
     #[\Override]
