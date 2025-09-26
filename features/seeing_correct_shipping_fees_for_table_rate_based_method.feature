@@ -13,31 +13,32 @@ Feature: Seeing correct shipping fees for table rate based shipping methods
         And the store has "Basic" shipping method using "Weight-based" table rate for "United States" channel
         And I am a logged in customer
 
-    @ui
+    @ui @javascript
     Scenario: Seeing correct shipping fee for the light shipment
         When I add product "Bottle of water" to the cart
         Then my cart shipping total should be "$5.00"
 
-    @ui
+    @ui @javascript
     Scenario: Seeing correct shipping fee for the exact upper limit of the lighter shipment
         When I add 5 products "Bottle of water" to the cart
         Then my cart shipping total should be "$5.00"
 
-    @ui
+    @ui @javascript
     Scenario: Seeing correct shipping fee for the heavier shipment
         When I add 15 products "Bottle of water" to the cart
         Then my cart shipping total should be "$10.00"
 
-    @ui
+    @ui @javascript
     Scenario: Seeing no shipping methods for too heavy shipment
         When I add 25 products "Bottle of water" to the cart
         Then I should not see shipping total for my cart
         And I should have no shipping methods available to choose from
 
-    @ui
+    @ui @javascript
     Scenario: Seeing no shipping methods for too heavy shipment when increasing product quantity from the shopping cart
         When I add product "Bottle of water" to the cart
         Then my cart shipping total should be "$5.00"
         When I change "Bottle of water" quantity to "25"
+        And I check the details of my cart
         Then my cart shipping total should be "$0.00"
         And I should have no shipping methods available to choose from
