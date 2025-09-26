@@ -153,7 +153,7 @@ jobs:
 
             -
                 name: Validate database schema
-                run: (cd tests/TestApplication && vendor/bin/console doctrine:schema:validate)
+                run: vendor/bin/console doctrine:schema:validate
 
             -
                 name: Run PHPStan
