@@ -46,6 +46,7 @@ final class TableRateConfigurationType extends AbstractType implements DataMappe
                 'placeholder' => $messagesNamespace . 'table_rate.placeholder',
                 'class' => ShippingTableRate::class,
                 'query_builder' => function (EntityRepository $entityRepository) use ($currency): QueryBuilder {
+                    /** @psalm-suppress QueryBuilderSetParameter */
                     return $entityRepository
                         ->createQueryBuilder('tr')
                         ->where('tr.currency = :currency')

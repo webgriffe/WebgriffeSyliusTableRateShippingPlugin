@@ -15,6 +15,7 @@
     <plugins>
         <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin">
             <containerXml>var/cache/dev/Sylius_TestApplication_KernelDevDebugContainer.xml</containerXml>
+            <containerXml>var/cache/test/Sylius_TestApplication_KernelTestDebugContainer.xml</containerXml>
         </pluginClass>
     </plugins>
 </psalm>
