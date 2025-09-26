@@ -6,6 +6,8 @@ namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui;
 
 use Behat\Behat\Context\Context;
 use FriendsOfBehat\PageObjectExtension\Page\UnexpectedPageException;
+use Sylius\Behat\Element\Admin\NotificationsElementInterface;
+use Sylius\Behat\NotificationType;
 use Sylius\Component\Core\Formatter\StringInflector;
 use Sylius\Component\Core\Model\ShippingMethod;
 use Sylius\Component\Currency\Model\CurrencyInterface;
@@ -21,6 +23,7 @@ class ManagingTableRatesContext implements Context
         private IndexPageInterface $indexPage,
         private CreatePageInterface $createPage,
         private UpdatePageInterface $updatePage,
+        private NotificationsElementInterface $notificationsElement,
     ) {
     }
 
@@ -268,7 +271,7 @@ class ManagingTableRatesContext implements Context
      */
     public function iShouldBeNotifiedThatCodeHasToBeUnique(): void
     {
-        Assert::same($this->createPage->getValidationMessage('code'), 'There\'s another shipping table rate with the same code. The code has to be unique.');
+        Assert::same($this->createPage->getValidationMessage('code'), 'This value is already used.');
     }
 
     /**
@@ -277,10 +280,8 @@ class ManagingTableRatesContext implements Context
     public function iShouldBeNotifiedThatTheTableRateCouldntBeDeletedBecauseIsAlreadyUsedByTheShippingMethod(
         ShippingMethod $shippingMethod,
     ): void {
-        Assert::contains(
-            $this->indexPage->getValidationMessage(),
-            'The table rate cannot be deleted because is currently used by the following shipping methods: ' .
-            $shippingMethod->getCode(),
+        Assert::true(
+            $this->notificationsElement->hasNotification((string) NotificationType::error(), 'The table rate cannot be deleted because is currently used by the following shipping methods: '),
         );
     }
 

@@ -29,6 +29,7 @@ services:
             - '@Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\IndexPageInterface'
             - '@Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\CreatePageInterface'
             - '@Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate\UpdatePageInterface'
+            - '@sylius.behat.element.admin.notifications'
 
     Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ManagingShippingMethodsWithTableRateContext:
         arguments:
