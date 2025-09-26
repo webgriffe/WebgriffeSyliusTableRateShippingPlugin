@@ -64,7 +64,7 @@ To contribute you need to:
    composer install
    ```
 
-3. Copy `tests/Application/.env` in `tests/Application/.env.local` and set configuration specific for your development environment.
+3. Copy `tests/TestApplication/.env` in `tests/TestApplication/.env.local` and set configuration specific for your development environment.
 
 4. Then, from the plugin's root directory, run the following commands:
 
@@ -160,7 +160,7 @@ To run Behat's Javascript scenarios you need to setup Selenium and Chromedriver.
 
       ```bash
       symfony server:ca:install
-      APP_ENV=test symfony server:start --port=8080 --dir=tests/Application/public --daemon
+      APP_ENV=test symfony server:start --port=8080 --dir=tests/TestApplication/public --daemon
       ```
 
 License
