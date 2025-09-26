@@ -36,6 +36,7 @@ final class ShippingTableRateContext implements Context
      */
     public function transformShippingTableRate(string $name): ShippingTableRate
     {
+        /** @var ShippingTableRate[] $shippingTableRates */
         $shippingTableRates = $this->shippingTableRateRepository->findBy(['name' => $name]);
 
         Assert::count(

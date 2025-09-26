@@ -8,9 +8,9 @@ use Sylius\Behat\Page\Admin\Crud\UpdatePageInterface as BaseUpdatePageInterface;
 
 interface UpdatePageInterface extends BaseUpdatePageInterface
 {
-    public function addRate(int $rate, int $weightLimit);
+    public function addRate(int $rate, int $weightLimit): void;
 
-    public function isCodeDisabled();
+    public function isCodeDisabled(): bool;
 
     public function isCurrencyDisabled(): bool;
 }

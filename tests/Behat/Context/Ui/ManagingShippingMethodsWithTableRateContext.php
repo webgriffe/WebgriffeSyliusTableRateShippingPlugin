@@ -24,8 +24,11 @@ final class ManagingShippingMethodsWithTableRateContext implements Context
         ShippingTableRate $shippingTableRate,
         ChannelInterface $channel,
     ): void {
+        $channelCode = $channel->getCode();
+        Assert::notNull($channelCode);
+
         /** @var NodeElement[] $options */
-        $options = $this->updatePage->getTableRateOptions($channel->getCode());
+        $options = $this->updatePage->getTableRateOptions($channelCode);
         Assert::count($options, 1);
         Assert::eq($options[0]->getAttribute('value'), $shippingTableRate->getCode());
     }

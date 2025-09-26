@@ -7,6 +7,7 @@ namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate;
 use Behat\Mink\Element\NodeElement;
 use Sylius\Behat\Behaviour\ChecksCodeImmutability;
 use Sylius\Behat\Page\Admin\Crud\UpdatePage as BaseUpdatePage;
+use Webmozart\Assert\Assert;
 
 final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 {
@@ -20,16 +21,23 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
         );
     }
 
-    public function addRate(int $rate, int $weightLimit)
+    public function addRate(int $rate, int $weightLimit): void
     {
         $weightLimitToRateField = $this->getDocument()->findById(
             'webgriffe_sylius_table_rate_plugin_shipping_table_rate_weightLimitToRate',
         );
+        Assert::notNull($weightLimitToRateField, 'Weight limit to rate field not found on the page');
+
         $addRateButton = $weightLimitToRateField->findLink('Add');
+        Assert::notNull($addRateButton, 'Add rate button not found on the page');
+
         $addRateButton->click();
+
         $item = $weightLimitToRateField->find('css', '[data-form-collection=item]:last-child');
-        $item->fillField('Weight limit', $weightLimit);
-        $item->fillField('Rate', $rate / 100);
+        Assert::notNull($item, 'Added rate item not found on the page');
+
+        $item->fillField('Weight limit', (string) $weightLimit);
+        $item->fillField('Rate', number_format($rate, 2, '.', ''));
     }
 
     /**

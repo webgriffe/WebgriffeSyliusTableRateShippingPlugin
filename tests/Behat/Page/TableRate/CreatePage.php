@@ -6,10 +6,11 @@ namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate;
 
 use Sylius\Behat\Page\Admin\Crud\CreatePage as BaseCreatePage;
 use Sylius\Component\Currency\Model\CurrencyInterface;
+use Webmozart\Assert\Assert;
 
 class CreatePage extends BaseCreatePage implements CreatePageInterface
 {
-    public static function getCreateUpdatePageDefinedElements()
+    public static function getCreateUpdatePageDefinedElements(): array
     {
         return [
             'form' => 'form[name="webgriffe_sylius_table_rate_plugin_shipping_table_rate"]',
@@ -28,35 +29,49 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
         );
     }
 
-    public function fillCode(string $code)
+    public function fillCode(string $code): void
     {
         $this->getDocument()->fillField('Code', $code);
     }
 
-    public function fillName(string $name)
+    public function fillName(string $name): void
     {
         $this->getDocument()->fillField('Name', $name);
     }
 
-    public function fillCurrency(?CurrencyInterface $currency)
+    public function fillCurrency(?CurrencyInterface $currency): void
     {
-        $this->getDocument()->selectFieldOption('Currency', $currency ? $currency->getCode() : '');
+        $code = $currency?->getCode();
+        $this->getDocument()->selectFieldOption('Currency', $code !== null ? $code : '');
     }
 
     public function getFormValidationMessage(): string
     {
-        return trim($this->getElement('form')->find('css', '.sylius-validation-error')->getText());
+        $text = $this->getElement('form')->find('css', '.sylius-validation-error')?->getText();
+        if ($text === null) {
+            return '';
+        }
+
+        return trim($text);
     }
 
-    public function addRate(int $rate, int $weightLimit)
+    public function addRate(int $rate, int $weightLimit): void
     {
         $weightLimitToRateField = $this->getDocument()->findById(
             'webgriffe_sylius_table_rate_plugin_shipping_table_rate_weightLimitToRate',
         );
+        Assert::notNull($weightLimitToRateField, 'Weight limit to rate field not found on the page');
+
         $addRateButton = $weightLimitToRateField->findLink('Add');
+        Assert::notNull($addRateButton, 'Add rate button not found on the page');
+
         $addRateButton->click();
+
         $item = $weightLimitToRateField->find('css', '[data-form-collection=item]:last-child');
-        $item->fillField('Weight limit', $weightLimit);
-        $item->fillField('Rate', $rate / 100);
+        Assert::notNull($item, 'Added rate item not found on the page');
+
+        $item->fillField('Weight limit', (string) $weightLimit);
+        $value = $rate / 100;
+        $item->fillField('Rate', number_format($value, 2, '.', ''));
     }
 }
