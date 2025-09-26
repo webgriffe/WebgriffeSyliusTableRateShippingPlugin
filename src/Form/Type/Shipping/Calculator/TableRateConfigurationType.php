@@ -6,6 +6,7 @@ namespace Webgriffe\SyliusTableRateShippingPlugin\Form\Type\Shipping\Calculator;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -26,14 +27,14 @@ final class TableRateConfigurationType extends AbstractType implements DataMappe
     ) {
     }
 
-    public const TABLE_RATE_FIELD_NAME = 'table_rate';
+    public const string TABLE_RATE_FIELD_NAME = 'table_rate';
 
     #[\Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $messagesNamespace = 'webgriffe_sylius_table_rate_plugin.ui.calculator_configuration.';
         $currency = $options['currency'] ?? null;
-        if (!is_string($currency)) {
+        if (!($currency instanceof CurrencyInterface)) {
             throw new \InvalidArgumentException('The "currency" option is required and must be a string.');
         }
 
