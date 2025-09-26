@@ -3,8 +3,7 @@
 namespace spec\Webgriffe\SyliusTableRateShippingPlugin\Checker;
 
 use Sylius\Component\Core\Model\ShipmentInterface;
-use Sylius\Component\Shipping\Calculator\CalculatorInterface;
-use Sylius\Component\Shipping\Checker\ShippingMethodEligibilityCheckerInterface;
+use Sylius\Component\Shipping\Checker\Eligibility\ShippingMethodEligibilityCheckerInterface;
 use Sylius\Component\Shipping\Model\ShippingMethodInterface;
 use PhpSpec\ObjectBehavior;
 use Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculator;
