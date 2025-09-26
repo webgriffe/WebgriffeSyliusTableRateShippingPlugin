@@ -6,26 +6,22 @@ namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate;
 
 use Sylius\Behat\Page\Admin\Crud\CreatePage as BaseCreatePage;
 use Sylius\Component\Currency\Model\CurrencyInterface;
-use Webmozart\Assert\Assert;
 
 class CreatePage extends BaseCreatePage implements CreatePageInterface
 {
-    public static function getCreateUpdatePageDefinedElements(): array
-    {
-        return [
-            'form' => 'form[name="webgriffe_sylius_table_rate_plugin_shipping_table_rate"]',
-            'code' => '#webgriffe_sylius_table_rate_plugin_shipping_table_rate_code',
-            'name' => '#webgriffe_sylius_table_rate_plugin_shipping_table_rate_name',
-            'currency' => '#webgriffe_sylius_table_rate_plugin_shipping_table_rate_currency',
-            'weightLimitToRate' => '#webgriffe_sylius_table_rate_plugin_shipping_table_rate_weightLimitToRate',
-        ];
-    }
-
     protected function getDefinedElements(): array
     {
         return array_merge(
             parent::getDefinedElements(),
-            self::getCreateUpdatePageDefinedElements(),
+            [
+                'form' => 'form[name="webgriffe_sylius_table_rate_plugin_shipping_table_rate"]',
+                'code' => '[data-test-code]',
+                'name' => '[data-test-name]',
+                'currency' => '[data-test-currency]',
+                'weightlimittorates' => '[data-test-weightlimittorate]',
+                'last_weightlimittorate' => '[data-test-weightlimittorate] [data-test-weightlimittorate]:last-child',
+                'add_weightlimittorate' => '[data-test-add-weightlimittorate]',
+            ],
         );
     }
 
@@ -47,7 +43,7 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
 
     public function getFormValidationMessage(): string
     {
-        $text = $this->getElement('form')->find('css', '.sylius-validation-error')?->getText();
+        $text = $this->getElement('form')->find('css', '.alert-danger')?->getText();
         if ($text === null) {
             return '';
         }
@@ -57,21 +53,18 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
 
     public function addRate(int $rate, int $weightLimit): void
     {
-        $weightLimitToRateField = $this->getDocument()->findById(
-            'webgriffe_sylius_table_rate_plugin_shipping_table_rate_weightLimitToRate',
-        );
-        Assert::notNull($weightLimitToRateField, 'Weight limit to rate field not found on the page');
+        $count = count($this->getWeightLimitToRates());
+        $this->getElement('add_weightlimittorate')->click();
+        $this->getDocument()->waitFor(5, fn () => $count + 1 === count($this->getWeightLimitToRates()));
 
-        $addRateButton = $weightLimitToRateField->findLink('Add');
-        Assert::notNull($addRateButton, 'Add rate button not found on the page');
-
-        $addRateButton->click();
-
-        $item = $weightLimitToRateField->find('css', '[data-form-collection=item]:last-child');
-        Assert::notNull($item, 'Added rate item not found on the page');
-
-        $item->fillField('Weight limit', (string) $weightLimit);
+        $weightLimitToRate = $this->getElement('last_weightlimittorate');
+        $weightLimitToRate->fillField('Weight limit', (string) $weightLimit);
         $value = $rate / 100;
-        $item->fillField('Rate', number_format($value, 2, '.', ''));
+        $weightLimitToRate->fillField('Rate', number_format($value, 2, '.', ''));
+    }
+
+    protected function getWeightLimitToRates(): array
+    {
+        return $this->getElement('weightlimittorates')->findAll('css', '[data-test-weightlimittorate]');
     }
 }

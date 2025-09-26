@@ -7,7 +7,6 @@ namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Page\TableRate;
 use Behat\Mink\Element\NodeElement;
 use Sylius\Behat\Behaviour\ChecksCodeImmutability;
 use Sylius\Behat\Page\Admin\Crud\UpdatePage as BaseUpdatePage;
-use Webmozart\Assert\Assert;
 
 final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 {
@@ -17,42 +16,42 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
     {
         return array_merge(
             parent::getDefinedElements(),
-            CreatePage::getCreateUpdatePageDefinedElements(),
+            [
+                'form' => 'form[name="webgriffe_sylius_table_rate_plugin_shipping_table_rate"]',
+                'code' => '[data-test-code]',
+                'name' => '[data-test-name]',
+                'currency' => '[data-test-currency]',
+                'weightlimittorates' => '[data-test-weightlimittorate]',
+                'last_weightlimittorate' => '[data-test-weightlimittorate] [data-test-weightlimittorate]:last-child',
+                'add_weightlimittorate' => '[data-test-add-weightlimittorate]',
+            ],
         );
     }
 
-    public function addRate(int $rate, int $weightLimit): void
-    {
-        $weightLimitToRateField = $this->getDocument()->findById(
-            'webgriffe_sylius_table_rate_plugin_shipping_table_rate_weightLimitToRate',
-        );
-        Assert::notNull($weightLimitToRateField, 'Weight limit to rate field not found on the page');
-
-        $addRateButton = $weightLimitToRateField->findLink('Add');
-        Assert::notNull($addRateButton, 'Add rate button not found on the page');
-
-        $addRateButton->click();
-
-        $item = $weightLimitToRateField->find('css', '[data-form-collection=item]:last-child');
-        Assert::notNull($item, 'Added rate item not found on the page');
-
-        $item->fillField('Weight limit', (string) $weightLimit);
-        $item->fillField('Rate', number_format($rate, 2, '.', ''));
-    }
-
-    /**
-     * @throws \Behat\Mink\Exception\ElementNotFoundException
-     */
     protected function getCodeElement(): NodeElement
     {
         return $this->getElement('code');
     }
 
-    /**
-     * @throws \Behat\Mink\Exception\ElementNotFoundException
-     */
     public function isCurrencyDisabled(): bool
     {
         return $this->getElement('currency')->getAttribute('disabled') === 'disabled';
+    }
+
+    public function addRate(int $rate, int $weightLimit): void
+    {
+        $count = count($this->getWeightLimitToRates());
+        $this->getElement('add_weightlimittorate')->click();
+        $this->getDocument()->waitFor(5, fn () => $count + 1 === count($this->getWeightLimitToRates()));
+
+        $weightLimitToRate = $this->getElement('last_weightlimittorate');
+        $weightLimitToRate->fillField('Weight limit', (string) $weightLimit);
+        $value = $rate / 100;
+        $weightLimitToRate->fillField('Rate', number_format($value, 2, '.', ''));
+    }
+
+    protected function getWeightLimitToRates(): array
+    {
+        return $this->getElement('weightlimittorates')->findAll('css', '[data-test-weightlimittorate]');
     }
 }
