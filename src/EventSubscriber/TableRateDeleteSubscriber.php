@@ -12,12 +12,13 @@ use Webgriffe\SyliusTableRateShippingPlugin\Calculator\TableRateShippingCalculat
 use Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate;
 use Webmozart\Assert\Assert;
 
-class TableRateDeleteSubscriber implements EventSubscriberInterface
+final class TableRateDeleteSubscriber implements EventSubscriberInterface
 {
     public function __construct(private ShippingMethodRepositoryInterface $shippingMethodRepository)
     {
     }
 
+    #[\Override]
     public static function getSubscribedEvents(): array
     {
         return ['webgriffe.shipping_table_rate.pre_delete' => 'onTableRatePreDelete'];
@@ -32,6 +33,7 @@ class TableRateDeleteSubscriber implements EventSubscriberInterface
         $foundMethods = [];
         /** @var ShippingMethod $shippingMethod */
         foreach ($shippingMethods as $shippingMethod) {
+            /** @var array $channelConfiguration */
             foreach ($shippingMethod->getConfiguration() as $channelConfiguration) {
                 /** @var string|null $channelTableRateCode */
                 $channelTableRateCode = $channelConfiguration['table_rate'] ?? null;

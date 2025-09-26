@@ -13,6 +13,7 @@ use Webgriffe\SyliusTableRateShippingPlugin\Form\EventSubscriber\AddCurrencySubs
 
 final class ShippingTableRateType extends AbstractResourceType
 {
+    #[\Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $messagesNamespace = 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.';
@@ -34,6 +35,7 @@ final class ShippingTableRateType extends AbstractResourceType
         ;
     }
 
+    #[\Override]
     public function getBlockPrefix(): string
     {
         return 'webgriffe_sylius_table_rate_plugin_shipping_table_rate';

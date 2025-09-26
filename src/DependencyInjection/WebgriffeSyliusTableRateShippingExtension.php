@@ -15,7 +15,7 @@ final class WebgriffeSyliusTableRateShippingExtension extends AbstractResourceEx
 {
     use PrependDoctrineMigrationsTrait;
 
-    /** @psalm-suppress UnusedVariable */
+    #[\Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
@@ -23,21 +23,25 @@ final class WebgriffeSyliusTableRateShippingExtension extends AbstractResourceEx
         $loader->load('services.yaml');
     }
 
+    #[\Override]
     public function prepend(ContainerBuilder $container): void
     {
         $this->prependDoctrineMigrations($container);
     }
 
+    #[\Override]
     protected function getMigrationsNamespace(): string
     {
         return 'Webgriffe\SyliusTableRateShippingPlugin\Migrations';
     }
 
+    #[\Override]
     protected function getMigrationsDirectory(): string
     {
         return '@WebgriffeSyliusTableRateShippingPlugin/src/Migrations';
     }
 
+    #[\Override]
     protected function getNamespacesOfMigrationsExecutedBefore(): array
     {
         return ['Sylius\Bundle\CoreBundle\Migrations'];

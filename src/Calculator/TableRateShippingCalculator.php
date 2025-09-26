@@ -19,19 +19,21 @@ final class TableRateShippingCalculator implements CalculatorInterface
     {
     }
 
-    public function calculate(BaseShipmentInterface $shipment, array $configuration): int
+    #[\Override]
+    public function calculate(BaseShipmentInterface $subject, array $configuration): int
     {
-        Assert::isInstanceOf($shipment, ShipmentInterface::class);
+        Assert::isInstanceOf($subject, ShipmentInterface::class);
 
-        $tableRate = $this->tableRateResolver->resolve($shipment, $configuration);
+        $tableRate = $this->tableRateResolver->resolve($subject, $configuration);
 
         try {
-            return $tableRate->getRate($shipment->getShippingWeight());
+            return $tableRate->getRate($subject->getShippingWeight());
         } catch (RateNotFoundException $e) {
             return 0;
         }
     }
 
+    #[\Override]
     public function getType(): string
     {
         return self::TYPE;

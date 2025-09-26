@@ -10,8 +10,12 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 final class WeightLimitToRateType extends AbstractType
 {
+    #[\Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $messagesNamespace = 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.';

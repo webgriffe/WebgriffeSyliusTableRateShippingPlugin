@@ -21,23 +21,23 @@ final class TableRateShippingMethodEligibilityChecker implements ShippingMethodE
     ) {
     }
 
+    #[\Override]
     public function isEligible(
-        ShippingSubjectInterface $subject,
-        ShippingMethodInterface $method,
+        ShippingSubjectInterface $shippingSubject,
+        ShippingMethodInterface $shippingMethod,
     ): bool {
-        if (!$this->eligibilityChecker->isEligible($subject, $method)) {
+        if (!$this->eligibilityChecker->isEligible($shippingSubject, $shippingMethod)) {
             return false;
         }
 
-        if ($method->getCalculator() !== TableRateShippingCalculator::TYPE) {
+        if ($shippingMethod->getCalculator() !== TableRateShippingCalculator::TYPE) {
             return true;
         }
 
-        Assert::isInstanceOf($subject, ShipmentInterface::class);
+        Assert::isInstanceOf($shippingSubject, ShipmentInterface::class);
 
-        $weight = $subject->getShippingWeight();
-        /** @noinspection PhpParamsInspection */
-        $tableRate = $this->tableRateResolver->resolve($subject, $method->getConfiguration());
+        $weight = $shippingSubject->getShippingWeight();
+        $tableRate = $this->tableRateResolver->resolve($shippingSubject, $shippingMethod->getConfiguration());
 
         try {
             $tableRate->getRate($weight);

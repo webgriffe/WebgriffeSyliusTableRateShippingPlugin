@@ -11,13 +11,17 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Webmozart\Assert\Assert;
 
-class AddCurrencySubscriber implements EventSubscriberInterface
+final class AddCurrencySubscriber implements EventSubscriberInterface
 {
+    #[\Override]
     public static function getSubscribedEvents(): array
     {
         return [FormEvents::PRE_SET_DATA => 'preSetData'];
     }
 
+    /**
+     * @psalm-api
+     */
     public function preSetData(FormEvent $event): void
     {
         $messagesNamespace = 'webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.';
