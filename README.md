@@ -1,6 +1,6 @@
 <p align="center">
-    <a href="https://sylius.com" target="_blank">
-        <img src="https://demo.sylius.com/assets/shop/img/logo.png" />
+    <a href="https://www.webgriffe.com" target="_blank">
+        <img src="https://sylius.com/wp-content/uploads/2018/08/webgriffe_logo.png" height="120" />
     </a>
 </p>
 
@@ -66,17 +66,16 @@ To contribute you need to:
 
 3. Copy `tests/TestApplication/.env` in `tests/TestApplication/.env.local` and set configuration specific for your development environment.
 
+4. Run docker (create a `compose.override.yml` if you need to customize services):
+
+    ```bash
+    docker-compose up -d
+    ```
+
 4. Then, from the plugin's root directory, run the following commands:
 
     ```bash
-    (cd vendor/sylius/test-application && yarn install)
-    (cd vendor/sylius/test-application && yarn build)
-    vendor/bin/console assets:install
-   
-    vendor/bin/console doctrine:database:create
-    vendor/bin/console doctrine:migrations:migrate -n
-    # Optionally load data fixtures
-    vendor/bin/console sylius:fixtures:load -n
+    composer test-app-init
     ```
 
 5. Run your local server:
