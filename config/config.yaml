@@ -1,0 +1,36 @@
+imports:
+    - { resource: 'twig_hooks/**/*.yaml' }
+
+sylius_resource:
+    resources:
+        webgriffe.shipping_table_rate:
+            classes:
+                model: Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate
+                form: Webgriffe\SyliusTableRateShippingPlugin\Form\Type\ShippingTableRateType
+
+sylius_grid:
+    grids:
+        webgriffe_sylius_table_rate_plugin_shipping_table_rate:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate
+            fields:
+                code:
+                    type: string
+                    label: webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.code
+                name:
+                    type: string
+                    label: webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.name
+                rates_count:
+                    type: string
+                    label: webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.rates_count
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete

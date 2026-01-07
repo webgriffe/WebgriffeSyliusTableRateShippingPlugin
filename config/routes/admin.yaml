@@ -1,0 +1,17 @@
+webgriffe_sylius_table_rate_plugin_shipping_table_rate:
+    resource: |
+        alias: webgriffe.shipping_table_rate
+        section: admin
+        templates: "@SyliusAdmin\\shared\\crud"
+        except: ['show', 'bulkDelete']
+        redirect: update
+        grid: webgriffe_sylius_table_rate_plugin_shipping_table_rate
+        form:
+            type: Webgriffe\SyliusTableRateShippingPlugin\Form\Type\ShippingTableRateType
+        permission: true
+        vars:
+            all:
+                subheader: webgriffe_sylius_table_rate_plugin.ui.shipping_table_rates.subheader
+            index:
+                icon: 'pallet'
+    type: sylius.resource

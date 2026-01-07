@@ -1,0 +1,3 @@
+webgriffe_sylius_table_rate_shipping_plugin_admina:
+    resource: "@WebgriffeSyliusTableRateShippingPlugin/config/routes/admin.yaml"
+    prefix: /admin

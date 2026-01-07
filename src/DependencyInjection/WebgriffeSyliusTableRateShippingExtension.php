@@ -4,24 +4,46 @@ declare(strict_types=1);
 
 namespace Webgriffe\SyliusTableRateShippingPlugin\DependencyInjection;
 
-use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Sylius\Bundle\CoreBundle\DependencyInjection\PrependDoctrineMigrationsTrait;
+use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-final class WebgriffeSyliusTableRateShippingExtension extends Extension
+final class WebgriffeSyliusTableRateShippingExtension extends AbstractResourceExtension implements PrependExtensionInterface
 {
+    use PrependDoctrineMigrationsTrait;
+
+    #[\Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $this->processConfiguration($this->getConfiguration([], $container), $configs);
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
 
-        $loader->load('services.yml');
+        $loader->load('services.yaml');
     }
 
-    public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface
+    #[\Override]
+    public function prepend(ContainerBuilder $container): void
     {
-        return new Configuration();
+        $this->prependDoctrineMigrations($container);
+    }
+
+    #[\Override]
+    protected function getMigrationsNamespace(): string
+    {
+        return 'Webgriffe\SyliusTableRateShippingPlugin\Migrations';
+    }
+
+    #[\Override]
+    protected function getMigrationsDirectory(): string
+    {
+        return '@WebgriffeSyliusTableRateShippingPlugin/src/Migrations';
+    }
+
+    #[\Override]
+    protected function getNamespacesOfMigrationsExecutedBefore(): array
+    {
+        return ['Sylius\Bundle\CoreBundle\Migrations'];
     }
 }

@@ -25,7 +25,7 @@ default:
                 - Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ShippingTableRateContext
 
             filters:
-                tags: "@table_rate_shipping_fee && @ui"
+                tags: "@table_rate_shipping_fee&&@ui"
 
         ui_managing_table_rates:
             contexts:
@@ -46,7 +46,7 @@ default:
                 - Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ManagingTableRatesContext
 
             filters:
-                tags: "@managing_table_rates && @ui"
+                tags: "@managing_table_rates&&@ui"
 
         ui_managing_shipping_methods_with_table_rate:
             contexts:
@@ -64,4 +64,4 @@ default:
                 - Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui\ManagingShippingMethodsWithTableRateContext
 
             filters:
-                tags: "@managing_shipping_methods_with_table_rate && @ui"
+                tags: "@managing_shipping_methods_with_table_rate&&@ui"

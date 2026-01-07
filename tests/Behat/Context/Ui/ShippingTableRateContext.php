@@ -30,7 +30,7 @@ final class ShippingTableRateContext implements Context
         $this->addressPage->nextStep();
 
         $this->selectShippingPage->verify();
-        Assert::true($this->selectShippingPage->hasNoShippingMethodsMessage());
+        Assert::true($this->selectShippingPage->hasNoAvailableShippingMethodsMessage());
     }
 
     private function createDefaultAddress(): AddressInterface

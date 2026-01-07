@@ -1,6 +1,6 @@
 <p align="center">
-    <a href="https://sylius.com" target="_blank">
-        <img src="https://demo.sylius.com/assets/shop/img/logo.png" />
+    <a href="https://www.webgriffe.com" target="_blank">
+        <img src="https://sylius.com/wp-content/uploads/2018/08/webgriffe_logo.png" height="120" />
     </a>
 </p>
 
@@ -64,21 +64,28 @@ To contribute you need to:
    composer install
    ```
 
-3. Copy `tests/Application/.env` in `tests/Application/.env.local` and set configuration specific for your development environment.
+3. Copy `tests/TestApplication/.env` in `tests/TestApplication/.env.local` and set configuration specific for your development environment.
+
+4. Run docker (create a `compose.override.yml` if you need to customize services):
+
+    ```bash
+    docker-compose up -d
+    ```
 
 4. Then, from the plugin's root directory, run the following commands:
 
-   ```bash
-   (cd tests/Application && yarn install)
-   (cd tests/Application && yarn build)
-   (cd tests/Application && bin/console assets:install public)
-   (cd tests/Application && bin/console doctrine:database:create)
-   (cd tests/Application && bin/console doctrine:schema:create)
-   (cd tests/Application && bin/console sylius:fixtures:load)
-   (cd tests/Application && symfony server:start -d) # Requires Symfony CLI (https://symfony.com/download)
-   ```
+    ```bash
+    composer test-app-init
+    ```
 
-5. Now at http://localhost:8080/ you have a full Sylius testing application which runs the plugin
+5. Run your local server:
+
+      ```bash
+      symfony server:ca:install
+      symfony server:start -d
+      ```
+
+6. Now at http://localhost:8080/ you have a full Sylius testing application which runs the plugin
 
 ### Testing
 
@@ -87,12 +94,14 @@ After your changes you must ensure that the tests are still passing.
 First setup your test database:
 
     ```bash
-    (cd tests/Application && bin/console -e test doctrine:database:create)
-    (cd tests/Application && bin/console -e test doctrine:schema:create)
+    APP_ENV=test vendor/bin/console doctrine:database:create
+    APP_ENV=test vendor/bin/console doctrine:migrations:migrate -n
+    # Optionally load data fixtures
+    APP_ENV=test vendor/bin/console sylius:fixtures:load -n
     ```
 
 This plugin's test application already comes with a test configuration that uses SQLite as test database.
-If you don't want this you can create a `tests/Application/.env.test.local` with a different `DATABASE_URL`.
+If you don't want this you can create a `tests/TestApplication/.env.test.local` with a different `DATABASE_URL`.
 
 The current CI suite runs the following tests:
 
@@ -150,7 +159,7 @@ To run Behat's Javascript scenarios you need to setup Selenium and Chromedriver.
 
       ```bash
       symfony server:ca:install
-      APP_ENV=test symfony server:start --port=8080 --dir=tests/Application/public --daemon
+      APP_ENV=test symfony server:start --port=8080 --dir=tests/TestApplication/public --daemon
       ```
 
 License

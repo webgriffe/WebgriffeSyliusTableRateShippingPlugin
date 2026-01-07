@@ -23,6 +23,7 @@ final class TableRateResolver implements TableRateResolverInterface
     {
     }
 
+    #[\Override]
     public function resolve(ShipmentInterface $shipment, array $calculatorConfig): ShippingTableRate
     {
         $order = $shipment->getOrder();
@@ -35,15 +36,19 @@ final class TableRateResolver implements TableRateResolverInterface
                 'Cannot resolve a table rate, there\'s no channel for this shipment\'s order.',
             );
         }
-        $channelCode = $channel->getCode();
 
-        if (!isset($calculatorConfig[$channelCode])) {
+        $channelCode = $channel->getCode();
+        Assert::notNull($channelCode, 'The channel code cannot be null');
+
+        /** @var array|null $channelConfig */
+        $channelConfig = $calculatorConfig[$channelCode] ?? null;
+        if ($channelConfig === null) {
             $shippingMethod = $shipment->getMethod();
             if (null === $shippingMethod) {
                 throw new MissingChannelConfigurationException(
                     sprintf(
                         'This shipment has no configuration for channel "%s".',
-                        $channel->getName(),
+                        (string) $channel->getName(),
                     ),
                 );
             }
@@ -51,14 +56,14 @@ final class TableRateResolver implements TableRateResolverInterface
             throw new MissingChannelConfigurationException(
                 sprintf(
                     'Shipping method "%s" has no configuration for channel "%s".',
-                    $shippingMethod->getName(),
-                    $channel->getName(),
+                    (string) $shippingMethod->getName(),
+                    (string) $channel->getName(),
                 ),
             );
         }
 
         /** @var string $tableRateCode */
-        $tableRateCode = $calculatorConfig[$channelCode][TableRateConfigurationType::TABLE_RATE_FIELD_NAME];
+        $tableRateCode = $channelConfig[TableRateConfigurationType::TABLE_RATE_FIELD_NAME];
         $tableRate = $this->tableRateRepository->findOneBy(['code' => $tableRateCode]);
         Assert::isInstanceOf($tableRate, ShippingTableRate::class);
 

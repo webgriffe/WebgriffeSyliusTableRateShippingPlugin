@@ -22,6 +22,11 @@ class IndexPage extends BaseIndexPage implements IndexPageInterface
 
     public function getValidationMessage(): string
     {
-        return $this->getDocument()->find('css', '.sylius-flash-message.negative')->getText();
+        $element = $this->getDocument()->find('css', '.sylius-flash-message.negative');
+        if ($element === null) {
+            return '';
+        }
+
+        return $element->getText();
     }
 }

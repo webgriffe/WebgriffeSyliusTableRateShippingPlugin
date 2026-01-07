@@ -1,0 +1,3 @@
+{% set config = get_hookable_configuration() %}
+{% set fieldCode = config.field %}
+{{ form_row(hookable_metadata.context.form[fieldCode], sylius_test_form_attribute(fieldCode)) }}

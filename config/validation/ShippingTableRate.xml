@@ -1,0 +1,69 @@
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+    http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="Webgriffe\SyliusTableRateShippingPlugin\Entity\ShippingTableRate">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">
+                <value>code</value>
+            </option>
+            <option name="groups">
+                <value>sylius</value>
+            </option>
+        </constraint>
+
+        <property name="code">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="max">250</option>
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+            <constraint name="Regex">
+                <option name="pattern">/^[\w-]*$/</option>
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="max">250</option>
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="currency">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="weightLimitToRate">
+            <constraint name="NotBlank">
+                <option name="message">webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.weightLimitToRate.not_blank</option>
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>

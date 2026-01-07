@@ -9,13 +9,13 @@ use Sylius\Component\Currency\Model\CurrencyInterface;
 
 interface CreatePageInterface extends BaseCreatePageInterface
 {
-    public function fillCode(string $code);
+    public function fillCode(string $code): void;
 
-    public function fillName(string $name);
+    public function fillName(string $name): void;
 
-    public function fillCurrency(?CurrencyInterface $currency);
+    public function fillCurrency(?CurrencyInterface $currency): void;
 
-    public function addRate(int $rate, int $weightLimit);
+    public function addRate(int $rate, int $weightLimit): void;
 
     public function getFormValidationMessage(): string;
 }

@@ -20,7 +20,7 @@ class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
     {
         return array_merge(
             parent::getDefinedElements(),
-            ['table_rate' => '#sylius_shipping_method_configuration_%channelCode%_table_rate'],
+            ['table_rate' => '#sylius_admin_shipping_method_configuration_%channelCode%_table_rate'],
         );
     }
 }

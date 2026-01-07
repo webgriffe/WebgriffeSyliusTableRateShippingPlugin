@@ -6,6 +6,8 @@ namespace Tests\Webgriffe\SyliusTableRateShippingPlugin\Behat\Context\Ui;
 
 use Behat\Behat\Context\Context;
 use FriendsOfBehat\PageObjectExtension\Page\UnexpectedPageException;
+use Sylius\Behat\Element\Admin\NotificationsElementInterface;
+use Sylius\Behat\NotificationType;
 use Sylius\Component\Core\Formatter\StringInflector;
 use Sylius\Component\Core\Model\ShippingMethod;
 use Sylius\Component\Currency\Model\CurrencyInterface;
@@ -21,6 +23,7 @@ class ManagingTableRatesContext implements Context
         private IndexPageInterface $indexPage,
         private CreatePageInterface $createPage,
         private UpdatePageInterface $updatePage,
+        private NotificationsElementInterface $notificationsElement,
     ) {
     }
 
@@ -37,7 +40,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @Then I should see :number table rate(s) in the list
      */
-    public function iShouldSeeZeroTableRatesInTheList(int $number = 0)
+    public function iShouldSeeZeroTableRatesInTheList(int $number = 0): void
     {
         Assert::same($number, $this->indexPage->countItems());
     }
@@ -45,7 +48,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @Then I should see the :shippingTableRate table rate in the list
      */
-    public function iShouldSeeTheTableRateInTheList(ShippingTableRate $shippingTableRate)
+    public function iShouldSeeTheTableRateInTheList(ShippingTableRate $shippingTableRate): void
     {
         Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $shippingTableRate->getName()]));
     }
@@ -53,7 +56,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @When I add a shipping table rate named :name for currency :currency
      */
-    public function iAddAShippingTableRateNamedForCurrency(string $name, CurrencyInterface $currency)
+    public function iAddAShippingTableRateNamedForCurrency(string $name, CurrencyInterface $currency): void
     {
         $this->createPage->open();
         $this->createPage->fillCode(StringInflector::nameToUppercaseCode($name));
@@ -66,7 +69,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @When I delete the :shippingTableRate table rate
      */
-    public function iDeleteTheTableRate(ShippingTableRate $shippingTableRate)
+    public function iDeleteTheTableRate(ShippingTableRate $shippingTableRate): void
     {
         $this->indexPage->deleteResourceOnPage(['name' => $shippingTableRate->getName()]);
     }
@@ -82,7 +85,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @When I save my changes
      */
-    public function iSaveMyChanges()
+    public function iSaveMyChanges(): void
     {
         $this->updatePage->saveChanges();
     }
@@ -90,7 +93,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @When I change its code to :code
      */
-    public function iChangeItsCodeTo(string $code)
+    public function iChangeItsCodeTo(string $code): void
     {
         $this->createPage->fillCode($code);
     }
@@ -98,7 +101,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @When I change its name to :name
      */
-    public function iChangeItsNameTo(string $name)
+    public function iChangeItsNameTo(string $name): void
     {
         $this->createPage->fillName($name);
     }
@@ -106,7 +109,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @Then /^(this shipping table rate) name should be "([^"]+)"$/
      */
-    public function thisShippingTableRateNameShouldBe(ShippingTableRate $shippingTableRate, string $code)
+    public function thisShippingTableRateNameShouldBe(ShippingTableRate $shippingTableRate, string $code): void
     {
         $this->updatePage->open(['id' => $shippingTableRate->getId()]);
         $this->updatePage->hasResourceValues(['name' => $code]);
@@ -123,7 +126,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @Then /^(this shipping table rate) should have (\d+) rates$/
      */
-    public function thisShippingTableRateShouldHaveRates(ShippingTableRate $shippingTableRate, int $count)
+    public function thisShippingTableRateShouldHaveRates(ShippingTableRate $shippingTableRate, int $count): void
     {
         $this->indexPage->open();
 
@@ -133,7 +136,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @When I try to add a new shipping table
      */
-    public function iTryToAddANewShippingTable()
+    public function iTryToAddANewShippingTable(): void
     {
         $this->createPage->open();
     }
@@ -141,7 +144,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @When I specify its code as :code
      */
-    public function iSpecifyItsCodeAs(string $code)
+    public function iSpecifyItsCodeAs(string $code): void
     {
         $this->createPage->fillCode($code);
     }
@@ -149,7 +152,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @When I specify its currency as :currency
      */
-    public function iSpecifyItsCurrencyAs(CurrencyInterface $currency)
+    public function iSpecifyItsCurrencyAs(CurrencyInterface $currency): void
     {
         $this->createPage->fillCurrency($currency);
     }
@@ -157,7 +160,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @When I do not specify its name
      */
-    public function iDoNotSpecifyItsName()
+    public function iDoNotSpecifyItsName(): void
     {
         $this->createPage->fillName('');
     }
@@ -165,7 +168,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @When I try to add it
      */
-    public function iTryToAddIt()
+    public function iTryToAddIt(): void
     {
         $this->createPage->create();
     }
@@ -173,7 +176,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @Then I should be notified that :element is required
      */
-    public function iShouldBeNotifiedThatIsRequired($element)
+    public function iShouldBeNotifiedThatIsRequired(string $element): void
     {
         Assert::same($this->createPage->getValidationMessage($element), 'This value should not be blank.');
     }
@@ -181,7 +184,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @When I specify its name as :name
      */
-    public function iSpecifyItsNameAs(string $name)
+    public function iSpecifyItsNameAs(string $name): void
     {
         $this->createPage->fillName($name);
     }
@@ -189,7 +192,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @When I do not specify its code
      */
-    public function iDoNotSpecifyItsCode()
+    public function iDoNotSpecifyItsCode(): void
     {
         $this->createPage->fillCode('');
     }
@@ -197,7 +200,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @When I do not specify its currency
      */
-    public function iDoNotSpecifyItsCurrency()
+    public function iDoNotSpecifyItsCurrency(): void
     {
         $this->createPage->fillCurrency(null);
     }
@@ -205,7 +208,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @When I do not specify any rate
      */
-    public function iDoNotSpecifyAnyRate()
+    public function iDoNotSpecifyAnyRate(): void
     {
         // Simply we don't add the rate
     }
@@ -213,7 +216,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @Then I should be notified that at least one rate is required
      */
-    public function iShouldBeNotifiedThatAtLeastOneRateIsRequired()
+    public function iShouldBeNotifiedThatAtLeastOneRateIsRequired(): void
     {
         Assert::same(
             $this->createPage->getFormValidationMessage(),
@@ -224,7 +227,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @Then the code field should be disabled
      */
-    public function theCodeFieldShouldBeDisabled()
+    public function theCodeFieldShouldBeDisabled(): void
     {
         Assert::true($this->updatePage->isCodeDisabled());
     }
@@ -232,7 +235,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @Then the :shippingTableRate table rate should still have code :code
      */
-    public function theShippingTableRateShouldStillHaveCode(ShippingTableRate $shippingTableRate, string $code)
+    public function theShippingTableRateShouldStillHaveCode(ShippingTableRate $shippingTableRate, string $code): void
     {
         Assert::eq($shippingTableRate->getCode(), $code);
     }
@@ -240,7 +243,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @Then the currency field should be disabled
      */
-    public function theCurrencyFieldShouldBeDisabled()
+    public function theCurrencyFieldShouldBeDisabled(): void
     {
         Assert::true($this->updatePage->isCurrencyDisabled());
     }
@@ -248,7 +251,7 @@ class ManagingTableRatesContext implements Context
     /**
      * @When I change its currency to :currency
      */
-    public function iChangeItsCurrencyTo(CurrencyInterface $currency)
+    public function iChangeItsCurrencyTo(CurrencyInterface $currency): void
     {
         $this->createPage->fillCurrency($currency);
     }
@@ -259,19 +262,16 @@ class ManagingTableRatesContext implements Context
     public function theTableRateShouldStillHaveCurrency(
         ShippingTableRate $shippingTableRate,
         CurrencyInterface $currency,
-    ) {
-        Assert::same($shippingTableRate->getCurrency()->getCode(), $currency->getCode());
+    ): void {
+        Assert::same($shippingTableRate->getCurrency()?->getCode(), $currency->getCode());
     }
 
     /**
      * @Then I should be notified that code has to be unique
      */
-    public function iShouldBeNotifiedThatCodeHasToBeUnique()
+    public function iShouldBeNotifiedThatCodeHasToBeUnique(): void
     {
-        $this->createPage->getValidationMessage(
-            'code',
-            'There\'s another shipping table rate with the same code. The code has to be unique.',
-        );
+        Assert::same($this->createPage->getValidationMessage('code'), 'This value is already used.');
     }
 
     /**
@@ -279,18 +279,16 @@ class ManagingTableRatesContext implements Context
      */
     public function iShouldBeNotifiedThatTheTableRateCouldntBeDeletedBecauseIsAlreadyUsedByTheShippingMethod(
         ShippingMethod $shippingMethod,
-    ) {
-        Assert::contains(
-            $this->indexPage->getValidationMessage(),
-            'The table rate cannot be deleted because is currently used by the following shipping methods: ' .
-            $shippingMethod->getCode(),
+    ): void {
+        Assert::true(
+            $this->notificationsElement->hasNotification((string) NotificationType::error(), 'The table rate cannot be deleted because is currently used by the following shipping methods: '),
         );
     }
 
     /**
      * @Then the :shippingTableRate shipping table rate should still be there
      */
-    public function theShippingTableRateShouldStillBeThere(ShippingTableRate $shippingTableRate)
+    public function theShippingTableRateShouldStillBeThere(ShippingTableRate $shippingTableRate): void
     {
         Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $shippingTableRate->getName()]));
     }

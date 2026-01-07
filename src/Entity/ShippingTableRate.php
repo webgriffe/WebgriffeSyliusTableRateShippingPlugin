@@ -5,94 +5,76 @@ declare(strict_types=1);
 namespace Webgriffe\SyliusTableRateShippingPlugin\Entity;
 
 use Sylius\Component\Currency\Model\CurrencyInterface;
-use Sylius\Component\Resource\Model\CodeAwareInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 use Webgriffe\SyliusTableRateShippingPlugin\Exception\RateNotFoundException;
 
 /**
- * @UniqueEntity("code", groups={"sylius"})
+ * @psalm-api
  */
-class ShippingTableRate implements ResourceInterface, CodeAwareInterface
+class ShippingTableRate implements ShippingTableRateInterface
 {
-    /** @var int|null */
-    protected $id;
+    protected ?int $id = null;
 
-    /**
-     * @var string|null
-     *
-     * @Assert\NotBlank(groups={"sylius"})
-     */
-    protected $code;
+    protected ?string $code = null;
 
-    /**
-     * @var string|null
-     *
-     * @Assert\NotBlank(groups={"sylius"})
-     */
-    protected $name;
+    protected ?string $name = null;
 
-    /**
-     * @var CurrencyInterface|null
-     *
-     * @Assert\NotBlank(groups={"sylius"})
-     */
-    protected $currency;
+    protected ?CurrencyInterface $currency = null;
 
-    /**
-     * @var array
-     *
-     * @Assert\NotBlank(
-     *     groups={"sylius"},
-     *     message="webgriffe_sylius_table_rate_plugin.ui.shipping_table_rate.weightLimitToRate.not_blank"
-     * )
-     */
-    protected $weightLimitToRate = [];
+    /** @var array<array{weightLimit: float, rate: int}> */
+    protected array $weightLimitToRate = [];
 
+    #[\Override]
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    #[\Override]
     public function getCode(): ?string
     {
         return $this->code;
     }
 
+    #[\Override]
     public function setCode(?string $code): void
     {
         $this->code = $code;
     }
 
+    #[\Override]
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    #[\Override]
     public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
+    #[\Override]
     public function getCurrency(): ?CurrencyInterface
     {
         return $this->currency;
     }
 
+    #[\Override]
     public function setCurrency(?CurrencyInterface $currency): void
     {
         $this->currency = $currency;
     }
 
+    #[\Override]
     public function addRate(float $weightLimit, int $rate): void
     {
         $this->weightLimitToRate[] = ['weightLimit' => $weightLimit, 'rate' => $rate];
     }
 
+    #[\Override]
     public function getRate(float $weight): int
     {
-        usort($this->weightLimitToRate, function (array $a, array $b): int {
+        usort($this->weightLimitToRate, static function (array $a, array $b): int {
             return $a['weightLimit'] <=> $b['weightLimit'];
         });
 
@@ -105,6 +87,7 @@ class ShippingTableRate implements ResourceInterface, CodeAwareInterface
         throw new RateNotFoundException($this, $weight);
     }
 
+    #[\Override]
     public function getRatesCount(): int
     {
         return count($this->weightLimitToRate);
@@ -120,6 +103,8 @@ class ShippingTableRate implements ResourceInterface, CodeAwareInterface
 
     /**
      * @internal
+     *
+     * @param array<array{weightLimit: float, rate: int}> $weightLimitToRate
      */
     public function setWeightLimitToRate(array $weightLimitToRate): void
     {
