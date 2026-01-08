@@ -45,11 +45,11 @@
 5. Finish the installation by updating the database schema and installing assets:
 
    ```bash
-   bin/console cache:clear
-   bin/console doctrine:migrations:diff
-   bin/console doctrine:migrations:migrate
-   bin/console assets:install
-   bin/console sylius:theme:assets:install
+   vendor/bin/console cache:clear
+   vendor/bin/console doctrine:migrations:diff
+   vendor/bin/console doctrine:migrations:migrate
+   vendor/bin/console assets:install
+   vendor/bin/console sylius:theme:assets:install
    ```
 
 ## Contributing
