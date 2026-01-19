@@ -11,7 +11,6 @@ default:
 
     extensions:
         DMore\ChromeExtension\Behat\ServiceContainer\ChromeExtension: ~
-        Robertfausk\Behat\PantherExtension: ~
 
         FriendsOfBehat\MinkDebugExtension:
             directory: etc/build
@@ -34,18 +33,6 @@ default:
                     chrome:
                         api_url: http://127.0.0.1:9222
                         validate_certificate: false
-                panther:
-                    panther:
-                        manager_options:
-                            connection_timeout_in_ms: 5000
-                            request_timeout_in_ms: 120000
-                            chromedriver_arguments:
-                                - --log-path=etc/build/chromedriver.log
-                                - --verbose
-                            capabilities:
-                                acceptSslCerts: true
-                                acceptInsecureCerts: true
-                                unexpectedAlertBehaviour: accept
             show_auto: false
 
         FriendsOfBehat\SymfonyExtension:
