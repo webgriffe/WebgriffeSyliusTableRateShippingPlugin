@@ -67,8 +67,8 @@ jobs:
                 run: php -v | head -n 1 | awk '{ print $2 }' > .php-version
 
             -
-                name: Install certificates
-                run: symfony server:ca:install || true
+                name: Validate composer.json
+                run: composer validate --ansi --strict
 
             -
                 name: Get Composer cache directory
@@ -102,6 +102,26 @@ jobs:
                 run: composer install --no-interaction
 
             -
+                name: Validate container
+                run: vendor/bin/console lint:container
+
+            -
+                name: Run ECS
+                run: vendor/bin/ecs check
+
+            -
+                name: Run PHPStan
+                run: vendor/bin/phpstan analyse -c phpstan.neon -l max src/
+
+            -
+                name: Run Psalm
+                run: vendor/bin/psalm
+
+            -
+                name: Run PHPSpec
+                run: vendor/bin/phpspec run --ansi -f progress --no-interaction
+
+            -
                 name: Run unit tests
                 run: vendor/bin/phpunit --colors=always --testsuite=unit
 
@@ -130,6 +150,10 @@ jobs:
                     (vendor/bin/console doctrine:schema:create -vvv)
 
             -
+                name: Validate database schema
+                run: vendor/bin/console doctrine:schema:validate
+
+            -
                 name: Prepare test application assets
                 run: |
                     vendor/bin/console assets:install -vvv
@@ -144,32 +168,12 @@ jobs:
                 run: vendor/bin/console sylius:fixtures:load -n
 
             -
-                name: Validate composer.json
-                run: composer validate --ansi --strict
-
-            -
-                name: Validate container
-                run: vendor/bin/console lint:container
-
-            -
-                name: Validate database schema
-                run: vendor/bin/console doctrine:schema:validate
-
-            -
-                name: Run PHPStan
-                run: vendor/bin/phpstan analyse -c phpstan.neon -l max src/
-
-            -
-                name: Run Psalm
-                run: vendor/bin/psalm
-
-            -
-                name: Run PHPSpec
-                run: vendor/bin/phpspec run --ansi -f progress --no-interaction
-
-            -
                 name: Run Non-unit PHPUnit tests
                 run: vendor/bin/phpunit --colors=always --testsuite=non-unit
+
+            -
+                name: Install certificates
+                run: symfony server:ca:install || true
 
             -
                 name: Run Chrome Headless
