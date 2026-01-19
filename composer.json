@@ -108,6 +108,15 @@
         ],
         "auto-scripts": {
             "security-checker security:check": "script"
-        }
+        },
+        "post-install-cmd": [
+            "@create-console-symlink"
+        ],
+        "post-update-cmd": [
+            "@create-console-symlink"
+        ],
+        "create-console-symlink": [
+            "@php bin/create_console_symlink.php"
+        ]
     }
 }
