@@ -12,44 +12,35 @@
 
 ## Installation
 
-1. Run `composer require --no-scripts webgriffe/sylius-table-rate-shipping-plugin`.
+1. Run `composer require --no-scripts webgriffe/sylius-table-rate-shipping-plugin`: it's normal that the "cache:clear" command, that is executed automatically at the end, fails because you have to do the next steps.
 
-2. Add the plugin to the `config/bundles.php` file:
+2. If they have not been added automatically, you have to add these bundles to `config/bundles.php` file:
 
    ```php
    Webgriffe\SyliusTableRateShippingPlugin\WebgriffeSyliusTableRateShippingPlugin::class => ['all' => true],
    ```
 
-3. Add the plugin's config to by creating the file `config/packages/webgriffe_sylius_table_rate_shipping_plugin.yaml` with the following content:
+3. Add the plugin's configs by creating the file `config/packages/webgriffe_sylius_table_rate_shipping_plugin.yaml` with the following content:
 
    ```yaml
    imports:
-       - { resource: "@WebgriffeSyliusTableRateShippingPlugin/Resources/config/config.yml" }
+       - { resource: "@WebgriffeSyliusTableRateShippingPlugin/config/config.yaml" }
    ```
 
-4. Add the plugin's routing by creating the file `config/routes/webgriffe_sylius_table_rate_shipping_plugin.yaml` with the following content:
+4. Add the plugin's routes by creating the file `config/routes/webgriffe_sylius_table_rate_shipping_plugin.yaml` with the following content:
 
-   ```yaml
-   webgriffe_sylius_table_rate_shipping_plugin_shop:
-     resource: "@WebgriffeSyliusTableRateShippingPlugin/Resources/config/shop_routing.yml"
-     prefix: /{_locale}
-     requirements:
-       _locale: ^[A-Za-z]{2,4}(_([A-Za-z]{4}|[0-9]{3}))?(_([A-Za-z]{2}|[0-9]{3}))?$
-   
+   ```yaml   
    webgriffe_sylius_table_rate_shipping_plugin_admin:
-     resource: "@WebgriffeSyliusTableRateShippingPlugin/Resources/config/admin_routing.yml"
+     resource: "@WebgriffeSyliusTableRateShippingPlugin/config/routes/admin.yaml"
      prefix: /%sylius_admin.path_name%
    
    ```
 
-5. Finish the installation by updating the database schema and installing assets:
+5. Finish the installation by updating the database schema:
 
    ```bash
-   vendor/bin/console cache:clear
-   vendor/bin/console doctrine:migrations:diff
-   vendor/bin/console doctrine:migrations:migrate
-   vendor/bin/console assets:install
-   vendor/bin/console sylius:theme:assets:install
+   bin/console cache:clear
+   bin/console doctrine:migrations:migrate
    ```
 
 ## Contributing
@@ -66,26 +57,51 @@ To contribute you need to:
 
 3. Copy `tests/TestApplication/.env` in `tests/TestApplication/.env.local` and set configuration specific for your development environment.
 
-4. Run docker (create a `compose.override.yml` if you need to customize services):
+4. Link node_modules:
+
+    ```bash
+    ln -s vendor/sylius/test-application/node_modules node_modules
+    ```
+
+5. Run docker (create a `compose.override.yml` if you need to customize services):
 
     ```bash
     docker-compose up -d
     ```
 
-4. Then, from the plugin's root directory, run the following commands:
+6. Then, from the plugin's root directory, run the following commands:
 
     ```bash
     composer test-app-init
     ```
 
-5. Run your local server:
+7. Run your local server:
 
       ```bash
       symfony server:ca:install
       symfony server:start -d
       ```
 
-6. Now at http://localhost:8080/ you have a full Sylius testing application which runs the plugin
+8. Now at http://localhost:8080/ you have a full Sylius testing application which runs the plugin
+
+### Static checks
+
+  - Coding Standard
+    ```bash
+    vendor/bin/ecs check --fix
+    ```
+
+  - Psalm
+  
+    ```bash
+    vendor/bin/psalm
+    ```
+
+  - PHPStan
+
+    ```bash
+    vendor/bin/phpstan analyse
+    ```
 
 ### Testing
 
@@ -100,72 +116,61 @@ First setup your test database:
     APP_ENV=test vendor/bin/console sylius:fixtures:load -n
     ```
 
-This plugin's test application already comes with a test configuration that uses SQLite as test database.
-If you don't want this you can create a `tests/TestApplication/.env.test.local` with a different `DATABASE_URL`.
+And build assets:
+
+```bash
+    (cd vendor/sylius/test-application && yarn install)
+    (cd vendor/sylius/test-application && yarn build)
+    vendor/bin/console assets:install
+```
 
 The current CI suite runs the following tests:
 
-* Easy Coding Standard
-
-  ```bash
-  vendor/bin/ecs check src/ tests/Behat/
-  ```
-
-* PHPStan
-
-  ```bash
-  vendor/bin/phpstan analyse -c phpstan.neon -l max src/
-  ```
-
-* PHPUnit
+  - PHPUnit
 
   ```bash
   vendor/bin/phpunit
   ```
 
-* PHPSpec
+  - PHPSpec
 
   ```bash
   vendor/bin/phpspec run
   ```
 
-* Behat (without Javascript)
+  - Behat (non-JS scenarios)
 
   ```bash
-  vendor/bin/behat --tags="~@javascript"
+    vendor/bin/behat --strict --tags="~@javascript"
   ```
 
-* Behat (only Javascript)
+  - Behat (JS scenarios)
 
-  ```bash
-  vendor/bin/behat --tags="@javascript"
-  ```
+    1. [Install Symfony CLI command](https://symfony.com/download).
 
-To run them all with a single command run:
-
-```bash
-composer suite
-```
-
-To run Behat's Javascript scenarios you need to setup Selenium and Chromedriver. Do the following:
-
-1. Start Headless Chrome:
+    2. Start Headless Chrome:
 
       ```bash
       google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --enable-features=Metal --headless --remote-debugging-port=9222 --window-size=2880,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1
       ```
 
-2. Install SSL certificates (only once needed) and run test application's webserver on `127.0.0.1:8080`:
+    3. Install SSL certificates (only once needed) and run test application's webserver on `127.0.0.1:8080`:
 
       ```bash
       symfony server:ca:install
       APP_ENV=test symfony server:start --port=8080 --dir=tests/TestApplication/public --daemon
       ```
 
-License
--------
+    4. Run Behat:
+    
+      ```bash
+      vendor/bin/behat --strict --tags="@javascript"
+      ```
+
+## License
+
 This library is under the MIT license. See the complete license in the LICENSE file.
 
-Credits
--------
+## Credits
+
 Developed by [Webgriffe®](http://www.webgriffe.com/).
