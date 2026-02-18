@@ -93,14 +93,16 @@
             "@database-reset",
             "@frontend-clear"
         ],
-        "ecs": "ecs check src/ tests/Behat/",
-        "phpstan": "phpstan analyse -c phpstan.neon -l max src/",
+        "ecs": "ecs",
+        "phpstan": "phpstan analyse",
+        "psalm": "psalm --no-cache",
         "phpunit": "phpunit",
         "phpspec": "phpspec run",
         "behat": "behat --strict -vvv --no-interaction || behat --strict -vvv --no-interaction --rerun",
         "suite": [
             "@ecs",
             "@phpstan",
+            "@psalm",
             "@phpunit",
             "@phpspec",
             "@behat"
