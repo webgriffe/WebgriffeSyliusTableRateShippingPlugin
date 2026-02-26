@@ -15,6 +15,9 @@ final class Version20260218113714 extends AbstractMigration
     #[\Override]
     public function up(Schema $schema): void
     {
+        if ($schema->getTable('webgriffe_sylius_shipping_table_rate')->hasIndex('UNIQ_1D5F4E4177153098')) {
+            return;
+        }
         $this->addSql('ALTER TABLE webgriffe_sylius_shipping_table_rate RENAME INDEX code_idx TO UNIQ_1D5F4E4177153098');
     }
 
